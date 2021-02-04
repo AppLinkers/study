@@ -1,22 +1,69 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View,Image,TouchableOpacity,TextInput } from 'react-native';
 
-export default function LoginPage() {
+import React, {useState} from 'react';
+import { StyleSheet, Text, View,Image,TouchableOpacity,TextInput } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import firebase from 'firebase'
+
+var firebaseConfig = {
+  apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
+  authDomain: "studyapp-3e58f.firebaseapp.com",
+  databaseURL: "https://studyapp-3e58f-default-rtdb.firebaseio.com",
+  projectId: "studyapp-3e58f",
+  storageBucket: "studyapp-3e58f.appspot.com",
+  messagingSenderId: "514395246608",
+  appId: "1:514395246608:web:2c39981eed6d3602b4fa95",
+  measurementId: "G-GL08SPFWYS"
+};
+// Initialize Firebase
+if(firebase.apps.length===0){
+  firebase.initializeApp(firebaseConfig);
+}
+
+export default function LoginPage({navigation}) {
+
+  const [typeID, setTypeId] = useState('');
+  const [typePw, setTypePw] = useState('');
+
+  function loginAuth(){
+    var auth = false;
+
+   firebase.database().ref('/users').on("child_added", snapshot =>{
+      var userID = snapshot.val().id;
+      var userPw = snapshot.val().pw;
+      
+
+      if(userID===typeID){
+        if(userPw===typePw){
+          navigation.navigate("MainPage")
+          
+        }
+      }
+      
+   })
+
+
+
+  }
+
+
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
       <Image 
         style={styles.mainImage}
         source={require('../assets/smart.png')}></Image>
         <Text style={styles.txt}>Follow Your Dream!</Text>
         <TextInput 
           style={styles.ID}
+          value={typeID}
+          onChangeText ={(typeID) =>setTypeId(typeID)}
           placeholder='ID'></TextInput>
         <TextInput 
           style={styles.PW}
+          value={typePw}
+          onChangeText ={(typePw) =>setTypePw(typePw)}
           placeholder='PassWord'></TextInput>
-        <TouchableOpacity style={styles.button}><Text style={styles.buttonTxt}>로 그 인</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={loginAuth}><Text style={styles.buttonTxt}>로 그 인</Text></TouchableOpacity>
         <TouchableOpacity style={styles.enter}><Text style={styles.enterTxt}>아직 회원이 아니신가요?</Text></TouchableOpacity>
     </View>
   );

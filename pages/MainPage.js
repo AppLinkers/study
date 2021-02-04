@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 
 
 export default function MainPage() {
 return(
     <View style={styles.container}>
-        <StatusBar style='auto'/>
         <View style={styles.container1}>
             <View style={styles.title}><Text>AppLinker's</Text></View>
             <View style={styles.underTitle}><Text>이달의 스터디</Text></View>
