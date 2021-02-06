@@ -1,24 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
+import { withOrientation } from 'react-navigation';
+import { SliderBox } from "react-native-image-slider-box";
 
 
 export default function MainPage() {
-return(
-    <View style={styles.container}>
-        <View style={styles.container1}>
-            <View style={styles.title}><Text>AppLinker's</Text></View>
-            <View style={styles.underTitle}><Text>이달의 스터디</Text></View>
-            <ScrollView style={styles.image}
-                        horizontal={true}>
-                <TouchableOpacity style={styles.imageButton}><Text>스티디1</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.imageButton}><Text>스티디2</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.imageButton}><Text>스티디3</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.imageButton}><Text>스티디4</Text></TouchableOpacity>
 
-            </ScrollView>
+    const images= [
+        "https://source.unsplash.com/1024x768/?nature",
+        "https://source.unsplash.com/1024x768/?water",
+        "https://source.unsplash.com/1024x768/?girl",
+        "https://source.unsplash.com/1024x768/?tree", // Network image
+        require('/Users/seungwanjung/Desktop/github/study/assets/logo.png'),          // Local image
+      ]
+    
+return(
+    
+    <View style={styles.container}>
+        <ScrollView>
+        <View style={styles.container1}>
+
+            <View style={styles.title}>
+                <Image 
+                    source={require('/Users/seungwanjung/Desktop/github/study/assets/logo.png')}
+                    style={{width:150,height:40}}/>
+            </View>
+
+            <SliderBox 
+            images={images}
+            style={{height:250}} 
+            onCurrentImagePressed={index => alert(`image ${index} pressed`)}/>
+
             <View style={styles.underImage}><Text>스터디</Text></View>
         </View>
-        <ScrollView style={styles.container2}>
+        
             <View style={styles.line1}>
                 <TouchableOpacity style={styles.button}><Text>개발</Text></TouchableOpacity>
                 <TouchableOpacity style={styles.button}><Text>창업</Text></TouchableOpacity>
@@ -27,7 +42,7 @@ return(
                 <TouchableOpacity style={styles.button}><Text>자격증</Text></TouchableOpacity>
                 <TouchableOpacity style={styles.button}><Text>취업</Text></TouchableOpacity>
             </View>
-        </ScrollView>
+            </ScrollView>
         <View style={styles.container3}>
             <TouchableOpacity style={styles.mainmenu}><Text>홈</Text></TouchableOpacity>
             <TouchableOpacity style={styles.mainmenu}><Text>홈</Text></TouchableOpacity>
@@ -40,7 +55,7 @@ return(
 
 const styles = StyleSheet.create({
     container:{
-        flex:1,
+        flex:1
        
     },
     container1:{
@@ -61,10 +76,11 @@ const styles = StyleSheet.create({
     },
     title:{
         borderWidth:1,
-        height:100,
+        paddingTop:15,
         justifyContent:'flex-end',
-        paddingLeft:20,
-        paddingBottom:10
+        paddingLeft:10,
+        paddingBottom:15,
+        backgroundColor:"white"
     },
     underTitle:{
         borderWidth:1,
@@ -83,7 +99,7 @@ const styles = StyleSheet.create({
     underImage:{
         borderWidth:1,
         height:50,
-        marginTop:15
+        marginTop:1
     },
     line1:{
         flexDirection:'row'

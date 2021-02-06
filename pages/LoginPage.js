@@ -26,7 +26,6 @@ export default function LoginPage({navigation}) {
   const [typePw, setTypePw] = useState('');
 
   function loginAuth(){
-    var auth = false;
 
    firebase.database().ref('/users').on("child_added", snapshot =>{
       var userID = snapshot.val().id;
@@ -36,13 +35,9 @@ export default function LoginPage({navigation}) {
       if(userID===typeID){
         if(userPw===typePw){
           navigation.navigate("MainPage")
-          
         }
       }
-      
-   })
-
-
+   });
 
   }
 
@@ -61,6 +56,7 @@ export default function LoginPage({navigation}) {
         <TextInput 
           style={styles.PW}
           value={typePw}
+          secureTextEntry={true}
           onChangeText ={(typePw) =>setTypePw(typePw)}
           placeholder='PassWord'></TextInput>
         <TouchableOpacity style={styles.button} onPress={loginAuth}><Text style={styles.buttonTxt}>로 그 인</Text></TouchableOpacity>
