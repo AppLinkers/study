@@ -19,7 +19,14 @@ export default function MainPage({navigation, route}) {
 
       
       const {userID} = route.params;
-      
+
+      const developRef = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/develop.png?alt=media&token=1e2847dd-0cdf-49bf-8c0b-bfc58cc12cf3"
+      const companyRef = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/company.png?alt=media&token=cb416474-5fdc-4d47-9266-b799737bcffc"
+      const startupRef = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/startup.png?alt=media&token=91f7eac3-6ae0-4099-ae9d-6866d0db49c5"
+      const certifiRef = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/certifi.png?alt=media&token=c8cf7006-a106-4569-a82d-023d39c89a60"
+
+
+
       function selcetStudy(){
         navigation.navigate("SelectPage")
       }
@@ -55,14 +62,14 @@ return(
             <View style={styles.line1}>
                 <TouchableOpacity onPress={selcetStudy}>
                     <Image
-                        source={require('../assets/develop.png')}
+                        source={{uri: developRef}}
                         style={{height:150, width:150,marginLeft:30}}
                         />
                     
                 </TouchableOpacity>
                 <TouchableOpacity onPress={selcetStudy}>
                 <Image
-                        source={require('../assets/startup.png')}
+                        source={{uri: startupRef}}
                         style={{height:100, width:100, marginLeft:50, marginTop:20}}
                         />
                 </TouchableOpacity>
@@ -70,13 +77,13 @@ return(
             <View style={styles.line2}>
                 <TouchableOpacity onPress={selcetStudy}>
                     <Image
-                        source={require('../assets/certifi.png')}
+                        source={{uri: certifiRef}}
                         style={{height:100, width:100, marginLeft:56, marginTop:10}}
                         />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={selcetStudy}>
                 <Image
-                        source={require('../assets/company.png')}
+                        source={{uri: companyRef}}
                         style={{height:120, width:120, marginLeft:70}}
                         />
                 </TouchableOpacity>
