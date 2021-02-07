@@ -2,52 +2,91 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 import { withOrientation } from 'react-navigation';
 import { SliderBox } from "react-native-image-slider-box";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 
-export default function MainPage() {
+
+export default function MainPage({navigation, route}) {
 
     const images= [
         "https://source.unsplash.com/1024x768/?nature",
         "https://source.unsplash.com/1024x768/?water",
         "https://source.unsplash.com/1024x768/?girl",
         "https://source.unsplash.com/1024x768/?tree", // Network image
-        require('/Users/seungwanjung/Desktop/github/study/assets/logo.png'),          // Local image
+        require('../assets/logo.png'),          // Local image
       ]
+
+      
+      const {userID} = route.params;
+      
+      function selcetStudy(){
+        navigation.navigate("SelectPage")
+      }
     
 return(
     
     <View style={styles.container}>
-        <ScrollView>
+        
+
         <View style={styles.container1}>
 
             <View style={styles.title}>
                 <Image 
-                    source={require('/Users/seungwanjung/Desktop/github/study/assets/logo.png')}
+                    source={require('../assets/logo.png')}
                     style={{width:150,height:40}}/>
-            </View>
 
+                <Text style={{fontWeight:"bold",fontSize:20, marginRight:10, marginTop:12}}>Welcome {userID}</Text>
+            </View>
+        </View>
+
+            <ScrollView>
             <SliderBox 
             images={images}
             style={{height:250}} 
+            autoplay={true}  //자동 슬라이드 넘김
+            circleLoop={true}
             onCurrentImagePressed={index => alert(`image ${index} pressed`)}/>
 
-            <View style={styles.underImage}><Text>스터디</Text></View>
-        </View>
+
+            <View style={styles.underImage}><Text style={{fontWeight:"bold",fontSize:30}}>Study</Text></View>
+        
         
             <View style={styles.line1}>
-                <TouchableOpacity style={styles.button}><Text>개발</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.button}><Text>창업</Text></TouchableOpacity>
+                <TouchableOpacity onPress={selcetStudy}>
+                    <Image
+                        source={require('../assets/develop.png')}
+                        style={{height:150, width:150,marginLeft:30}}
+                        />
+                    
+                </TouchableOpacity>
+                <TouchableOpacity onPress={selcetStudy}>
+                <Image
+                        source={require('../assets/startup.png')}
+                        style={{height:100, width:100, marginLeft:50, marginTop:20}}
+                        />
+                </TouchableOpacity>
             </View>
             <View style={styles.line2}>
-                <TouchableOpacity style={styles.button}><Text>자격증</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.button}><Text>취업</Text></TouchableOpacity>
+                <TouchableOpacity onPress={selcetStudy}>
+                    <Image
+                        source={require('../assets/certifi.png')}
+                        style={{height:100, width:100, marginLeft:56, marginTop:10}}
+                        />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={selcetStudy}>
+                <Image
+                        source={require('../assets/company.png')}
+                        style={{height:120, width:120, marginLeft:70}}
+                        />
+                </TouchableOpacity>
             </View>
             </ScrollView>
         <View style={styles.container3}>
-            <TouchableOpacity style={styles.mainmenu}><Text>홈</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.mainmenu}><Text>홈</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.mainmenu}><Text>홈</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.mainmenu}><Text>홈</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.mainmenu}><Text style={styles.mainmenuText}>홈</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.mainmenu} onPress={selcetStudy}><Text style={styles.mainmenuText}>Study</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.mainmenu}><Text style={styles.mainmenuText}>QnA</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.mainmenu}><Text style={styles.mainmenuText}>My</Text></TouchableOpacity>
         </View>
     </View>
         )
@@ -59,7 +98,7 @@ const styles = StyleSheet.create({
        
     },
     container1:{
-              
+       
     },
     container2:{
         
@@ -71,15 +110,16 @@ const styles = StyleSheet.create({
         backgroundColor:'skyblue',
         height:55,
         borderTopWidth:1,
-        borderTopColor:'gray',
+        borderTopColor:'#D5D5D5',
         flexDirection:'row'
     },
     title:{
         borderWidth:1,
-        paddingTop:15,
-        justifyContent:'flex-end',
+        paddingTop:10,
+        justifyContent:'space-between',
+        flexDirection: "row",
         paddingLeft:10,
-        paddingBottom:15,
+        paddingBottom:10,
         backgroundColor:"white"
     },
     underTitle:{
@@ -97,9 +137,10 @@ const styles = StyleSheet.create({
         marginLeft:20
     },
     underImage:{
+        alignItems:'center',
         borderWidth:1,
         height:50,
-        marginTop:1
+        paddingTop:5
     },
     line1:{
         flexDirection:'row'
@@ -115,7 +156,17 @@ const styles = StyleSheet.create({
         marginVertical:10,
         borderRadius:25,
         marginTop:30
-
+    },
+    mainmenu:{
+        width:103,
+        alignItems:'center',
+        paddingTop:8,
+        paddingBottom:8,
+        backgroundColor:'white'
+    },
+    mainmenuText:{
+        marginTop:4,
+      fontSize:20
     }
 
 

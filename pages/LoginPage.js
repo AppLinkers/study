@@ -24,22 +24,24 @@ export default function LoginPage({navigation}) {
 
   const [typeID, setTypeId] = useState('');
   const [typePw, setTypePw] = useState('');
+  const [done, setDone] = useState(false)
 
   function loginAuth(){
 
-   firebase.database().ref('/users').on("child_added", snapshot =>{
+  firebase.database().ref('/users').on("child_added", snapshot =>{
       var userID = snapshot.val().id;
       var userPw = snapshot.val().pw;
-      
-
       if(userID===typeID){
         if(userPw===typePw){
-          navigation.navigate("MainPage")
+          navigation.navigate("MainPage",{"userID":userID})
         }
       }
-   });
+   }); 
 
   }
+
+  var storageRef = firebase.storage().ref();
+  var spaceRef = storageRef.child('certifi.jpg');
 
 
   return (
@@ -48,6 +50,10 @@ export default function LoginPage({navigation}) {
         style={styles.mainImage}
         source={require('../assets/smart.png')}></Image>
         <Text style={styles.txt}>Follow Your Dream!</Text>
+        <Image
+            source={spaceRef}
+            style={{height:150, width:150,marginLeft:30}}
+          />
         <TextInput 
           style={styles.ID}
           value={typeID}
