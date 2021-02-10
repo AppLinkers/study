@@ -22,6 +22,8 @@ if(firebase.apps.length===0){
 
 export default function LoginPage({navigation}) {
 
+  console.disableYellowBox = true;
+
   const [typeID, setTypeId] = useState('');
   const [typePw, setTypePw] = useState('');
 

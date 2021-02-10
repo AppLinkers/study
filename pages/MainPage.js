@@ -4,14 +4,14 @@ import { withOrientation } from 'react-navigation';
 import { SliderBox } from "react-native-image-slider-box";
 
 
-export default function MainPage() {
-
+export default function MainPage({navigation}) {
+    console.disableYellowBox = true;
     const images= [
         "https://source.unsplash.com/1024x768/?nature",
         "https://source.unsplash.com/1024x768/?water",
         "https://source.unsplash.com/1024x768/?girl",
         "https://source.unsplash.com/1024x768/?tree", // Network image
-        require('/Users/seungwanjung/Desktop/github/study/assets/logo.png'),          // Local image
+        require('../assets/logo.png'),          // Local image
       ]
     
 return(
@@ -22,7 +22,7 @@ return(
 
             <View style={styles.title}>
                 <Image 
-                    source={require('/Users/seungwanjung/Desktop/github/study/assets/logo.png')}
+                    source={require('../assets/logo.png')}
                     style={{width:150,height:40}}/>
             </View>
 
@@ -35,7 +35,7 @@ return(
         </View>
         
             <View style={styles.line1}>
-                <TouchableOpacity style={styles.button}><Text>개발</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate('SelectPage')}}><Text>개발</Text></TouchableOpacity>
                 <TouchableOpacity style={styles.button}><Text>창업</Text></TouchableOpacity>
             </View>
             <View style={styles.line2}>

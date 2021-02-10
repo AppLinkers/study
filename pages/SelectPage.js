@@ -1,151 +1,229 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 
-export default function SelectPage() {
+export default function SelectPage({navigation}) {
   console.disableYellowBox = true;
   //return 구문 밖에서는 슬래시 두개 방식으로 주석
-  const Data = [{
-    name:'삼성 인더스터리 스터디' , people:'0'
-  },
-  {
-    name:'현대 R&D 스터디' , people:'1'
-  },
-  {
-    name:'엘지전자 스터디' , people:'2'
-  },
-  {
-    name:'셀트리온 주가예측방' , people:'3'
-  },
-  {
-    name:'애플 아이폰13 스터디' , people:'4'
-  },
-];
 
 
-const Item = ({name}) =>(
-  <View style={styles.item}>
-    <Image style={styles.image}
-                  source={require('../assets/kakao.jpeg')}/>
-    <Text style={styles.name}>{name}</Text>
-    <View style={styles.item2}>
-      <Image style={styles.image2}
-              source={require('../assets/window10.png')}/>
-      <Text>/12</Text>
-    </View>
-    
-  </View>
-);
 const renderItem = ({item}) => <Item name={item.name}/>;
 
   return (
       <View style={styles.container}>
-        <View style={styles.container2}>
-              <Text style={styles.AppName}>Real Study</Text>
+        <View style={styles.header}>
+            <View style={styles.nameContainer}><Text style={styles.AppName}>App Linker's</Text></View>
+            <View style={styles.icons}>
+                <TouchableOpacity><Image style={styles.icon}
+                        source={require('../assets/myIcon.png')}/>
+                </TouchableOpacity>
+                <TouchableOpacity><Image style={styles.icon}
+                        source={require('../assets/settingIcon.png')}/>
+                </TouchableOpacity>
+            </View>
         </View>
-
-      
-        <View style={styles.mainMenu}>
-       <TouchableOpacity style={styles.flex}>
-         <Text style={styles.buttonText}>개 발</Text>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.flex}>
-         <Text style={styles.buttonText}>창 업</Text>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.flex}>
-         <Text style={styles.buttonText}>자 격 증</Text>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.flex}>
-         <Text style={styles.buttonText}>취 업</Text>
-       </TouchableOpacity>
-      </View>
-        <View style={styles.container3}>
+        <View style={styles.alramContainer}>
                     <Text style={{color:'white',
-                        fontSize:15}}>공 지</Text>
+                        fontSize:15, marginLeft:15}}>공 지 사 항</Text>
         </View>
-      <ScrollView style={styles.container4}>
-        
-        <FlatList 
-          data={Data}
-          renderItem={renderItem}
-          keyExtractor={item => item.people}/>
+        <ScrollView style={styles.chatContainer}>
+          <TouchableOpacity style={styles.chat}>
+            <View style={styles.chat1}><Text style={styles.chatName}>React-native 스터디</Text><Text style={styles.chatPeople}>6</Text></View>
+            <View style={styles.chat2}>
+              <View style={styles.chatImage}>
+                <Image style={styles.jpg}
+                       source={require('../assets/profile.jpg')}></Image>
+              </View>
+              <View style={styles.chatContnet}>
+                <Text style={styles.hostName}>안승우</Text>
+                <Text style={styles.hostIntro}
+                      numberOfLines={1}>expo 이용해서 앱출시까지 마쳐봐요!</Text>
+              </View>
+              <View style={styles.chatDate}><Text style={styles.date}>2021-02-09 개설</Text></View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.chat}>
+            <View style={styles.chat1}><Text style={styles.chatName}>스타트업 스터디</Text><Text style={styles.chatPeople}>8</Text></View>
+            <View style={styles.chat2}>
+              <View style={styles.chatImage}>
+                <Image style={styles.jpg}
+                       source={require('../assets/profile2.jpg')}></Image>
+              </View>
+              <View style={styles.chatContnet}>
+                <Text style={styles.hostName}>정승완</Text>
+                <Text style={styles.hostIntro}
+                      numberOfLines={1}>창업 컨퍼런스 인원 모집합니다!</Text>
+              </View>
+              <View style={styles.chatDate}><Text style={styles.date}>2021-02-09 개설</Text></View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.chat}>
+            <View style={styles.chat1}><Text style={styles.chatName}>JAVA 스터디</Text><Text style={styles.chatPeople}>10</Text></View>
+            <View style={styles.chat2}>
+              <View style={styles.chatImage}>
+                <Image style={styles.jpg}
+                       source={require('../assets/profile3.jpg')}></Image>
+              </View>
+              <View style={styles.chatContnet}>
+                <Text style={styles.hostName}>이유석</Text>
+                <Text style={styles.hostIntro}
+                      numberOfLines={1}>코딩테스트 공부 같이해요!</Text>
+              </View>
+              <View style={styles.chatDate}><Text style={styles.date}>2021-02-09 개설</Text></View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.chat}>
+            <View style={styles.chat1}><Text style={styles.chatName}>산책 스터디</Text><Text style={styles.chatPeople}>6</Text></View>
+            <View style={styles.chat2}>
+              <View style={styles.chatImage}>
+                <Image style={styles.jpg}
+                       source={require('../assets/profile4.jpg')}></Image>
+              </View>
+              <View style={styles.chatContnet}>
+                <Text style={styles.hostName}>Rex</Text>
+                <Text style={styles.hostIntro}
+                      numberOfLines={1}>렉스 귀여워</Text>
+              </View>
+              <View style={styles.chatDate}><Text style={styles.date}>2021-02-09 개설</Text></View>
+            </View>
+          </TouchableOpacity>
 
-      </ScrollView>
+        </ScrollView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage} source={require('../assets/homeButton.png')}></Image></TouchableOpacity>
+          <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage2} source={require('../assets/chatButton.png')}></Image></TouchableOpacity>
+          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:18, color:'gray',fontWeight:'500'}}>Q&A</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:20, paddingBottom:10, color:'gray',fontWeight:'700'}}>. . .</Text></TouchableOpacity>
+        </View>
       </View>
   )
 
 }
 
 const styles = StyleSheet.create({
-    container:{
+container:{
         flex:1
-    },
-container2:{
-    alignItems:'center',
-    backgroundColor:'#A5DF00',
+},
+header:{
+    backgroundColor:'white',
     width:'100%',
-    height:60,
+    height:70,
+    flexDirection:'row',
+},
+nameContainer:{
+  flex:6,
+  paddingLeft:10,
+  paddingTop:5
+},
+icons:{
+  flex:4,
+  backgroundColor:'white',
+  flexDirection:'row',
+  justifyContent:'flex-end',
+  paddingTop:15,
+  paddingRight:10,
+
 },
 AppName:{
     marginTop:15,
-    fontSize:20,
-    color:'white',
+    fontSize:25,
+    color:'#A5DF00',
     fontWeight:'700'
 
 },
-mainMenu: {
-    flexDirection: "row"
-  },
-flex: {
-    flex:1,
-    paddingTop:12,
-    paddingBottom:8,
-    borderColor:'#A5DF00',
-    borderWidth:1,
-    justifyContent:'center',
-    alignItems:'center'
-
+icon:{
+  height:40,
+  width:40,
+  marginRight:7
 },
-buttonText:{
+alramContainer: {
+  backgroundColor:'white',
+  justifyContent:'center',
+  height:25,
+  backgroundColor:'#A5DF00'
+},
+chat:{
+  height:170,
+  borderBottomColor:'gray'
+},
+chat1:{
+  flex:2,
+  backgroundColor:'white',
+  flexDirection:'row'
+},
+chat2:{
+  flex:3,
+  flexDirection:'row'
+},
+chatName:{
+  fontSize:25,
+  marginTop:15,
+  marginLeft:15,
   fontWeight:'700',
+  
+},
+chatPeople:{
+  marginTop:30,
+  marginLeft:10,
   color:'gray'
 },
-container3: {
-  borderBottomWidth:1,
-  backgroundColor:'#D8D8D8',
-  borderBottomColor:'#D8D8D8',
+chatImage:{
+  flex:3,
+  backgroundColor:'white',
   justifyContent:'center',
   alignItems:'center'
 },
-item:{
-  borderBottomWidth:0.5,
-  height:120,
-  alignItems:'center',
-  flexDirection:'row',
-  borderColor:'gray'
+jpg:{
+  width:80,
+  height:80,
+  borderRadius:30
 },
-name:{
-  fontSize:20,
-  marginLeft:15
+chatContnet:{
+  flex:7,
+  backgroundColor:'white',
+  flexDirection:'column',
+  paddingLeft:10
 },
-image:{
-  height:60,
-  width:60,
-  borderRadius:30,
-  marginLeft:15
+hostName:{
+  marginTop:15,
+  fontWeight:'700',
+  fontSize:15
+  
 },
-image2:{
-  width:40,
-  height:40,
-  borderRadius:20
+hostIntro:{
+  marginTop:3,
+  fontSize:13
 },
-item2:{
-  paddingLeft:15,
- 
-  width:100,
-  height:120,
-  alignItems:'center'
+chatDate:{
+  flex:3,
+  flexDirection:'column',
+  backgroundColor:'white'
 
- 
+},
+date:{
+  fontSize:10,
+  marginTop:70,
+  color:'gray',
+  marginRight:5,
+},
+buttonContainer:{
+  justifyContent:'flex-end',
+  height:60,
+  flexDirection:'row',
+  backgroundColor:'#F2F2F2'
+},
+underButton:{
+  width:'25%',
+  justifyContent:'center',
+  alignItems:'center'
+},
+buttonImage:{
+  width:30,
+  height:30
+},
+buttonImage2:{
+  width:25,
+  height:25
 }
+
 
 })
