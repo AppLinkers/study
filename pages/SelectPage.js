@@ -6,8 +6,6 @@ export default function SelectPage({navigation}) {
   //return 구문 밖에서는 슬래시 두개 방식으로 주석
 
 
-const renderItem = ({item}) => <Item name={item.name}/>;
-
   return (
       <View style={styles.container}>
         <View style={styles.header}>
