@@ -3,10 +3,11 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} f
 import { withOrientation } from 'react-navigation';
 import { SliderBox } from "react-native-image-slider-box";
 import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-export default function MainPage({navigation, route}) {
+export default function MainPage({navigation, route, props}) {
 
     const images= [
         "https://source.unsplash.com/1024x768/?nature",
@@ -29,25 +30,25 @@ export default function MainPage({navigation, route}) {
       function selcetStudy(){
         navigation.navigate("SelectPage")
       }
+
+// drawer function
+
+  
+        const toggleDrawer = () => {
+          //Props to open/close the drawer
+          props.navigationProps.toggleDrawer();
+        };
+      
     
 return(
     
     <View style={styles.container}>
-        
 
-        <View style={styles.header}>
-            <View style={styles.nameContainer}><Text style={styles.AppName}>App Linker's</Text></View>
-            <View style={styles.icons}>
-                <TouchableOpacity><Image style={styles.icon}
-                        source={require('../assets/myIcon.png')}/>
-                </TouchableOpacity>
-                <TouchableOpacity><Image style={styles.icon}
-                        source={require('../assets/settingIcon.png')}/>
-                </TouchableOpacity>
-            </View>
-        </View>
+
         <View style={styles.alramContainer}>
         </View>
+
+
 
             <ScrollView>
             <SliderBox 
@@ -62,9 +63,6 @@ return(
         
         
             <View style={styles.line1}>
-
-                <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate('SelectPage')}}><Text>개발</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.button}><Text>창업</Text></TouchableOpacity>
 
                 <TouchableOpacity onPress={selcetStudy}>
                     <Image
@@ -99,7 +97,7 @@ return(
             <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage} source={require('../assets/homeButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage2} source={require('../assets/chatButton.png')}></Image></TouchableOpacity>
-          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:18, color:'gray',fontWeight:'500'}}>Q&A</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:18, color:'gray',fontWeight:'500'}}>QnA</Text></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Text style={{fontSize:20, paddingBottom:10, color:'gray',fontWeight:'700'}}>. . .</Text></TouchableOpacity>
         </View>
     </View>
