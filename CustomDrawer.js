@@ -3,18 +3,41 @@ import { StyleSheet, Text, View,Image,TouchableOpacity,TextInput } from 'react-n
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {DrawerContentScrollView, DrawerItemList, DrawerItem,} from '@react-navigation/drawer';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const CustomDrawer = (props) => {
     return(
 
-        <View>
+        <View >
             <Image
-                source={{ uri: "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/develop.png?alt=media&token=1e2847dd-0cdf-49bf-8c0b-bfc58cc12cf3"}}
+                source={require('./assets/myIcon.png')}
                 style={styles.sideMenuProfileIcon}
             />
-            <DrawerItemList {...props} />
+            <View style={{alignItems:'center'}}>
+                <Text style={{fontSize:25, fontWeight:'bold', marginBottom:15}}>UserName</Text>
+            </View>
+            <ScrollView>
+                <View style={{paddingLeft:20, paddingBottom:20 ,borderBottomWidth:1}}>
+                    <Text style={{fontSize:18, marginBottom:10}}>고객 정보</Text>
+                    <Text style={{marginBottom:10}}>보유 코인: </Text>
+                    <Text></Text>
+                    <Text>관심 스터디: </Text>
+                    <Text></Text>
+                </View>
 
+                <View style={{borderBottomWidth:1}}>
+                    <Text style={{marginTop:20, marginLeft:20, fontSize:18,}}>등록한 스터디 </Text>
+                    <View style={{marginTop:10, marginBottom:30}}>
+                        <DrawerItemList {...props} />
+                    </View>
+                </View>
 
+                <View>
+                    <Text style={{marginTop:20, marginLeft:20, fontSize:18,}}>이전 스터디 </Text>
+                    <View style={{marginTop:10, marginBottom:30}}>
+                    </View>
+                </View>
+            </ScrollView>
         
         </View>
 
@@ -25,6 +48,8 @@ const CustomDrawer = (props) => {
 const styles = StyleSheet.create({
 
     sideMenuProfileIcon: {
+        marginTop:100,
+        marginBottom:30,
         resizeMode: 'center',
         width: 100,
         height: 100,
