@@ -6,25 +6,22 @@ export default function SelectPage({navigation}) {
   //return 구문 밖에서는 슬래시 두개 방식으로 주석
 
 
+  function goToChat(){
+    navigation.navigate("ChatPage");
+  }
+
+
   return (
       <View style={styles.container}>
-        <View style={styles.header}>
-            <View style={styles.nameContainer}><Text style={styles.AppName}>App Linker's</Text></View>
-            <View style={styles.icons}>
-                <TouchableOpacity><Image style={styles.icon}
-                        source={require('../assets/myIcon.png')}/>
-                </TouchableOpacity>
-                <TouchableOpacity><Image style={styles.icon}
-                        source={require('../assets/settingIcon.png')}/>
-                </TouchableOpacity>
-            </View>
-        </View>
+        
         <View style={styles.alramContainer}>
                     <Text style={{color:'white',
                         fontSize:15, marginLeft:15}}>공 지 사 항</Text>
         </View>
         <ScrollView style={styles.chatContainer}>
-          <TouchableOpacity style={styles.chat}>
+
+
+          <TouchableOpacity style={styles.chat} onPress={goToChat}>
             <View style={styles.chat1}><Text style={styles.chatName}>React-native 스터디</Text><Text style={styles.chatPeople}>6</Text></View>
             <View style={styles.chat2}>
               <View style={styles.chatImage}>
@@ -39,6 +36,11 @@ export default function SelectPage({navigation}) {
               <View style={styles.chatDate}><Text style={styles.date}>2021-02-09 개설</Text></View>
             </View>
           </TouchableOpacity>
+
+
+
+
+
           <TouchableOpacity style={styles.chat}>
             <View style={styles.chat1}><Text style={styles.chatName}>스타트업 스터디</Text><Text style={styles.chatPeople}>8</Text></View>
             <View style={styles.chat2}>
@@ -54,6 +56,8 @@ export default function SelectPage({navigation}) {
               <View style={styles.chatDate}><Text style={styles.date}>2021-02-09 개설</Text></View>
             </View>
           </TouchableOpacity>
+
+
           <TouchableOpacity style={styles.chat}>
             <View style={styles.chat1}><Text style={styles.chatName}>JAVA 스터디</Text><Text style={styles.chatPeople}>10</Text></View>
             <View style={styles.chat2}>
@@ -69,6 +73,8 @@ export default function SelectPage({navigation}) {
               <View style={styles.chatDate}><Text style={styles.date}>2021-02-09 개설</Text></View>
             </View>
           </TouchableOpacity>
+
+
           <TouchableOpacity style={styles.chat}>
             <View style={styles.chat1}><Text style={styles.chatName}>산책 스터디</Text><Text style={styles.chatPeople}>6</Text></View>
             <View style={styles.chat2}>
@@ -89,9 +95,9 @@ export default function SelectPage({navigation}) {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage} source={require('../assets/homeButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage2} source={require('../assets/chatButton.png')}></Image></TouchableOpacity>
-          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:18, color:'gray',fontWeight:'500'}}>Q&A</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:18, color:'gray',fontWeight:'500'}}>QnA</Text></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Text style={{fontSize:20, paddingBottom:10, color:'gray',fontWeight:'700'}}>. . .</Text></TouchableOpacity>
-        </View>
+        </View> 
       </View>
   )
 
@@ -99,7 +105,8 @@ export default function SelectPage({navigation}) {
 
 const styles = StyleSheet.create({
 container:{
-        flex:1
+        flex:1,
+        backgroundColor:'white',
 },
 header:{
     backgroundColor:'white',
@@ -134,6 +141,7 @@ icon:{
   marginRight:7
 },
 alramContainer: {
+  marginTop:10,
   backgroundColor:'white',
   justifyContent:'center',
   height:25,

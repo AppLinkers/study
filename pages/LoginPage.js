@@ -42,8 +42,6 @@ export default function LoginPage({navigation}) {
 
   }
 
-  var storageRef = firebase.storage().ref();
-  var spaceRef = storageRef.child('certifi.jpg');
 
 
   return (
@@ -52,10 +50,6 @@ export default function LoginPage({navigation}) {
         style={styles.mainImage}
         source={require('../assets/smart.png')}></Image>
         <Text style={styles.txt}>Follow Your Dream!</Text>
-        <Image
-            source={spaceRef}
-            style={{height:150, width:150,marginLeft:30}}
-          />
         <TextInput 
           style={styles.ID}
           value={typeID}
