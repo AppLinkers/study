@@ -56,6 +56,8 @@ return(
             autoplay={true}  //자동 슬라이드 넘김
             circleLoop={true}
             onCurrentImagePressed={index => alert(`image ${index} pressed`)}/>
+            
+            <TouchableOpacity style={styles.adBanner}></TouchableOpacity>
 
 
             <View style={styles.underImage}><Text style={{fontWeight:"bold",fontSize:30}}>Study</Text></View>
@@ -63,38 +65,22 @@ return(
         
             <View style={styles.line1}>
 
-                <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate('SelectPage')}}><Text>개발</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.button}><Text>창업</Text></TouchableOpacity>
 
-                <TouchableOpacity onPress={selcetStudy}>
-                    <Image
-                        source={{uri: developRef}}
-                        style={{height:150, width:150,marginLeft:30}}
-                        />
+                <TouchableOpacity onPress={selcetStudy} style={styles.studyBanner}>
+                    <Text style={styles.studyTxt}>개 발</Text>
                     
                 </TouchableOpacity>
-                <TouchableOpacity onPress={selcetStudy}>
-                <Image
-                        source={{uri: startupRef}}
-                        style={{height:100, width:100, marginLeft:50, marginTop:20}}
-                        />
+                <TouchableOpacity onPress={selcetStudy} style={styles.studyBanner2}>
+                    <Text style={styles.studyTxt}>창 업</Text>
                 </TouchableOpacity>
-
-            </View>
-            <View style={styles.line2}>
-                <TouchableOpacity onPress={selcetStudy}>
-                    <Image
-                        source={{uri: certifiRef}}
-                        style={{height:100, width:100, marginLeft:56, marginTop:10}}
-                        />
+              
+                <TouchableOpacity onPress={selcetStudy} style={styles.studyBanner3}>
+                    <Text style={styles.studyTxt}>자 격 증</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={selcetStudy}>
-                <Image
-                        source={{uri: companyRef}}
-                        style={{height:120, width:120, marginLeft:70}}
-                        />
+                <TouchableOpacity onPress={selcetStudy} style={styles.studyBanner4}>
+                <Text style={styles.studyTxt}>취 업</Text>
                 </TouchableOpacity>
-            </View>
+                </View>
             </ScrollView>
             <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage} source={require('../assets/homeButton.png')}></Image></TouchableOpacity>
@@ -171,23 +157,56 @@ const styles = StyleSheet.create({
     },
     underImage:{
         height:50,
-        paddingTop:5,
+        marginTop:25,
         paddingLeft:10
     },
+    adBanner:{
+        width:'100%',
+        height:80,
+        marginTop:30,
+        backgroundColor:'#FA5858'
+    },
     line1:{
-        flexDirection:'row'
+        alignItems:'center',
     },
-    line2:{
-        flexDirection:'row'
+    studyBanner:{
+        width:400,
+        height:120,
+        marginTop:15,
+        borderRadius:20,
+        justifyContent:'flex-end',
+        backgroundColor:'#00FFBF'
     },
-    button:{
-        borderWidth:1,
-        width:180,
-        height:100,
-        marginHorizontal:10,
-        marginVertical:10,
-        borderRadius:25,
-        marginTop:30
+    studyBanner2:{
+        width:400,
+        height:120,
+        marginTop:15,
+        borderRadius:20,
+        justifyContent:'flex-end',
+        backgroundColor:'#FFBF00'
+    },
+    studyBanner3:{
+        width:400,
+        height:120,
+        marginTop:15,
+        borderRadius:20,
+        justifyContent:'flex-end',
+        backgroundColor:'#2E64FE'
+    },
+    studyBanner4:{
+        width:400,
+        height:120,
+        marginTop:15,
+        borderRadius:20,
+        justifyContent:'flex-end',
+        backgroundColor:'#CC2EFA'
+    },
+    studyTxt:{
+        paddingBottom:10,
+        paddingLeft:15,
+        fontSize:35,
+        color:'white',
+        fontWeight:'700'
     },
     buttonContainer:{
         justifyContent:'flex-end',

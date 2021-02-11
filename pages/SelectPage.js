@@ -140,7 +140,7 @@ alramContainer: {
   backgroundColor:'#A5DF00'
 },
 chat:{
-  height:170,
+  height:150,
   borderBottomColor:'gray'
 },
 chat1:{
@@ -153,14 +153,14 @@ chat2:{
   flexDirection:'row'
 },
 chatName:{
-  fontSize:25,
+  fontSize:22,
   marginTop:15,
   marginLeft:15,
   fontWeight:'700',
   
 },
 chatPeople:{
-  marginTop:30,
+  marginTop:25,
   marginLeft:10,
   color:'gray'
 },
