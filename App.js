@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
-
+import CustomDrawer from './CustomDrawer';
 
 
 const Stack = createStackNavigator();
@@ -54,9 +54,6 @@ function MainPageStack({ navigation }) {
         <Stack.Screen name="LoginPage" component={LoginPage} 
           options={{
           title: "App Linker's", //Set Header Title
-          headerRight: () => (
-            <NavigationDrawerStructure navigationProps={navigation} />
-          ),
           headerTitleStyle: styles.header,
         }}/>
         <Stack.Screen name ="SelectPage" component={SelectPage}
@@ -89,7 +86,9 @@ export default function App(){
           activeTintColor: '#e91e63',
           itemStyle: { marginVertical: 5 },
         }}
+        drawerContent={(props) => <CustomDrawer {...props} />}
         >
+
         <Drawer.Screen
           name="MainPage"
           options={{ drawerLabel: 'First page Option' }}
