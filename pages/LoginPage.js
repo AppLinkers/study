@@ -4,6 +4,8 @@ import { StyleSheet, Text, View,Image,TouchableOpacity,TextInput } from 'react-n
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase'
+import CustomDrawer from '../CustomDrawer';
+import App from '../App';
 
 var firebaseConfig = {
   apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
@@ -20,7 +22,8 @@ if(firebase.apps.length===0){
   firebase.initializeApp(firebaseConfig);
 }
 
-export default function LoginPage({navigation}) {
+
+export default function LoginPage({navigation}, props) {
 
   console.disableYellowBox = true;
 
@@ -29,7 +32,7 @@ export default function LoginPage({navigation}) {
   const [done, setDone] = useState(false)
 
   function loginAuth(){
-
+    
   firebase.database().ref('/users').on("child_added", snapshot =>{
       var userID = snapshot.val().id;
       var userPw = snapshot.val().pw;
@@ -42,10 +45,9 @@ export default function LoginPage({navigation}) {
 
   }
 
-
-
   return (
     <View style={styles.container}>
+      
       <Image 
         style={styles.mainImage}
         source={require('../assets/smart.png')}></Image>

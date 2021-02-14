@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import LoginPage from './LoginPage'
+import SelectPage from './SelectPage'
+import ChatPage from './ChatPage'
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 import { withOrientation } from 'react-navigation';
 import { SliderBox } from "react-native-image-slider-box";
+import Test from '../Test';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
+import CustomDrawer from '../CustomDrawer';
+import App from '../App';
+
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+
+
 
 
 export default function MainPage({navigation, route, props}) {
@@ -18,37 +30,28 @@ export default function MainPage({navigation, route, props}) {
       ]
 
       
-      const {userID} = route.params;
+    //  const {userID} = route.params;
 
       const developRef = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/develop.png?alt=media&token=1e2847dd-0cdf-49bf-8c0b-bfc58cc12cf3"
       const companyRef = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/company.png?alt=media&token=cb416474-5fdc-4d47-9266-b799737bcffc"
       const startupRef = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/startup.png?alt=media&token=91f7eac3-6ae0-4099-ae9d-6866d0db49c5"
       const certifiRef = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/certifi.png?alt=media&token=c8cf7006-a106-4569-a82d-023d39c89a60"
 
-
+    
 
       function selcetStudy(){
-        navigation.navigate("SelectPage")
+       // navigation.navigate("SelectPage")
+       navigation.navigate('SelectPage');
       }
 
-// drawer function
 
-  
-        const toggleDrawer = () => {
-          //Props to open/close the drawer
-          props.navigationProps.toggleDrawer();
-        };
-      
-    
+
 return(
     
     <View style={styles.container}>
-
-
+        
         <View style={styles.alramContainer}>
         </View>
-
-
 
             <ScrollView>
             <SliderBox 

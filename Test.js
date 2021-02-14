@@ -8,12 +8,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 import CustomDrawer from './CustomDrawer';
-import Test from './Test'
 
 
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+
+
 
 const NavigationDrawerStructure = (props) => {
 
@@ -21,7 +23,6 @@ const NavigationDrawerStructure = (props) => {
   const toggleDrawer = () => {
     //Props to open/close the drawer
     props.navigationProps.toggleDrawer();
-
   }
 
   return (
@@ -39,7 +40,6 @@ const NavigationDrawerStructure = (props) => {
     </View>
   );
 }
-
 
 function MainPageStack({ navigation }) {
   return (
@@ -83,61 +83,65 @@ function MainPageStack({ navigation }) {
 }
 
 
-
-export default function App({navigation}){
-
-  var id = "admin";
-  var coin = 100;
-  var interest = ["android ,", " startup"]
+export default function Test(props){
+  const id = props.userID;
+  const coin = props.coin;
+  const interest = props.interest;
+    return(
+    
+    <Drawer.Navigator
+          drawerContentOptions={{
+            activeTintColor: '#e91e63',
+            itemStyle: { marginVertical: 5 },
+          }}
+          drawerContent={(props) => <CustomDrawer userID={id} coin={coin} interest={interest} {...props} />}
+          >
+            <Drawer.Screen
+            name="MainPage"
+            options={{ drawerLabel: 'First page Option' }}
+            component={MainPageStack}
+          />
+          <Drawer.Screen
+            name="ChatPage"
+            options={{ drawerLabel: 'Second page Option' }}
+            component={MainPageStack}
+          />
   
-  return (
-    <NavigationContainer independent={true}>
-      <Test userID={id} coin={coin} interest={interest}/>
-    </NavigationContainer>
-    
-    
+    </Drawer.Navigator>
+    )}
+  
 
-
-    )
-}
-
-
-
-
-
-
-
-const styles = StyleSheet.create({
-  header:{
-    marginTop:15,
-    marginBottom:15,
-    fontSize:25,
-    color:'#A5DF00',
-    fontWeight:'700'
+  const styles = StyleSheet.create({
+    header:{
+      marginTop:15,
+      marginBottom:15,
+      fontSize:25,
+      color:'#A5DF00',
+      fontWeight:'700'
+    },
+    icon:{
+      height:40,
+      width:40,
+      marginRight:7
+    },
+    nameContainer:{
+      flex:6,
+      paddingLeft:10,
+      paddingTop:5
+    },
+    AppName:{
+      marginTop:15,
+      fontSize:25,
+      color:'#A5DF00',
+      fontWeight:'700'
+  
   },
-  icon:{
-    height:40,
-    width:40,
-    marginRight:7
+  alramContainer: {
+    backgroundColor:'white',
+    justifyContent:'center',
+    height:5,
+    backgroundColor:'#A5DF00',
+    marginTop:10
   },
-  nameContainer:{
-    flex:6,
-    paddingLeft:10,
-    paddingTop:5
-  },
-  AppName:{
-    marginTop:15,
-    fontSize:25,
-    color:'#A5DF00',
-    fontWeight:'700'
-
-},
-alramContainer: {
-  backgroundColor:'white',
-  justifyContent:'center',
-  height:5,
-  backgroundColor:'#A5DF00',
-  marginTop:10
-},
-})
-
+  })
+  
