@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase'
 import CustomDrawer from '../CustomDrawer';
 import App from '../App';
+import { AsyncStorage } from 'react-native';
 
 var firebaseConfig = {
   apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
@@ -39,6 +40,7 @@ export default function LoginPage({navigation}, props) {
       if(userID===typeID){
         if(userPw===typePw){
           navigation.navigate("MainPage",{"userID":userID})
+          AsyncStorage.setItem('user', userID); 
         }
       }
    }); 

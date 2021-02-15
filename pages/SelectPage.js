@@ -7,7 +7,7 @@ export default function SelectPage({navigation}) {
 
 
   function goToChat(){
-    navigation.navigate("ChatPage");
+    navigation.navigate("JoinPage");
   }
 
 
@@ -181,7 +181,7 @@ chatImage:{
 jpg:{
   width:80,
   height:80,
-  borderRadius:30
+  borderRadius:40
 },
 chatContnet:{
   flex:7,
