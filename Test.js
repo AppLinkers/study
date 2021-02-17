@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage';
 import SelectPage from './pages/SelectPage';
 import MainPage from './pages/MainPage';
 import ChatPage from './pages/ChatPage';
+import SignupPage from './pages/SignupPage'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
@@ -69,6 +70,12 @@ function MainPageStack({ navigation }) {
           ),
           headerTitleStyle: styles.header,
         }}/>
+
+        <Stack.Screen name="SignupPage" component={SignupPage} 
+                  options={{
+                  title: "App Linker's", //Set Header Title
+                  headerTitleStyle: styles.header,
+                }}/>
 
         <Stack.Screen name ="ChatPage" component={ChatPage}
           options={{

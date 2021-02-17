@@ -47,7 +47,10 @@ export default function LoginPage({navigation}, props) {
         }
       }
    }); 
+  }
 
+  function goToSignup(){
+    navigation.navigate("SignupPage");
   }
 
   return (
@@ -69,7 +72,7 @@ export default function LoginPage({navigation}, props) {
           onChangeText ={(typePw) =>setTypePw(typePw)}
           placeholder='PassWord'></TextInput>
         <TouchableOpacity style={styles.button} onPress={loginAuth}><Text style={styles.buttonTxt}>로 그 인</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.enter}><Text style={styles.enterTxt}>아직 회원이 아니신가요?</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.enter} onPress={goToSignup}><Text style={styles.enterTxt}>아직 회원이 아니신가요?</Text></TouchableOpacity>
     </View>
   );
 }
