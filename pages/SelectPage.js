@@ -55,10 +55,14 @@ export default function SelectPage({navigation}) {
   return (
       <View style={styles.container}>
         
-        <View style={styles.alramContainer}>
-                    <Text style={{color:'white',
-                        fontSize:15, marginLeft:15}}>공 지 사 항</Text>
-        </View>
+        <ScrollView style={styles.selectStudy} horizontal={true}>
+          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>기초개발</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>앱/웹 개발</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>시스템 개발</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>보안</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>인공지능</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>기타</Text></TouchableOpacity>
+        </ScrollView>
         <ScrollView style={styles.chatContainer}>
 
 
@@ -117,12 +121,20 @@ icon:{
   width:40,
   marginRight:7
 },
-alramContainer: {
-  marginTop:10,
-  backgroundColor:'white',
+selectStudy: {
+  backgroundColor:'#7cd175',
+  height:5
+},
+selectStudyList:{
+  width:100,
+  alignItems:'center',
   justifyContent:'center',
-  height:25,
-  backgroundColor:'#A5DF00'
+
+},
+selectStudyTxt:{
+  fontSize:13,
+  fontWeight:'700',
+  color:'white'
 },
 chat:{
   height:150,

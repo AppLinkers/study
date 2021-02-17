@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-export default function ChantPage({navigation, route}) {
+export default function JoinPage({navigation, route}) {
 
 
     return(
