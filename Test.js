@@ -94,7 +94,7 @@ export default function Test(props){
             activeTintColor: '#e91e63',
             itemStyle: { marginVertical: 5 },
           }}
-          drawerContent={(props) => <CustomDrawer userID={id} coin={coin} interest={interest} {...props} />}
+          drawerContent={(props) => <CustomDrawer {...props} />}
           >
             <Drawer.Screen
             name="MainPage"

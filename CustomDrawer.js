@@ -14,30 +14,28 @@ import { AsyncStorage } from 'react-native';
 export default function CustomDrawer(props)  {
 
 
-    const [getValue, setGetValue] = useState('');
+    const [getName, setName] = useState('');
+    const [getCoin, setCoin] = useState('');
+
     AsyncStorage.getItem('user').then(
         (value) =>
-          setGetValue(value)
+          setName(value)
       );
+
+    AsyncStorage.getItem('coin').then(
+        (value) =>
+          setCoin(value)
+      );
+
+   
 
     return(
 
         <View >
-            <Image
-                source={require('./assets/myIcon.png')}
-                style={styles.sideMenuProfileIcon}
-            />
-            <View style={{alignItems:'center'}}>
-                <Text style={{fontSize:25, fontWeight:'bold', marginBottom:15}}>{getValue} </Text>
-            </View>
+           
+          
             <ScrollView>
-                <View style={{paddingLeft:20, paddingBottom:20 ,borderBottomWidth:1}}>
-                    <Text style={{fontSize:18, marginBottom:10}}>고객 정보</Text>
-                    <Text >보유 코인: </Text>
-                    <Text style={{marginBottom:10}}>{props.coin}</Text>
-                    <Text>관심 스터디: </Text>
-                    <Text>{props.interest}</Text>
-                </View>
+              
 
         <ScrollView>
             <View style={styles.header}>
@@ -48,8 +46,8 @@ export default function CustomDrawer(props)  {
                     <Image style={styles.image} source={require('./assets/profile.jpg')}/>
                 </View>
                 <View style={styles.profileInfo}>
-                    <Text style={styles.profileName}>이 름</Text>
-                    <Text>아이디</Text>
+                    <Text style={styles.profileName}>{getName}</Text>
+                    <Text>보유 코인: {getCoin}</Text>
                 </View>
             </View>
             <TouchableOpacity style={styles.profileChange}>
@@ -59,33 +57,24 @@ export default function CustomDrawer(props)  {
                 <Text style={{marginLeft:15, fontSize:18, color:'white'}}>튜터 신청</Text>
             </View>
             <View style={styles.listTitle}>
+                <Text style={{fontSize:20, fontWeight:'700'}}>내 스터디</Text>
+            </View>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Android 스터디 룸</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Expo 스터디 룸</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>창업 스터디 룸</Text></TouchableOpacity>
+           
+            <View style={styles.listTitle}>
                 <Text style={{fontSize:20, fontWeight:'700'}}>고객센터</Text>
             </View>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>공지사항</Text></TouchableOpacity>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>문의하기</Text></TouchableOpacity>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>사용 가이드</Text></TouchableOpacity>
+           
             <View style={styles.listTitle}>
-                <Text style={{fontSize:20, fontWeight:'700'}}>코인센터</Text>
+                <Text style={{fontSize:20, fontWeight:'700'}}>코인</Text>
             </View>
-            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>코인 충전</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>코인 환급</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>코인 결제</Text></TouchableOpacity>
-            <DrawerItemList {...props} />
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>코인충전</Text></TouchableOpacity>
 
-
-                <View style={{borderBottomWidth:1}}>
-                    <Text style={{marginTop:20, marginLeft:20, fontSize:18,}}>등록한 스터디 </Text>
-                    <View style={{marginTop:10, marginBottom:30}}>
-                    <DrawerItemList {...props} />
-                    </View>
-                </View>
-
-
-                <View>
-                    <Text style={{marginTop:20, marginLeft:20, fontSize:18,}}>이전 스터디 </Text>
-                    <View style={{marginTop:10, marginBottom:30}}>
-                    </View>
-                </View>
             </ScrollView>
         
         </ScrollView>
