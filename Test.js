@@ -44,7 +44,10 @@ const NavigationDrawerStructure = (props) => {
 
 function MainPageStack({ navigation }) {
   return (
-    <Stack.Navigator initialRouteName="LoginPage">
+    <Stack.Navigator initialRouteName="LoginPage"
+    screenOptions={{
+      headerStatusBarHeight:60
+    }}>
       <Stack.Screen name="MainPage"
         component={MainPage}
         options={{
@@ -120,7 +123,6 @@ export default function Test(props){
 
   const styles = StyleSheet.create({
     header:{
-      marginTop:15,
       marginBottom:15,
       fontSize:25,
       color:'#A5DF00',

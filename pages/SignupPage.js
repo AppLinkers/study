@@ -19,16 +19,16 @@ if(firebase.apps.length===0){
   firebase.initializeApp(firebaseConfig);
 }
 
-export default function signup() {
+export default function signup({navigation}) {
 
 
-  const [signUpName, setSignUpName] = useState('이름를 입력하세요');
-  const [signUpSex, setSignUpSex] = useState('성을 입력하세요');
-  const [signUpID, setSignUpID] = useState('아이디를 입력하세요');
-  const [signUpPW, setSignUpPW] = useState('비밀번호를 입력하세요');
-  const [signUpHP, setSignUpHP] = useState('핸드폰 번호를 입력하세요');
-  const [signUpEmail, setSignUpEmail] = useState('이메일을 입력하세요');
-  const [signUpStudy, setSignUpStudy] = useState('관심 스터디를 입력하세요');
+  const [signUpName, setSignUpName] = useState('');
+  const [signUpSex, setSignUpSex] = useState('');
+  const [signUpID, setSignUpID] = useState('');
+  const [signUpPW, setSignUpPW] = useState('');
+  const [signUpHP, setSignUpHP] = useState('');
+  const [signUpEmail, setSignUpEmail] = useState('');
+  const [signUpStudy, setSignUpStudy] = useState('');
 
  function Signup(name,sex,id,pw,hp,email,study){
     var ref = firebase.database().ref('users/'+id);
@@ -43,7 +43,7 @@ export default function signup() {
       study : study,
       coin : 10
     })
-    
+    navigation.navigate("LoginPage")
  }
 
   return (
@@ -51,14 +51,14 @@ export default function signup() {
       <TextInput
       style={styles.textinput}
       onChangeText={text => setSignUpName(text)}
-      signUpName={signUpName}
+      value={signUpName}
       placeholder="성명을 입력하세요"
       />
 
       <TextInput
       style={styles.textinput}
       onChangeText={text => setSignUpSex(text)}
-      signUpSex={signUpSex}
+      value={signUpSex}
       placeholder="성별을 입력하세요"
       />
 
@@ -66,35 +66,35 @@ export default function signup() {
       <TextInput
       style={styles.textinput}
       onChangeText={text => setSignUpID(text)}
-      signUpID={signUpID}
+      vlaue={signUpID}
       placeholder="아이디를 입력하세요"
       />
 
       <TextInput
       style={styles.textinput}
       onChangeText={text => setSignUpPW(text)}
-      signUpPW={signUpPW}
+      value={signUpPW}
       placeholder="비밀번호를 입력하세요"
       />
 
       <TextInput
       style={styles.textinput}
       onChangeText={text => setSignUpHP(text)}
-      signUpHP={signUpHP}
+      value={signUpHP}
       placeholder="핸드폰 번호를 입력하세요"
       />
 
       <TextInput
       style={styles.emailinput}
       onChangeText={text => setSignUpEmail(text)}
-      signUpEmail={signUpEmail}
+      value={signUpEmail}
       placeholder="이메일을 입력하세요"
       />      
 
       <TextInput
       style={styles.textinput}
       onChangeText={text => setSignUpStudy(text)}
-      signUpStudy={signUpStudy}
+      value={signUpStudy}
       placeholder="관심 스터디를 입력하세요"
       />      
 
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
 
   emailinput:{
-    width:100,
+    width:200,
     height: 25, 
     borderColor: 'gray',
     borderWidth: 1,
