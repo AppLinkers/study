@@ -77,7 +77,7 @@ function MainPageStack({ navigation }) {
         <Stack.Screen name="SignupPage" component={SignupPage} 
                   options={{
                   title: "App Linker's", //Set Header Title
-                  headerTitleStyle: styles.header,
+                  headerTitleStyle: styles.header1,
                 }}/>
 
         <Stack.Screen name ="ChatPage" component={ChatPage}
@@ -127,6 +127,13 @@ export default function Test(props){
       fontSize:25,
       color:'#A5DF00',
       fontWeight:'700'
+    },
+    header1:{
+      marginBottom:15,
+      fontSize:20,
+      color:'black',
+      fontWeight:'700',
+      
     },
     icon:{
       height:40,

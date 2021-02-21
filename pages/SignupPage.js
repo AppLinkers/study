@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import firebase from 'firebase';
-import {  StyleSheet, Text, View, TextInput, TouchableOpacity, Picker } from 'react-native';
+import {  StyleSheet, Text, View, TextInput, TouchableOpacity, Picker,ScrollView, CheckBox, FlatList} from 'react-native';
 
 
 var firebaseConfig = {
@@ -18,6 +18,26 @@ var firebaseConfig = {
 if(firebase.apps.length===0){
   firebase.initializeApp(firebaseConfig);
 }
+
+const DATA = [
+  {
+    id: '1',
+    title: '남',
+  },
+  {
+    id: '2',
+    title: '여',
+  },
+];
+
+const Item = ({ item, onPress, style, style2 }) => (
+  
+  <TouchableOpacity onPress={onPress} style={[styles.sexBox,style]}>
+    <Text style={style2}>{item.title}</Text>
+  </TouchableOpacity>
+);
+
+
 
 export default function signup({navigation}) {
 
@@ -46,89 +66,190 @@ export default function signup({navigation}) {
     navigation.navigate("LoginPage")
  }
 
+ navigation.setOptions({
+    title:'회 원 가 입',
+    headerStyle:{
+      backgroundColor:'#fff',
+      height:100,
+    },
+    headerTitleAlign:'center',
+    headerTintColor:'#000'
+ })
+
+ const [isSelected, setSelection] = useState(false);
+
+ const [selectedId, setSelectedId] = useState(null);
+
+  const renderItem = ({ item }) => {
+    const backgroundColor = item.id === selectedId ? '#7cd175' : 'white';
+    const color = item.id === selectedId ? 'white' : 'gray';
+    return <Item item={item} onPress={() => setSelectedId(item.id)} style={{ backgroundColor }} style2={{color}} />;
+  };
+
   return (
     <View style={styles.container}>
+      <ScrollView>
+      <Text style={{marginTop:30,alignSelf:'flex-start', marginLeft:5, fontSize:14, color:'black',}}>이 름</Text>
+      
       <TextInput
       style={styles.textinput}
       onChangeText={text => setSignUpName(text)}
       value={signUpName}
-      placeholder="성명을 입력하세요"
+      placeholder="실명을 입력하세요"
+      />
+      <Text style={styles.inputExplain}>성 별</Text>
+      <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        extraData={selectedId}
+        horizontal={true}
       />
 
+      <Text style={styles.inputExplain}>이메일</Text>
       <TextInput
       style={styles.textinput}
-      onChangeText={text => setSignUpSex(text)}
-      value={signUpSex}
-      placeholder="성별을 입력하세요"
-      />
-
-
-      <TextInput
-      style={styles.textinput}
-      onChangeText={text => setSignUpID(text)}
-      vlaue={signUpID}
-      placeholder="아이디를 입력하세요"
-      />
-
-      <TextInput
-      style={styles.textinput}
-      onChangeText={text => setSignUpPW(text)}
-      value={signUpPW}
-      placeholder="비밀번호를 입력하세요"
-      />
-
+      onChangeText={text => setSignUpEmail(text)}
+      value={signUpEmail}
+      placeholder="이메일 주소"
+      /> 
+      <Text style={styles.inputExplain}>휴대폰 번호</Text>
       <TextInput
       style={styles.textinput}
       onChangeText={text => setSignUpHP(text)}
       value={signUpHP}
-      placeholder="핸드폰 번호를 입력하세요"
+      placeholder="'-' 구분없이 입력"
       />
-
+      <Text style={styles.inputExplain}>아이디</Text>
+      <View style={{flexDirection:'row'}}>
       <TextInput
-      style={styles.emailinput}
-      onChangeText={text => setSignUpEmail(text)}
-      value={signUpEmail}
-      placeholder="이메일을 입력하세요"
-      />      
-
+      style={styles.textinput1}
+      onChangeText={text => setSignUpID(text)}
+      vlaue={signUpID}
+      placeholder="아이디"
+      />
+      <TouchableOpacity style={styles.sameButton}><Text style={{color:'#7cd175',fontSize:12,fontWeight:'700'}}>중 복 확 인</Text></TouchableOpacity>
+      </View>
+      <Text style={styles.inputExplain}>비밀번호</Text>
       <TextInput
       style={styles.textinput}
-      onChangeText={text => setSignUpStudy(text)}
-      value={signUpStudy}
-      placeholder="관심 스터디를 입력하세요"
-      />      
-
-      
+      onChangeText={text => setSignUpPW(text)}
+      value={signUpPW}
+      placeholder="비밀번호"
+      />
+      <Text style={styles.inputExplain}>비밀번호 확인</Text>
+      <TextInput
+      style={styles.textinput}
+      onChangeText={text => setSignUpPW(text)}
+      value={signUpPW}
+      placeholder="비밀번호 확인"
+      />
+      <Text style={styles.inputExplain}>관심 스터디</Text>
+      <View style={styles.likeContainer}>
+        <CheckBox 
+          value={isSelected}
+          onValueChange={setSelection}
+          style={styles.checkbox}/>
+        <Text style={{marginLeft:5}}>개발</Text>
+        <CheckBox 
+          value={isSelected}
+          onValueChange={setSelection}
+          style={styles.checkbox}/>
+        <Text style={{marginLeft:5}}>창업</Text>
+        <CheckBox 
+          value={isSelected}
+          onValueChange={setSelection}
+          style={styles.checkbox}/>
+        <Text style={{marginLeft:5}}>자격증</Text>
+        <CheckBox 
+          value={isSelected}
+          onValueChange={setSelection}
+          style={styles.checkbox}/>
+        <Text style={{marginLeft:5}}>취업</Text>
+          
+      </View>
+      </ScrollView>
       <TouchableOpacity
         onPress={() => Signup(signUpName,signUpSex,signUpID,signUpPW,signUpHP,signUpEmail,signUpStudy)}
-        style={{ backgroundColor: 'gray' }}>
-        <Text style={{ fontSize: 15, color: '#fff' }}>Signup</Text>
+        style={styles.button}>
+        <Text style={{ fontSize: 15, color: '#fff',fontWeight:'700' }}>Sign up</Text>
       </TouchableOpacity>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems:'center'
+    
   },
 
   textinput:{
-    width:200,
-    height: 25, 
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom:30 
-  },
+    width:325,
+    height: 45, 
+    paddingLeft:7,
+    paddingTop:15,
+    backgroundColor:'white',
+    borderBottomWidth:1.5,
+    borderBottomColor:'#7cd175'
 
-  emailinput:{
-    width:200,
-    height: 25, 
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom:30 
+  },
+  textinput1:{
+    width:225,
+    height: 45, 
+    paddingLeft:7,
+    paddingTop:15,
+    backgroundColor:'white',
+    borderBottomWidth:1.5,
+    borderBottomColor:'#7cd175'
+  },
+  inputExplain:{
+    alignSelf:'flex-start',
+    marginLeft:5,
+    fontSize:14,
+    color:'black',
+    marginTop:15
+
+  },
+  sexBox:{
+    borderWidth:0.5,
+    width:160,
+    height:45,
+    marginTop:10,
+    justifyContent:'center',
+    alignItems:'center',
+    borderColor:'black',
+    marginHorizontal:2.5
+    
+  },
+  likeContainer:{
+    flexDirection:'row',
+    alignItems:'center',
+    marginTop:10
+  },
+  sameButton:{
+      width:100,
+      height:45,
+      borderRadius:20,
+      justifyContent:'center',
+      alignItems:'center',
+      marginLeft:10,
+      borderWidth:2,
+      borderColor:'#7cd175'
+  },
+  button:{
+    backgroundColor:'#7cd175',
+    justifyContent:'center',
+    alignItems:'center',
+    height:50,
+    width:350,
+    borderRadius:20,
+    marginBottom:10
+  },
+  checkbox:{
+    marginLeft:10
   }
 });
