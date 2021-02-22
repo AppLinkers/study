@@ -11,7 +11,7 @@ import { AsyncStorage } from 'react-native';
 //const CustomDrawer = (props) => 
 
 
-export default function CustomDrawer(props)  {
+export default function CustomDrawer(props,{navigation})  {
 
 
     const [getName, setName] = useState('');

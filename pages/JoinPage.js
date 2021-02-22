@@ -8,10 +8,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 export default function JoinPage({navigation, route}) {
 
+    function goToChat(){
+        navigation.navigate("ChatPage");
+    }
+
 
     return(
         <View style={styles.container}>
-            
+            <ScrollView>
             <View style={styles.body}>
                 <Image style={styles.propilImage} source={require('../assets/profile.jpg')}/>
                 <Text style={styles.name}>이 름</Text>
@@ -32,11 +36,11 @@ export default function JoinPage({navigation, route}) {
                     </View>
                 </View>
                 <View style={styles.studyDetail}><Text>설명란 (테두리 없음)</Text></View>
-                <TouchableOpacity style={styles.joinButton}><Text style={styles.joinTxt}>Join it!</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.joinButton} onPress={goToChat}><Text style={styles.joinTxt}>Join it!</Text></TouchableOpacity>
             </View>
                 
 
-
+            </ScrollView>
 
         </View>
     );

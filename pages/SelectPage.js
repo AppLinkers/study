@@ -28,7 +28,7 @@ export default function SelectPage({navigation}) {
       // Single Comes here which will be repeatative for the FlatListItems
       <TouchableOpacity style={styles.chat} onPress={goToChat}>
             <View style={styles.chat1}><Text style={styles.chatName}>{item.title}</Text><Text style={styles.chatPeople}>6</Text></View>
-            <View style={styles.chat2}>
+            <View style={styles.chat2} >
               <View style={styles.chatImage}>
                 <Image style={styles.jpg}
                        source={{uri: item.image}}></Image>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput ,TouchableOpacity,Button ,ScrollView,FlatList} from 'react-native';
 import { withOrientation } from 'react-navigation';
 import { SliderBox } from "react-native-image-slider-box";
 import { NavigationContainer } from '@react-navigation/native';
@@ -7,36 +7,34 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 
 export default function ChantPage({navigation, route}) {
-
+    const [chatType, setChatType] = useState('')
 
     return(
         <View style={styles.container}>
             
-            <View style={styles.body}>
-                <Image style={styles.propilImage} source={require('../assets/profile.jpg')}/>
-                <Text style={styles.name}>이 름</Text>
-                <Text style={styles.studyName}>스터디 이름</Text>
-                <Text style={styles.studyShort}>"스터디 간단 소개"</Text>
-                <View style={styles.info}>
-                    <View style={styles.infoBox}>
-                        <Image style={styles.infoImage} source={require('../assets/location.jpg')}/>
-                        <Text style={styles.infoTxt}>위 치</Text>
-                    </View>
-                    <View style={styles.infoBox}>
-                        <Image style={styles.infoImage} source={require('../assets/people.jpg')}/>
-                        <Text style={styles.infoTxt}>인원수</Text>
-                    </View>
-                    <View style={styles.infoBox2}>
-                        <Image style={styles.infoImage} source={require('../assets/date.jpg')}/>
-                        <Text style={styles.infoTxt}>기 간</Text>
-                    </View>
-                </View>
-                <View style={styles.studyDetail}><Text>설명란 (테두리 없음)</Text></View>
-                <TouchableOpacity style={styles.joinButton}><Text style={styles.joinTxt}>Join it!</Text></TouchableOpacity>
-            </View>
-                
-
-
+            
+     <View style={{backgroundColor:"#ffd3ae"}}>
+       <Text style={{fontSize:20, textAlign:"center", marginTop:12}}>StudyGroup Name: </Text>
+       <View style={{borderBottomColor: '#D5D5D5', borderBottomWidth: 1, paddingBottom:10}}/>
+     </View>
+ 
+ 
+ 
+ 
+ 
+ 
+ <View>
+   <View style={{backgroundColor:"white", flexDirection:"row"}}>
+   <Button title="   +   "></Button>
+     <TextInput 
+       value={chatType}
+       onChangeText={(chatType)=>setChatType(chatType)}
+       placeholder="TYPE CHAT"
+       style={styles.chatInput}></TextInput>
+     <Button style={styles.sendBtn} title=" send " onPress={()=>{sendChat(userID,chatType)}}></Button>
+   </View>
+            
+</View>
 
         </View>
     );
@@ -47,9 +45,23 @@ export default function ChantPage({navigation, route}) {
 const styles = StyleSheet.create({
 
     container:{
-        backgroundColor:'#c7bad9',
-        flex:1,
-        alignItems:'center'
+        flex: 1,
+     flexDirection: 'column',
+     justifyContent: 'space-between',
+     backgroundColor: "white"
+    },
+
+    chatInput:{
+        width:302,
+        height:40,
+        backgroundColor:"#e8e8e8",
+        marginLeft:2,
+        marginRight:2,
+        paddingLeft:15
+      },
+
+    sendBtn:{
+        backgroundColor:'blue'
     },
     
     body:{
