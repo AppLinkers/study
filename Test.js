@@ -5,6 +5,8 @@ import MainPage from './pages/MainPage';
 import ChatPage from './pages/ChatPage';
 import JoinPage from './pages/JoinPage';
 import SignupPage from './pages/SignupPage'
+import SignupPage from './pages/SignupPage';
+import ChangeProfilePage from './pages/ChangeProfilePage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
@@ -96,7 +98,18 @@ function MainPageStack({ navigation }) {
           headerRight: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          headerTitleStyle: styles.header,
+          headerTitleStyle: styles.header,}}/>
+
+        <Stack.Screen name ="ChangeProfilePage" component={ChangeProfilePage}
+          options={{
+          title: "프로필 변경", //Set Header Title
+          headerTitleStyle: styles.header2,
+          headerStyle:{
+            backgroundColor:'#7cd175',
+            height:100
+          },
+          headerTitleAlign:'center',
+          headerTintColor:'white'
         }}/>
     </Stack.Navigator>
   );
@@ -142,6 +155,13 @@ export default function Test(props){
       marginBottom:15,
       fontSize:20,
       color:'black',
+      fontWeight:'700',
+      
+    },
+    header2:{
+      marginBottom:15,
+      fontSize:20,
+      color:'white',
       fontWeight:'700',
       
     },
