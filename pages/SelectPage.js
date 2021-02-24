@@ -1,13 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList, AsyncStorage} from 'react-native';
+import firebase from 'firebase';
+
+var firebaseConfig = {
+  apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
+  authDomain: "studyapp-3e58f.firebaseapp.com",
+  databaseURL: "https://studyapp-3e58f-default-rtdb.firebaseio.com",
+  projectId: "studyapp-3e58f",
+  storageBucket: "studyapp-3e58f.appspot.com",
+  messagingSenderId: "514395246608",
+  appId: "1:514395246608:web:2c39981eed6d3602b4fa95",
+  measurementId: "G-GL08SPFWYS"
+};
+// Initialize Firebase
+if(firebase.apps.length===0){
+  firebase.initializeApp(firebaseConfig);
+}
+
 
 export default function SelectPage({navigation}) {
   console.disableYellowBox = true;
   //return 구문 밖에서는 슬래시 두개 방식으로 주석
+const[userID, setUserID]=useState('')
 
+AsyncStorage.getItem('user').then(
+  (value) =>
+    setUserID(value)
+);
 
   function goToChat(){
-    navigation.navigate("JoinPage");
+    var authTemp=[]
+    var go = false;
+    firebase.database().ref('chat/devChat/auth').on("child_added", snapshot =>{
+      var authID = snapshot.val().id
+      authTemp.push(authID);
+    })
+    for(var i=0; i<authTemp.length; i++){
+      if(authTemp[i]===userID){
+        go = true;
+      }
+    }
+
+    if(go==true){
+      navigation.navigate("ChatPage")
+    }else{
+      navigation.navigate("JoinPage")
+    }
+
+
+    
   }
 
 

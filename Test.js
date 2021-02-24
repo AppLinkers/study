@@ -4,7 +4,6 @@ import SelectPage from './pages/SelectPage';
 import MainPage from './pages/MainPage';
 import ChatPage from './pages/ChatPage';
 import JoinPage from './pages/JoinPage';
-import SignupPage from './pages/SignupPage'
 import SignupPage from './pages/SignupPage';
 import ChangeProfilePage from './pages/ChangeProfilePage';
 import { NavigationContainer } from '@react-navigation/native';
