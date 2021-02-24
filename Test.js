@@ -3,7 +3,9 @@ import LoginPage from './pages/LoginPage';
 import SelectPage from './pages/SelectPage';
 import MainPage from './pages/MainPage';
 import ChatPage from './pages/ChatPage';
-import SignupPage from './pages/SignupPage'
+import JoinPage from './pages/JoinPage';
+import SignupPage from './pages/SignupPage';
+import ChangeProfilePage from './pages/ChangeProfilePage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
@@ -46,8 +48,7 @@ function MainPageStack({ navigation }) {
   return (
     <Stack.Navigator initialRouteName="LoginPage"
     screenOptions={{
-      headerTranslucent: true,
-      headerStatusBarHeight:60,
+      headerStatusBarHeight:60
     }}>
       <Stack.Screen name="MainPage"
         component={MainPage}
@@ -79,7 +80,7 @@ function MainPageStack({ navigation }) {
         <Stack.Screen name="SignupPage" component={SignupPage} 
                   options={{
                   title: "App Linker's", //Set Header Title
-                  headerTitleStyle: styles.header,
+                  headerTitleStyle: styles.header1,
                 }}/>
 
         <Stack.Screen name ="ChatPage" component={ChatPage}
@@ -89,6 +90,26 @@ function MainPageStack({ navigation }) {
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
           headerTitleStyle: styles.header,
+        }}/>
+
+<Stack.Screen name ="JoinPage" component={JoinPage}
+          options={{
+          title: "App Linker's", //Set Header Title
+          headerRight: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTitleStyle: styles.header,}}/>
+
+        <Stack.Screen name ="ChangeProfilePage" component={ChangeProfilePage}
+          options={{
+          title: "프로필 변경", //Set Header Title
+          headerTitleStyle: styles.header2,
+          headerStyle:{
+            backgroundColor:'#7cd175',
+            height:100
+          },
+          headerTitleAlign:'center',
+          headerTintColor:'white'
         }}/>
     </Stack.Navigator>
   );
@@ -127,6 +148,20 @@ export default function Test(props){
       fontSize:25,
       color:'#A5DF00',
       fontWeight:'700'
+    },
+    header1:{
+      marginBottom:15,
+      fontSize:20,
+      color:'black',
+      fontWeight:'700',
+      
+    },
+    header2:{
+      marginBottom:15,
+      fontSize:20,
+      color:'white',
+      fontWeight:'700',
+      
     },
     icon:{
       height:40,

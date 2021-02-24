@@ -2159,6 +2159,11 @@ agent-base@6:
   dependencies:
     debug "4"
 
+angular@1.x:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/angular/-/angular-1.8.2.tgz#5983bbb5a9fa63e213cb7749199e0d352de3a2f1"
+  integrity sha512-IauMOej2xEe7/7Ennahkbb5qd/HFADiNuLSESz9Q27inmi32zB0lnAsFeLEWcox3Gd1F6YhNd1CP7/9IukJ0Gw==
+
 anser@^1.4.9:
   version "1.4.10"
   resolved "https://registry.yarnpkg.com/anser/-/anser-1.4.10.tgz#befa3eddf282684bd03b63dcda3927aef8c2e35b"
@@ -2704,6 +2709,13 @@ chardet@^0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
   integrity sha1-tUc7M9yXxCTl2Y3IfVXU2KKci/I=
+
+checkbox@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/checkbox/-/checkbox-0.0.1.tgz#c407d7e51ee2183bee957dbc34960e3c00d0d165"
+  integrity sha1-xAfX5R7iGDvulX28NJYOPADQ0WU=
+  dependencies:
+    angular "1.x"
 
 ci-info@^2.0.0:
   version "2.0.0"

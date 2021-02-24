@@ -11,7 +11,9 @@ import { AsyncStorage } from 'react-native';
 //const CustomDrawer = (props) => 
 
 
-export default function CustomDrawer(props)  {
+export default function CustomDrawer({navigation})  {
+
+
 
 
     const [getName, setName] = useState('');
@@ -27,7 +29,10 @@ export default function CustomDrawer(props)  {
           setCoin(value)
       );
 
-   
+        
+      function changeProile(){
+        navigation.navigate("ChangeProfilePage");
+      }
 
     return(
 
@@ -50,7 +55,7 @@ export default function CustomDrawer(props)  {
                     <Text>보유 코인: {getCoin}</Text>
                 </View>
             </View>
-            <TouchableOpacity style={styles.profileChange}>
+            <TouchableOpacity style={styles.profileChange} onPress={changeProile}>
                 <Text style={{color:'white', fontWeight:'500'}}>프로필 변경</Text>
             </TouchableOpacity>
             <View style={styles.banner}>
