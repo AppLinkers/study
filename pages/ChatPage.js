@@ -1,23 +1,134 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput ,TouchableOpacity,Button ,ScrollView,FlatList} from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput,RefreshControl ,TouchableOpacity,Button ,ScrollView,FlatList} from 'react-native';
 import { withOrientation } from 'react-navigation';
 import { SliderBox } from "react-native-image-slider-box";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import firebase from 'firebase'
+import { AsyncStorage } from 'react-native';
+
+
+var firebaseConfig = {
+    apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
+    authDomain: "studyapp-3e58f.firebaseapp.com",
+    databaseURL: "https://studyapp-3e58f-default-rtdb.firebaseio.com",
+    projectId: "studyapp-3e58f",
+    storageBucket: "studyapp-3e58f.appspot.com",
+    messagingSenderId: "514395246608",
+    appId: "1:514395246608:web:2c39981eed6d3602b4fa95",
+    measurementId: "G-GL08SPFWYS"
+  };
+  // Initialize Firebase
+  if(firebase.apps.length===0){
+    firebase.initializeApp(firebaseConfig);
+  }
 
 
 export default function ChantPage({navigation, route}) {
     const [chatType, setChatType] = useState('')
+    const [userID, setUserID] = useState('');
+    const [chat, setChat]=useState('');
+    
+
+    AsyncStorage.getItem('user').then(
+        (value) =>
+          setUserID(value)
+      );
+
+      
+
+      const [chatData, setChatData]=useState('')
+      const [refreshing, setRefreshing]=useState(false)
+      useEffect(()=>{
+        var keys = Object.keys(chat);
+        
+        var data=[]
+           
+          //  firebase.database().ref('/chat/devChat/').once("value").then((snapshot) =>{
+            firebase.database().ref('/chat/devChat/').once("value", snapshot =>{
+                setChat(snapshot.val())
+             }); 
+
+             for(var i=0; i<keys.length; i++){
+                data.push({id:chat[keys[i]].id, msg:chat[keys[i]].msg})
+            }
+            
+            setChatData(data);
+
+             
+      },[])
+
+     
+      
+
+      const ItemSeparatorView = () => {
+        return (
+          //Item Separator
+          <View
+            style={{ }}
+          />
+        );
+      };
+    
+      const ItemView = ({ item }) => {
+    
+        return (
+          // Single Comes here which will be repeatative for the FlatListItems
+          <View flexDirection="row" style={{backgroundColor:"white"}}>
+            <Text style={styles.chat} >
+               {item.id}  :  {item.msg}
+            </Text>
+          </View>
+        );
+      };
+
+      function wait(timeout) {
+        return new Promise(resolve => {
+          setTimeout(resolve, timeout);
+        });
+      }
+    
+      function sendChat(userID,newChat){
+        setRefreshing(true)
+       var ref = firebase.database().ref('chat/devChat/');
+       ref.push().set({id:userID, msg:newChat})  
+
+       var keys = Object.keys(chat);
+        
+        var data=[]
+           
+            firebase.database().ref('/chat/devChat/').once("value").then((snapshot) =>{
+          //  firebase.database().ref('/chat/devChat/').once("value", snapshot =>{
+                setChat(snapshot.val())
+             }); 
+
+             for(var i=0; i<keys.length; i++){
+                data.push({id:chat[keys[i]].id, msg:chat[keys[i]].msg})
+            }
+            
+            setChatData(data);
+
+            wait(500).then(() => setRefreshing(false));
+      } 
+
+     
 
     return(
         <View style={styles.container}>
-            
-            
      <View style={{backgroundColor:"#ffd3ae"}}>
-       <Text style={{fontSize:20, textAlign:"center", marginTop:12}}>StudyGroup Name: </Text>
+       <Text style={{fontSize:20, textAlign:"center", marginTop:12}}>StudyGroup Name:{chatData.length}</Text>
        <View style={{borderBottomColor: '#D5D5D5', borderBottomWidth: 1, paddingBottom:10}}/>
      </View>
+
+
+     <FlatList
+           data={chatData}
  
+           ItemSeparatorComponent={ItemSeparatorView}
+           renderItem={ItemView}
+           keyExtractor={(item, index) => index.toString()}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={sendChat} />}
+         />
  
  
  
