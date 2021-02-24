@@ -57,6 +57,7 @@ export default function CustomDrawer({navigation})  {
             </View>
             <TouchableOpacity style={styles.profileChange} onPress={changeProile}>
                 <Text style={{color:'white', fontWeight:'500'}}>프로필 변경</Text>
+                
             </TouchableOpacity>
             <View style={styles.banner}>
                 <Text style={{marginLeft:15, fontSize:18, color:'white'}}>튜터 신청</Text>
@@ -64,6 +65,7 @@ export default function CustomDrawer({navigation})  {
             <View style={styles.listTitle}>
                 <Text style={{fontSize:20, fontWeight:'700'}}>내 스터디</Text>
             </View>
+
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Android 스터디 룸</Text></TouchableOpacity>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Expo 스터디 룸</Text></TouchableOpacity>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>창업 스터디 룸</Text></TouchableOpacity>
