@@ -63,6 +63,7 @@ function MainPageStack({ navigation }) {
         
         <Stack.Screen name="LoginPage" component={LoginPage} 
           options={{
+          
           title: "App Linker's", //Set Header Title
           headerTitleStyle: styles.header,
         }}/>
@@ -116,9 +117,7 @@ function MainPageStack({ navigation }) {
 
 
 export default function Test(props){
-  const id = props.userID;
-  const coin = props.coin;
-  const interest = props.interest;
+ 
     return(
     
     <Drawer.Navigator
