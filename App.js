@@ -24,7 +24,7 @@ export default function App({navigation}){
 
   
   return (
-    <NavigationContainer independent={true}>
+    <NavigationContainer>
       <Test/>
     </NavigationContainer>
     

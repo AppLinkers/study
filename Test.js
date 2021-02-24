@@ -44,7 +44,11 @@ const NavigationDrawerStructure = (props) => {
 
 function MainPageStack({ navigation }) {
   return (
-    <Stack.Navigator initialRouteName="LoginPage">
+    <Stack.Navigator initialRouteName="LoginPage"
+    screenOptions={{
+      headerTranslucent: true,
+      headerStatusBarHeight:60,
+    }}>
       <Stack.Screen name="MainPage"
         component={MainPage}
         options={{
@@ -58,6 +62,7 @@ function MainPageStack({ navigation }) {
         
         <Stack.Screen name="LoginPage" component={LoginPage} 
           options={{
+          
           title: "App Linker's", //Set Header Title
           headerTitleStyle: styles.header,
         }}/>
@@ -91,9 +96,7 @@ function MainPageStack({ navigation }) {
 
 
 export default function Test(props){
-  const id = props.userID;
-  const coin = props.coin;
-  const interest = props.interest;
+ 
     return(
     
     <Drawer.Navigator
@@ -120,7 +123,6 @@ export default function Test(props){
 
   const styles = StyleSheet.create({
     header:{
-      marginTop:15,
       marginBottom:15,
       fontSize:25,
       color:'#A5DF00',

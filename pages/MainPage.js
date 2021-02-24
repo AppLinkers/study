@@ -22,11 +22,11 @@ const Drawer = createDrawerNavigator();
 export default function MainPage({navigation, route, props}) {
 
     const images= [
-        "https://source.unsplash.com/1024x768/?nature",
-        "https://source.unsplash.com/1024x768/?water",
-        "https://source.unsplash.com/1024x768/?girl",
-        "https://source.unsplash.com/1024x768/?tree", // Network image
-        require('../assets/logo.png'),          // Local image
+        "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/mainbanner1.jpg?alt=media&token=36244cbd-94bd-448a-99d1-07c289e9173f",
+        "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/mainbanner2.jpg?alt=media&token=bf703c38-0da8-41ab-8926-147f0ae7a049",
+        "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/mainbanner3.jpg?alt=media&token=e89d51a7-b577-4082-82f7-52875d7aa76e",
+        "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/mainbanner4.jpg?alt=media&token=83026391-3688-4e69-89fe-e24ba9d18e76", // Network image
+        "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/mainbanner5.jpg?alt=media&token=47e3a129-9536-4954-92fe-124d4764e8d6"  
       ]
 
       
