@@ -11,7 +11,7 @@ import { AsyncStorage } from 'react-native';
 //const CustomDrawer = (props) => 
 
 
-export default function CustomDrawer(props,{navigation})  {
+export default function CustomDrawer({navigation})  {
 
 
 
@@ -32,6 +32,10 @@ export default function CustomDrawer(props,{navigation})  {
         
       function changeProile(){
         navigation.navigate("ChangeProfilePage");
+      }
+
+      function BuyCoin(){
+        navigation.navigate("BuyCoinPage");
       }
 
     return(
@@ -78,7 +82,7 @@ export default function CustomDrawer(props,{navigation})  {
             <View style={styles.listTitle}>
                 <Text style={{fontSize:20, fontWeight:'700'}}>코인</Text>
             </View>
-            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>코인충전</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer} onPress={BuyCoin}><Text style={styles.listName}>코인충전</Text></TouchableOpacity>
 
             </ScrollView>
         
