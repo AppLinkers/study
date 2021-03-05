@@ -63,13 +63,8 @@ function MainPageStack({ navigation }) {
 
         
         <Stack.Screen name="LoginPage" component={LoginPage} 
-          options={{
-<<<<<<< HEAD
-          
+          options={{         
           title: "App Linker's", //Set Header Title
-=======
-          title: "", //Set Header Title
->>>>>>> 4397bb5cbdcef2122902fdf44b9ccf3fb6207c01
           headerTitleStyle: styles.header,
           headerStyle:{
             height:0

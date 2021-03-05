@@ -1,40 +1,64 @@
 import React, { useEffect, useState} from 'react';
+import firebase from 'firebase';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList, Modal,TouchableHighlight} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 
 const DATA = [
     {
         id: '1',
         title: '코인 1개',
-        cost: '100원'
+        cost: '100원',
+        value: 100
     },
     {
         id: '2',
         title: '코인 10개',
-        cost: '1,000원'
+        cost: '1,000원',
+        value: 1000
     },
     {
         id: '3',
         title: '코인 100개',
-        cost: '10,000원'
+        cost: '10,000원',
+        value: 10000
     },
     {
         id: '4',
         title: '코인 200개',
-        cost: '20,000원'
+        cost: '20,000원',
+        value: 20000
     },
     {
         id: '5',
         title: '코인 500개',
-        cost: '50,000원'
+        cost: '50,000원',
+        value: 50000
     },
     {
         id: '6',
         title: '코인 1000개',
-        cost: '100,000원'
+        cost: '100,000원',
+        value: 100000
     },
     
 ];
+
+var firebaseConfig = {
+    apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
+    authDomain: "studyapp-3e58f.firebaseapp.com",
+    databaseURL: "https://studyapp-3e58f-default-rtdb.firebaseio.com",
+    projectId: "studyapp-3e58f",
+    storageBucket: "studyapp-3e58f.appspot.com",
+    messagingSenderId: "514395246608",
+    appId: "1:514395246608:web:2c39981eed6d3602b4fa95",
+    measurementId: "G-GL08SPFWYS"
+  };
+
+  // Initialize Firebase
+if (firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig);
+  }
 
 const ItemView = ({item}) => (
             <View style={styles.lines}>
@@ -43,11 +67,27 @@ const ItemView = ({item}) => (
                 </View>
                 <View style={{flex:3,justifyContent:'center'}}><Text>{item.title}</Text></View>
                 <View style={{flex:2, justifyContent:'center',alignItems:'center'}}>
-                <TouchableOpacity style={styles.buyButton}><Text style={{color:'white', fontWeight:'700'}}>{item.cost}</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.buyButton} ><Text style={{color:'white', fontWeight:'700'}}>{item.cost}</Text></TouchableOpacity>
                 </View>
             </View>
 );
 export default function BuyCoinPage({navigation}) {
+    const [getName, setName] = useState('');
+    const [getCoin, setCoin] = useState();
+    
+    AsyncStorage.getItem('user').then(
+        (value) =>
+          setName(value)
+      );
+
+    AsyncStorage.getItem('coin').then(
+        (value) =>
+          setCoin(value)
+      );
+    function buycoin(getCoin){
+        firebase.database().ref('/users/'+getName+'/coin').set(getCoin);
+    }
+
     const [modalVisible, setModalVisible] = useState(false);
     return(
         <View style={styles.container}>
@@ -84,6 +124,11 @@ export default function BuyCoinPage({navigation}) {
                 data={DATA}
                 renderItem={ItemView}
                 keyExtractor={(index) => index.toString()}/>
+            <div>코인 구매 버튼?
+                data = {DATA}
+                <button onPress = {getCoin => setCoin(getCoin + data[0].value)}>코인 선택?</button>
+                <button onPress = {buycoin(getCoin)}>코인구매</button>
+            </div>
             <View style={{height:45, borderBottomWidth:0.5,marginBottom:183, borderBottomColor:'gray', justifyContent:'flex-end'}}>
                 <Text style={{marginLeft:10,marginBottom:5, fontWeight:'700',fontSize:12}}>코인 이용안내</Text>
             </View>
