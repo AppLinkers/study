@@ -33,8 +33,8 @@ const NavigationDrawerStructure = (props) => {
     <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity onPress={toggleDrawer}>
         {/*Donute Button Image */}
-        <Image style={styles.icon}
-                        source={require('./assets/myIcon.png')}/>
+        <Image style={styles.icon1}
+                        source={{uri:'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/User%20icon%20(2).png?alt=media&token=f334db93-5686-4287-a29b-13ce9cec9b16'}}/>
       </TouchableOpacity>
       <TouchableOpacity><Image style={styles.icon}
                         source={require('./assets/settingIcon.png')}/>
@@ -184,8 +184,13 @@ export default function Test(props){
       
     },
     icon:{
-      height:40,
-      width:40,
+      height:35,
+      width:35,
+      marginRight:12
+    },
+    icon1:{
+      height:28,
+      width:28,
       marginRight:7
     },
     nameContainer:{
