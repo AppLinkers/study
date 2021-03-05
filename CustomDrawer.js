@@ -34,6 +34,10 @@ export default function CustomDrawer({navigation})  {
         navigation.navigate("ChangeProfilePage");
       }
 
+      function BuyCoin(){
+        navigation.navigate("BuyCoinPage");
+      }
+
     return(
 
         <View >
@@ -80,7 +84,7 @@ export default function CustomDrawer({navigation})  {
             <View style={styles.listTitle}>
                 <Text style={{fontSize:20, fontWeight:'700'}}>코인</Text>
             </View>
-            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>코인충전</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer} onPress={BuyCoin}><Text style={styles.listName}>코인충전</Text></TouchableOpacity>
 
             </ScrollView>
         
