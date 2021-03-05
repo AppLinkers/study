@@ -4,19 +4,7 @@ import firebase from 'firebase';
 import RadioGroup from 'react-native-custom-radio-group';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, CheckBox, FlatList } from 'react-native';
 
-// main
-// var firebaseConfig = {
-//   apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
-//   authDomain: "studyapp-3e58f.firebaseapp.com",
-//   databaseURL: "https://studyapp-3e58f-default-rtdb.firebaseio.com",
-//   projectId: "studyapp-3e58f",
-//   storageBucket: "studyapp-3e58f.appspot.com",
-//   messagingSenderId: "514395246608",
-//   appId: "1:514395246608:web:2c39981eed6d3602b4fa95",
-//   measurementId: "G-GL08SPFWYS"
-// };
 
-// test
 var firebaseConfig = {
   apiKey: "AIzaSyA6mVXJi_3GY-oqhrPuiJwzaZAPikQ6Gbk",
   authDomain: "test-eeaf5.firebaseapp.com",

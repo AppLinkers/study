@@ -39,23 +39,17 @@ export default function ChantPage({navigation, route}) {
 
       const [chatData, setChatData]=useState('')
       const [refreshing, setRefreshing]=useState(false)
+      var data;
       useEffect(()=>{
-        var keys = Object.keys(chat);
+        data = Object.values(chat);
         
-        var data=[]
-           
           //  firebase.database().ref('/chat/devChat/').once("value").then((snapshot) =>{
             firebase.database().ref('/chat/devChat/messages').once("value", snapshot =>{
                 setChat(snapshot.val())
              }); 
 
-             for(var i=0; i<keys.length; i++){
-                data.push({id:chat[keys[i]].id, msg:chat[keys[i]].msg})
-            }
-            
-            setChatData(data);
-
              
+            setChatData(data);
       },[])
 
      
@@ -89,22 +83,19 @@ export default function ChantPage({navigation, route}) {
       }
     
       function sendChat(userID,newChat){
+
         setRefreshing(true)
        var ref = firebase.database().ref('chat/devChat/messages');
        ref.push().set({id:userID, msg:newChat})  
 
-       var keys = Object.keys(chat);
+       data = Object.values(chat);
         
-        var data=[]
            
             firebase.database().ref('/chat/devChat/messages').once("value").then((snapshot) =>{
           //  firebase.database().ref('/chat/devChat/').once("value", snapshot =>{
                 setChat(snapshot.val())
              }); 
 
-             for(var i=0; i<keys.length; i++){
-                data.push({id:chat[keys[i]].id, msg:chat[keys[i]].msg})
-            }
             
             setChatData(data);
 
