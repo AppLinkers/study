@@ -78,7 +78,7 @@ AsyncStorage.getItem('user').then(
               <View style={styles.chatContnet}>
                 <Text style={styles.hostName}>{item.host}</Text>
                 <Text style={styles.hostIntro}
-                      numberOfLines={1}>{item.subTitle}</Text>
+                      numberOfLines={1}>{item.subtitle}</Text>
               </View>
               <View style={styles.chatDate}><Text style={styles.date}>{item.date}</Text></View>
             </View>
@@ -94,29 +94,30 @@ AsyncStorage.getItem('user').then(
     dogChat: {title: "애견 스터디", host:"Rex", subTitle:"나를 범해주세요 주인님 하앍", date:"2021-02-09"+ " 개설", image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile4.jpg?alt=media&token=78f0a31b-2b53-4a52-aaa7-7b66a4a7dc4c"},
   }
   var list =Object.values(selectList)
-const[dataList, setDataList]= useState('');
+
+
+const[dataList, setDataList]= useState([{info: '로딩 중'}]);
 
 useEffect (() => {
   var data;
-  //firebase.database().ref('chat/').once("child_added", snapshot =>{
     firebase.database().ref('/chat/').once("value", snapshot =>{
     data = Object.values(snapshot.val())
     setDataList(Object.values(data))
 })
-console.log("adafsdfa")
-console.log(dataList[0].info)
 
 }, [])
 
+var listed = [];
 
-var listed = [dataList[0].info,dataList[1].info]
-
+for(var i=0; i<dataList.length; i++){
+  listed.push(dataList[i].info)
+}
   
 
 
   return (
       <View style={styles.container}>
-        
+        <View style={{height:50}}>
         <ScrollView style={styles.selectStudy} horizontal={true}>
           <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>기초개발</Text></TouchableOpacity>
           <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>앱/웹 개발</Text></TouchableOpacity>
@@ -125,22 +126,30 @@ var listed = [dataList[0].info,dataList[1].info]
           <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>인공지능</Text></TouchableOpacity>
           <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>기타</Text></TouchableOpacity>
         </ScrollView>
-        <ScrollView style={styles.chatContainer}>
+        </View>
+        
+        <ScrollView>
 
 
           <FlatList
-            data={list}
+            data={listed}
             ItemSeparatorComponent={ItemSeparatorView}
             renderItem={ItemView}
             keyExtractor={(item, index) => index.toString()}
             />
+
         </ScrollView>
+        <TouchableOpacity style={styles.addChat}>
+          <Text style={{fontSize:30, color:'white'}}>+</Text>
+        </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage} source={require('../assets/homeButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage2} source={require('../assets/chatButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Text style={{fontSize:18, color:'gray',fontWeight:'500'}}>QnA</Text></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Text style={{fontSize:20, paddingBottom:10, color:'gray',fontWeight:'700'}}>. . .</Text></TouchableOpacity>
         </View> 
+
+        
       </View>
   )
 
@@ -150,6 +159,17 @@ const styles = StyleSheet.create({
 container:{
         flex:1,
         backgroundColor:'white',
+},
+
+addChat:{
+  borderRadius:30,
+  backgroundColor:'#7cd175',
+  height:60,
+  width:60,
+  marginLeft:310,
+  marginBottom:20,
+  alignItems:'center',
+  justifyContent:'center'
 },
 header:{
     backgroundColor:'white',
@@ -185,7 +205,7 @@ icon:{
 },
 selectStudy: {
   backgroundColor:'#7cd175',
-  height:5
+  height:1
 },
 selectStudyList:{
   width:100,

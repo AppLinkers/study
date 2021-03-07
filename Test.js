@@ -6,6 +6,7 @@ import ChatPage from './pages/ChatPage';
 import JoinPage from './pages/JoinPage';
 import SignupPage from './pages/SignupPage';
 import ChangeProfilePage from './pages/ChangeProfilePage';
+import BuyCoinPage from './pages/BuyCoinPage'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
@@ -63,9 +64,13 @@ function MainPageStack({ navigation }) {
         
         <Stack.Screen name="LoginPage" component={LoginPage} 
           options={{
-          
           title: "App Linker's", //Set Header Title
+          title: "", //Set Header Title
           headerTitleStyle: styles.header,
+          headerStyle:{
+            height:0
+          }
+
         }}/>
 
         <Stack.Screen name ="SelectPage" component={SelectPage}
@@ -94,11 +99,14 @@ function MainPageStack({ navigation }) {
 
 <Stack.Screen name ="JoinPage" component={JoinPage}
           options={{
-          title: "App Linker's", //Set Header Title
-          headerRight: () => (
-            <NavigationDrawerStructure navigationProps={navigation} />
-          ),
-          headerTitleStyle: styles.header,}}/>
+          title: "", //Set Header Title
+          headerTitleStyle: styles.header,
+          headerStyle:{
+              backgroundColor:'#c7bad9',
+              height:5,
+              },
+              headerTintColor:'#c7bad9'
+          }}/>
 
         <Stack.Screen name ="ChangeProfilePage" component={ChangeProfilePage}
           options={{
@@ -106,6 +114,17 @@ function MainPageStack({ navigation }) {
           headerTitleStyle: styles.header2,
           headerStyle:{
             backgroundColor:'#7cd175',
+            height:100
+          },
+          headerTitleAlign:'center',
+          headerTintColor:'white'
+        }}/>
+        <Stack.Screen name ="BuyCoinPage" component={BuyCoinPage}
+          options={{
+          title: "코인샵", //Set Header Title
+          headerTitleStyle: styles.header1,
+          headerStyle:{
+            backgroundColor:'white',
             height:100
           },
           headerTitleAlign:'center',

@@ -7,6 +7,7 @@ import firebase from 'firebase'
 import CustomDrawer from '../CustomDrawer';
 import App from '../App';
 import { AsyncStorage } from 'react-native';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 var firebaseConfig = {
   apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
@@ -33,24 +34,28 @@ export default function LoginPage({navigation}, props) {
   const [done, setDone] = useState(false)
 
   function loginAuth(){
-    
-  firebase.database().ref('/users').on("child_added", snapshot =>{
-      var userID = snapshot.val().id;
-      var userPw = snapshot.val().pw;
-      var userCoin= snapshot.val().coin;
-      var userPhone = snapshot.val().hp
-      var userEmail = snapshot.val().email
-      if(userID===typeID){
-        if(userPw===typePw){
-          navigation.navigate("MainPage",{"userID":userID})
-          AsyncStorage.setItem('user', userID); 
-          AsyncStorage.setItem('coin', userCoin); 
-          AsyncStorage.setItem('phone', userPhone); 
-          AsyncStorage.setItem('email', userEmail); 
-          console.log(userCoin)
+
+    var userList = [];
+    var auth = false;
+    firebase.database().ref('/users').on("child_added", snapshot =>{
+        var userID = snapshot.val().id;
+        var userPw = snapshot.val().pw;
+        var userCoin= snapshot.val().coin;
+        var userPhone = snapshot.val().hp
+        var userEmail = snapshot.val().userEmail
+
+       if(userID===typeID){
+          if(userPw===typePw){
+            navigation.navigate("MainPage",{"userID":userID});
+            AsyncStorage.setItem('user', userID); 
+            AsyncStorage.setItem('coin', userCoin); 
+            AsyncStorage.setItem('phone', userPhone); 
+            AsyncStorage.setItem('email', userEmail); 
+            console.log(userCoin);
+          }
         }
-      }
-   }); 
+    }); 
+
   }
 
   function goToSignup(){
@@ -59,10 +64,8 @@ export default function LoginPage({navigation}, props) {
 
   return (
     <View style={styles.container}>
-      
-      <Image 
-        style={styles.mainImage}
-        source={require('../assets/smart.png')}></Image>
+          <Text style={styles.AppName}>App Linker's</Text>
+        
         <Text style={styles.txt}>Follow Your Dream!</Text>
         <TextInput 
           style={styles.ID}
@@ -75,6 +78,7 @@ export default function LoginPage({navigation}, props) {
           secureTextEntry={true}
           onChangeText ={(typePw) =>setTypePw(typePw)}
           placeholder='PassWord'></TextInput>
+        <TouchableOpacity style={{marginTop:20}}><Text style={styles.forgetPW}>아이디/비밀번호 찾기</Text></TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={loginAuth}><Text style={styles.buttonTxt}>로 그 인</Text></TouchableOpacity>
         <TouchableOpacity style={styles.enter} onPress={goToSignup}><Text style={styles.enterTxt}>아직 회원이 아니신가요?</Text></TouchableOpacity>
     </View>
@@ -88,49 +92,57 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  mainImage: {
-    width:300,
-    height:80
+  AppName:{
+    color:'#7cd175',
+    fontSize:35,
+    fontWeight:'700',
   },
   txt:{
     marginTop:15,
-    fontSize:20,
+    fontSize:15,
     fontWeight:'700'  
   },
   ID:{
-    borderWidth:3,
-    width:300,
+    borderBottomWidth:2,
+    width:350,
     height:60,
     marginTop:20,
     paddingLeft:15,
-    borderColor:'#A5DF00',
-    borderRadius:8
+    borderColor:'#7cd175',
+    borderRadius:5,
+    paddingTop:15
   },
   PW:{
-    borderWidth:3,
-    borderRadius:8,
-    width:300,
+    borderBottomWidth:2,
+    borderRadius:5,
+    width:350,
     height:60,
-    marginTop:20,
-    borderColor:'#A5DF00',
+    marginTop:15,
+    borderColor:'#7cd175',
     paddingLeft:15,
+    paddingTop:15
+  },
+  forgetPW:{
+    color:'gray',
+    fontSize:12,
+    marginLeft:220
   },
   button:{
-    marginTop:15,
-    borderRadius:8,
-    width:300,
-    height:60,
+    marginTop:20,
+    borderRadius:6,
+    width:350,
+    height:50,
     alignItems:'center',
     justifyContent:'center',
-    backgroundColor:'#A5DF00'
+    backgroundColor:'#7cd175'
   },
   buttonTxt:{
-    fontSize:20,
+    fontSize:18,
     fontWeight:'700',
     color:'white'
   },
   enter:{
-    marginTop:30,
+    marginTop:70,
     borderBottomWidth:1,
     borderColor:'#81DAF5'
   },

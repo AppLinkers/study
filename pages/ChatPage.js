@@ -27,7 +27,7 @@ var firebaseConfig = {
 export default function ChantPage({navigation, route}) {
     const [chatType, setChatType] = useState('')
     const [userID, setUserID] = useState('');
-    const [chat, setChat]=useState('');
+    const [chat, setChat]=useState([{messages: '로딩 중'}]);
     
 
     AsyncStorage.getItem('user').then(
@@ -37,7 +37,7 @@ export default function ChantPage({navigation, route}) {
 
       
 
-      const [chatData, setChatData]=useState('')
+      const [chatData, setChatData]=useState([{messages: '로딩 중'}]);
       const [refreshing, setRefreshing]=useState(false)
       var data;
       useEffect(()=>{

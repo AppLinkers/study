@@ -6,14 +6,14 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, CheckB
 
 
 var firebaseConfig = {
-  apiKey: "AIzaSyA6mVXJi_3GY-oqhrPuiJwzaZAPikQ6Gbk",
-  authDomain: "test-eeaf5.firebaseapp.com",
-  databaseURL: "https://test-eeaf5-default-rtdb.firebaseio.com",
-  projectId: "test-eeaf5",
-  storageBucket: "test-eeaf5.appspot.com",
-  messagingSenderId: "148353670549",
-  appId: "1:148353670549:web:3701244a0151f0fe106a9c",
-  measurementId: "G-NGZGMLYRF1"
+  apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
+  authDomain: "studyapp-3e58f.firebaseapp.com",
+  databaseURL: "https://studyapp-3e58f-default-rtdb.firebaseio.com",
+  projectId: "studyapp-3e58f",
+  storageBucket: "studyapp-3e58f.appspot.com",
+  messagingSenderId: "514395246608",
+  appId: "1:514395246608:web:2c39981eed6d3602b4fa95",
+  measurementId: "G-GL08SPFWYS"
 };
 
 // Initialize Firebase
@@ -30,8 +30,11 @@ const sexlist = [{
   value: 'female'
 }]
 
-export default function signup({ navigation }) {
 
+
+
+
+export default function signup({ navigation }) {
   const [signUpName, setSignUpName] = useState('');
   const [signUpSex, setSignUpSex] = useState('');
   const [signUpID, setSignUpID] = useState('');
@@ -40,10 +43,30 @@ export default function signup({ navigation }) {
   const [signUpHP, setSignUpHP] = useState('');
   const [signUpEmail, setSignUpEmail] = useState('');
   const [signUpStudy, setSignUpStudy] = useState('');
+  const [idOk, setidOk] = useState(false);
 
-  function Signup(name, sex, id, pw, chkpw, hp, email, study) {
-    if (pw !== chkpw) {
-      alert('비밀번호 확인')
+  function doubleChk(idOk, id){
+    firebase.database().ref('/users').on("child_added", snapshot =>{
+      var userID = snapshot.val().id;
+      setidOk(true);
+      if ( userID === id){
+        setidOk(false);
+        alert('ID가 중복됩니다.');
+      }
+   }); 
+   if (idOk){
+     alert('사용 가능한 ID 입니다.');
+   }
+  }
+
+  function Signup(idOk,name, sex, id, pw, chkpw, hp, email, study) {
+    const inputlist = [name, sex, id, pw, chkpw, hp, email]
+    if (!(idOk)) {
+      alert('ID 중복확인 필요');
+    }else if (pw !== chkpw) {
+      alert('비밀번호 확인');
+    } else if (inputlist.includes('')) {
+      alert('필수사항 입력 필요');
     } else {
       var ref = firebase.database().ref('users/' + id);
       ref.set({
@@ -74,10 +97,9 @@ export default function signup({ navigation }) {
   const [isSelected, setSelection] = useState(false);
 
 
-
-
   return (
     <View style={styles.container}>
+      <TouchableOpacity style ={styles.button} onPress={testSMS}></TouchableOpacity>
       <ScrollView>
         <Text style={{ marginTop: 30, alignSelf: 'flex-start', marginLeft: 5, fontSize: 14, color: 'black', }}>이 름</Text>
 
@@ -118,7 +140,9 @@ export default function signup({ navigation }) {
             vlaue={signUpID}
             placeholder="아이디"
           />
-          <TouchableOpacity style={styles.sameButton}>
+          <TouchableOpacity 
+            style={styles.sameButton}
+            onPress = {() => doubleChk(idOk, signUpID)}>
             <Text style={{ color: '#7cd175', fontSize: 12, fontWeight: '700' }}>중 복 확 인</Text>
           </TouchableOpacity>
         </View>
@@ -162,7 +186,7 @@ export default function signup({ navigation }) {
         </View>
       </ScrollView>
       <TouchableOpacity
-        onPress={() => Signup(signUpName, signUpSex, signUpID, signUpPW, checkPW, signUpHP, signUpEmail, signUpStudy)}
+        onPress={() => Signup(idOk,signUpName, signUpSex, signUpID, signUpPW, checkPW, signUpHP, signUpEmail, signUpStudy)}
         style={styles.button}>
         <Text style={{ fontSize: 15, color: '#fff', fontWeight: '700' }}>Sign up</Text>
       </TouchableOpacity>
