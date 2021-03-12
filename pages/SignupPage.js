@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import RadioGroup from 'react-native-custom-radio-group';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, CheckBox, FlatList } from 'react-native';
 
+
 var firebaseConfig = {
   apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
   authDomain: "studyapp-3e58f.firebaseapp.com",
@@ -139,8 +140,10 @@ export default function signup({ navigation }) {
     headerTintColor: '#000'
   })
 
+
   return (
     <View style={styles.container}>
+      <TouchableOpacity style ={styles.button} onPress={testSMS}></TouchableOpacity>
       <ScrollView>
         <Text style={{ marginTop: 30, alignSelf: 'flex-start', marginLeft: 5, fontSize: 14, color: 'black', }}>이 름</Text>
 
