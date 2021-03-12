@@ -35,7 +35,9 @@ export default function LoginPage({navigation}, props) {
 
   function loginAuth(){
 
+
   firebase.database().ref('/users').on("child_added", snapshot =>{
+      
       var userID = snapshot.val().id;
       var userPw = snapshot.val().pw;
       var userCoin= snapshot.val().coin;
@@ -44,10 +46,10 @@ export default function LoginPage({navigation}, props) {
       if(userID===typeID){
         if(userPw===typePw){
           navigation.navigate("MainPage",{"userID":userID});
-          AsyncStorage.setItem('user', userID); 
-          AsyncStorage.setItem('coin', userCoin); 
+          AsyncStorage.setItem('user', userID);
           AsyncStorage.setItem('phone', userPhone); 
           AsyncStorage.setItem('email', userEmail); 
+          AsyncStorage.setItem('coin', userCoin); 
           console.log(userCoin);
         }
       }

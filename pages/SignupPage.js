@@ -29,9 +29,12 @@ const sexlist = [{
   value: 'female'
 }]
 
-
-
-
+const data = [
+  { id: 1, value: "개발", isChecked: false },
+  { id: 2, value: "창업", isChecked: false },
+  { id: 3, value: "자격증", isChecked: false },
+  { id: 4, value: "취업", isChecked: false }
+];
 
 export default function signup({ navigation }) {
   const [signUpName, setSignUpName] = useState('');
@@ -41,8 +44,45 @@ export default function signup({ navigation }) {
   const [checkPW, setCheckPW] = useState('');
   const [signUpHP, setSignUpHP] = useState('');
   const [signUpEmail, setSignUpEmail] = useState('');
-  const [signUpStudy, setSignUpStudy] = useState('');
+  const [signUpStudy, setSignUpStudy] = useState(data);
   const [idOk, setidOk] = useState(false);
+
+
+  const handleChange = (id) => {
+    let temp = signUpStudy.map((product) => {
+      if (id === product.id) {
+        return { ...product, isChecked: !product.isChecked };
+      }
+      return product;
+    });
+    setSignUpStudy(temp);
+  };
+
+  let selected = signUpStudy.filter((product) => product.isChecked);
+
+  const renderFlatList = (renderData) => {
+    return (
+      <FlatList
+        data={renderData}
+        renderItem={({ item }) => (
+              <View
+                style={{
+                  flexDirection: 'row-reverse',
+                  flex: 1,
+                  justifyContent: 'space-between',
+                }}>
+                <CheckBox
+                  value={item.isChecked}
+                  onChange={() => {
+                    handleChange(item.id);
+                  }}
+                />
+                <Text>{item.value}</Text>
+              </View>
+        )}
+      />
+    );
+  };
 
   function doubleChk(idOk, id){
     firebase.database().ref('/users').on("child_added", snapshot =>{
@@ -58,7 +98,13 @@ export default function signup({ navigation }) {
    }
   }
 
-  function Signup(idOk,name, sex, id, pw, chkpw, hp, email, study) {
+  function Signup(idOk,name, sex, id, pw, chkpw, hp, email, selected) {
+    const studylist = [];
+
+    selected.forEach(element => {
+      studylist.push(element.value)
+    });
+
     const inputlist = [name, sex, id, pw, chkpw, hp, email]
     if (!(idOk)) {
       alert('ID 중복확인 필요');
@@ -75,7 +121,7 @@ export default function signup({ navigation }) {
         pw: pw,
         hp: hp,
         email: email,
-        study: study,
+        study: studylist,
         coin: 10
       })
       navigation.navigate("LoginPage")
@@ -92,11 +138,6 @@ export default function signup({ navigation }) {
     headerTitleAlign: 'center',
     headerTintColor: '#000'
   })
-
-  const [isSelected, setSelection] = useState(false);
-
-
-
 
   return (
     <View style={styles.container}>
@@ -161,32 +202,10 @@ export default function signup({ navigation }) {
           placeholder="비밀번호 확인"
         />
         <Text style={styles.inputExplain}>관심 스터디</Text>
-        <View style={styles.likeContainer}>
-          <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={styles.checkbox} />
-          <Text style={{ marginLeft: 5 }}>개발</Text>
-          <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={styles.checkbox} />
-          <Text style={{ marginLeft: 5 }}>창업</Text>
-          <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={styles.checkbox} />
-          <Text style={{ marginLeft: 5 }}>자격증</Text>
-          <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={styles.checkbox} />
-          <Text style={{ marginLeft: 5 }}>취업</Text>
-
-        </View>
+        <View style={{ flex: 1 }}>{renderFlatList(signUpStudy)}</View>
       </ScrollView>
       <TouchableOpacity
-        onPress={() => Signup(idOk,signUpName, signUpSex, signUpID, signUpPW, checkPW, signUpHP, signUpEmail, signUpStudy)}
+        onPress={() => Signup(idOk,signUpName, signUpSex, signUpID, signUpPW, checkPW, signUpHP, signUpEmail, selected)}
         style={styles.button}>
         <Text style={{ fontSize: 15, color: '#fff', fontWeight: '700' }}>Sign up</Text>
       </TouchableOpacity>

@@ -29,6 +29,8 @@ export default function CustomDrawer({navigation})  {
           setCoin(value)
       );
 
+
+
         
       function changeProile(){
         navigation.navigate("ChangeProfilePage");

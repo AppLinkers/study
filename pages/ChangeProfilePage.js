@@ -43,10 +43,12 @@ export default function ChangeProfilePage({navigation}) {
         firebase.database().ref('/users/'+getName+'/hp').set(fixPhone);
     }
 
+
+
     return(
     <View style={styles.container}>
         <Image style={styles.profileImage} source={{uri:'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4'}}/>
-        <TouchableOpacity style={styles.changeImage}>
+        <TouchableOpacity style={styles.changeImage} >
             <Image style={styles.camera} source={{uri:'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/camera%20icon.png?alt=media&token=9c66d14d-21b3-491b-9bff-3760c1c018d6'}}/>
         </TouchableOpacity>
         <Text style={styles.name}>{getName}</Text>
