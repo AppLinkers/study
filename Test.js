@@ -7,6 +7,7 @@ import JoinPage from './pages/JoinPage';
 import SignupPage from './pages/SignupPage';
 import ChangeProfilePage from './pages/ChangeProfilePage';
 import BuyCoinPage from './pages/BuyCoinPage'
+import MentoApplyPage from './pages/MentoApplyPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
@@ -20,9 +21,6 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-
-
-
 
 const NavigationDrawerStructure = (props) => {
 
@@ -146,6 +144,21 @@ function MainPageStack({ navigation }) {
                   },
                   headerTitleAlign:'center',
                   headerTintColor:'#000'
+                }}/>
+
+      <Stack.Screen name="MentoApplyPage" component={MentoApplyPage} 
+                 options={{
+                  title: "멘토 신청하기", //Set Header Title
+                  headerTitleStyle: styles.header2,
+                  headerStyle:{
+                    backgroundColor:'#7cd175',
+                    height:100
+                  },
+                  headerRight: () => (
+                    <NavigationDrawerStructure navigationProps={navigation} />
+                  ),
+                  headerTitleAlign:'center',
+                  headerTintColor:'white'
                 }}/>
 
     </Stack.Navigator>

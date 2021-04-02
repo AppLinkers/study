@@ -77,6 +77,9 @@ export default function CustomDrawer({ navigation }) {
             <TouchableOpacity style={styles.banner1} onPress={request}>
                 <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>스터디 신청</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.banner1} onPress={MentoApply}>
+                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>멘토 신청</Text>
+            </TouchableOpacity>
             <View style={styles.listTitle}>
                 <Text style={{fontSize:20, fontWeight:'700'}}>내 스터디</Text>
             </View>
