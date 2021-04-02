@@ -1,23 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList, AsyncStorage} from 'react-native';
-import firebase from 'firebase';
-
-var firebaseConfig = {
-  apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
-  authDomain: "studyapp-3e58f.firebaseapp.com",
-  databaseURL: "https://studyapp-3e58f-default-rtdb.firebaseio.com",
-  projectId: "studyapp-3e58f",
-  storageBucket: "studyapp-3e58f.appspot.com",
-  messagingSenderId: "514395246608",
-  appId: "1:514395246608:web:2c39981eed6d3602b4fa95",
-  measurementId: "G-GL08SPFWYS"
-};
-// Initialize Firebase
-if(firebase.apps.length===0){
-  firebase.initializeApp(firebaseConfig);
-}
-
-
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
+import {firebase_db} from '../firebaseConfig'
+import Card from '../Components/Card'
 export default function SelectPage({navigation}) {
   console.disableYellowBox = true;
   //return 구문 밖에서는 슬래시 두개 방식으로 주석
@@ -28,6 +12,16 @@ AsyncStorage.getItem('user').then(
     setUserID(value)
 );
 
+  const [state,setState] = useState([])
+
+  useEffect(()=>{
+
+    firebase_db.ref('/chat/devChat/info').once('value').then((snapshot) =>{
+      console.log("파이어베이스에서 데이터 가져왔습니다")
+      let info = snapshot.val();
+      setState(info)
+    })
+  },1000)
 
   function goToChat(){
     var authTemp=[]
@@ -87,33 +81,12 @@ AsyncStorage.getItem('user').then(
   };
 
 
-  const selectList = {
-    devChat:{title: "React-native Study", host:"안승우", subTitle:"expo 이용해서 앱출시까지 마쳐봐요", date:"2021-02-09"+ " 개설", image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4"},
-    startupChat: {title: "스타트업 스터디", host:"정승완", subTitle:"창업 컨퍼런스 인원 모집합니다!", date:"2021-02-09"+ " 개설", image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile2.jpg?alt=media&token=be4087a4-4ff5-4fe7-b0a2-b1c233f99313"},
-    javaChat: {title: "JAVA 스터디", host:"이유석", subTitle:"코딩테스트 공부 같이해요", date:"2021-02-09"+ " 개설",image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile3.jpg?alt=media&token=d83432d6-bc4d-4df3-96a3-966b62653934"},
-    dogChat: {title: "애견 스터디", host:"Rex", subTitle:"나를 범해주세요 주인님 하앍", date:"2021-02-09"+ " 개설", image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile4.jpg?alt=media&token=78f0a31b-2b53-4a52-aaa7-7b66a4a7dc4c"},
-  }
-  var list =Object.values(selectList)
-
-
-const[dataList, setDataList]= useState([{info: '로딩 중'}]);
-
-useEffect (() => {
-  var data;
-    firebase.database().ref('/chat/').once("value", snapshot =>{
-    data = Object.values(snapshot.val())
-    setDataList(Object.values(data))
-})
-
-}, [])
-
-var listed = [];
-
-for(var i=0; i<dataList.length; i++){
-  listed.push(dataList[i].info)
-}
-  
-
+  const selectList = [
+    {title: "React-native Study", host:"안승우", subTitle:"expo 이용해서 앱출시까지 마쳐봐요", date:"2021-02-09"+ " 개설", image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4"},
+    {title: "스타트업 스터디", host:"정승완", subTitle:"창업 컨퍼런스 인원 모집합니다!", date: state.date +" 개설", image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile2.jpg?alt=media&token=be4087a4-4ff5-4fe7-b0a2-b1c233f99313"},
+    {title: "JAVA 스터디", host:"이유석", subTitle:"코딩테스트 공부 같이해요", date:"2021-02-09"+ " 개설",image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile3.jpg?alt=media&token=d83432d6-bc4d-4df3-96a3-966b62653934"},
+    {title: "애견 스터디", host:"Rex", subTitle:"나를 범해주세요 주인님 하앍", date:"2021-02-09"+ " 개설", image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile4.jpg?alt=media&token=78f0a31b-2b53-4a52-aaa7-7b66a4a7dc4c"},
+  ]
 
   return (
       <View style={styles.container}>
@@ -130,14 +103,12 @@ for(var i=0; i<dataList.length; i++){
         
         <ScrollView>
 
-
-          <FlatList
-            data={listed}
+        <FlatList
+            data={selectList}
             ItemSeparatorComponent={ItemSeparatorView}
             renderItem={ItemView}
             keyExtractor={(item, index) => index.toString()}
             />
-
         </ScrollView>
         <TouchableOpacity style={styles.addChat}>
           <Text style={{fontSize:30, color:'white'}}>+</Text>
@@ -205,7 +176,7 @@ icon:{
 },
 selectStudy: {
   backgroundColor:'#7cd175',
-  height:1
+  height:5,
 },
 selectStudyList:{
   width:100,
@@ -217,6 +188,8 @@ selectStudyTxt:{
   fontSize:13,
   fontWeight:'700',
   color:'white'
+},
+chatContainer:{
 },
 chat:{
   height:150,

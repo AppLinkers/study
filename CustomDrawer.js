@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { MainPage } from './pages/MainPage'
 import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
 import { AsyncStorage } from 'react-native';
+import requestStudy from './pages/requestStudy';
 
 //const CustomDrawer = (props) => 
 
@@ -44,57 +45,56 @@ export default function CustomDrawer({ navigation }) {
         navigation.navigate("MentoApplyPage");
     }
 
-    return (
+
+      function request(){
+        navigation.navigate("requestStudy");
+      }
+
+    return(
 
         <View >
 
 
-            <ScrollView>
-
-
-                <ScrollView>
-                    <View style={styles.header}>
-                        <Text style={styles.headerName}>My Page</Text>
-                    </View>
-                    <View style={styles.profile}>
-                        <View style={styles.profileImage}>
-                            <Image style={styles.image} source={require('./assets/profile.jpg')} />
-                        </View>
-                        <View style={styles.profileInfo}>
-                            <Text style={styles.profileName}>{getName}{console.log(getCoin)}</Text>
-                            <Text>보유 코인: {getCoin}</Text>
-                        </View>
-                    </View>
-                    <TouchableOpacity style={styles.profileChange} onPress={changeProile}>
-                        <Text style={{ color: 'white', fontWeight: '500' }}>프로필 변경</Text>
-
-                    </TouchableOpacity>
-                    <View style={styles.banner}>
-                        <Text style={{ marginLeft: 15, fontSize: 18, color: 'white' }}>튜터 신청</Text>
-                    </View>
-                    <TouchableOpacity style={styles.listContainer} onPress={MentoApply}><Text style={styles.listName}>멘토신청</Text></TouchableOpacity>
-
-                    <View style={styles.listTitle}>
-                        <Text style={{ fontSize: 20, fontWeight: '700' }}>내 스터디</Text>
-                    </View>
-
-                    <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Android 스터디 룸</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Expo 스터디 룸</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>창업 스터디 룸</Text></TouchableOpacity>
-
-                    <View style={styles.listTitle}>
-                        <Text style={{ fontSize: 20, fontWeight: '700' }}>고객센터</Text>
-                    </View>
-                    <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>공지사항</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>문의하기</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>사용 가이드</Text></TouchableOpacity>
-
-                    <View style={styles.listTitle}>
-                        <Text style={{ fontSize: 20, fontWeight: '700' }}>코인</Text>
-                    </View>
-                    <TouchableOpacity style={styles.listContainer} onPress={BuyCoin}><Text style={styles.listName}>코인충전</Text></TouchableOpacity>
-
-                </ScrollView>
+        <ScrollView>
+            <View style={styles.header}>
+                <Text style={styles.headerName}>My Page</Text>
+            </View>
+            <View style={styles.profile}>
+                <View style={styles.profileImage}>
+                    <Image style={styles.image} source={require('./assets/profile.jpg')}/>
+                </View>
+                <View style={styles.profileInfo}>
+                    <Text style={styles.profileName}>{getName}</Text>
+                    <Text>보유 코인: {getCoin}</Text>
+                </View>
+            </View>
+            <TouchableOpacity style={styles.profileChange} onPress={changeProile}>
+                <Text style={{color:'white', fontWeight:'500'}}>프로필 변경</Text>
+            </TouchableOpacity>
+            <View style={styles.banner}>
+                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>튜터 신청</Text>
+            </View>
+            <TouchableOpacity style={styles.banner1} onPress={request}>
+                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>스터디 신청</Text>
+            </TouchableOpacity>
+            <View style={styles.listTitle}>
+                <Text style={{fontSize:20, fontWeight:'700'}}>내 스터디</Text>
+            </View>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Android 스터디 룸</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Expo 스터디 룸</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>창업 스터디 룸</Text></TouchableOpacity>
+           
+            <View style={styles.listTitle}>
+                <Text style={{fontSize:20, fontWeight:'700'}}>고객센터</Text>
+            </View>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>공지사항</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>문의하기</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>사용 가이드</Text></TouchableOpacity>
+           
+            <View style={styles.listTitle}>
+                <Text style={{fontSize:20, fontWeight:'700'}}>코인</Text>
+            </View>
+            <TouchableOpacity style={styles.listContainer} onPress={BuyCoin}><Text style={styles.listName}>코인충전</Text></TouchableOpacity>
 
             </ScrollView>
         </View>
@@ -167,13 +167,20 @@ const styles = StyleSheet.create({
         marginTop: 12,
         justifyContent: 'center'
     },
-    listTitle: {
-        height: 80,
-        borderBottomWidth: 2,
-        borderBottomColor: '#7cd175',
-        justifyContent: 'flex-end',
-        paddingLeft: 15,
-        paddingBottom: 10
+
+    banner1:{
+        height:68,
+        backgroundColor:'#467fd7',
+        marginTop:12,
+        justifyContent:'center'
+    },
+    listTitle:{
+        height:80,
+        borderBottomWidth:2,
+        borderBottomColor:'#7cd175',
+        justifyContent:'flex-end',
+        paddingLeft:15,
+        paddingBottom:10
     },
     listContainer: {
         height: 68,

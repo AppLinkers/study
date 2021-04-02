@@ -7,15 +7,15 @@ import { AsyncStorage } from 'react-native';
 const DATA = [
     {
         id: '1',
-        title: '코인 1개',
-        cost: '100원',
-        value: 100
-    },
-    {
-        id: '2',
         title: '코인 10개',
         cost: '1,000원',
         value: 1000
+    },
+    {
+        id: '2',
+        title: '코인 50개',
+        cost: '5,000원',
+        value : 5000
     },
     {
         id: '3',
@@ -31,17 +31,11 @@ const DATA = [
     },
     {
         id: '5',
-        title: '코인 500개',
-        cost: '50,000원',
-        value: 50000
+        title: '코인 300개',
+        cost: '30,000원',
+        value : 30000
     },
-    {
-        id: '6',
-        title: '코인 1000개',
-        cost: '100,000원',
-        value: 100000
-    },
-
+    
 ];
 
 var firebaseConfig = {

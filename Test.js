@@ -12,7 +12,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 import CustomDrawer from './CustomDrawer';
-import MentoApplyPage from './pages/MentoApplyPage';
+
+import requestStudy from './pages/requestStudy'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 
@@ -32,14 +34,15 @@ const NavigationDrawerStructure = (props) => {
 
   return (
     <View style={{ flexDirection: 'row' }}>
-      <TouchableOpacity onPress={toggleDrawer}>
+      <TouchableWithoutFeedback onPress={toggleDrawer}>
         {/*Donute Button Image */}
-        <Image style={styles.icon}
-                        source={require('./assets/user.png')}/>
-      </TouchableOpacity>
-      <TouchableOpacity><Image style={styles.icon}
-                        source={require('./assets/settings.png')}/>
-                </TouchableOpacity>
+
+        <Image style={styles.icon1}
+                        source={{uri:'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/User%20icon%20(2).png?alt=media&token=f334db93-5686-4287-a29b-13ce9cec9b16'}}/>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback><Image style={styles.icon}
+                        source={require('./assets/settingIcon.png')}/>
+                </TouchableWithoutFeedback>
       <View style={styles.alramContainer}>
         </View>
     </View>
@@ -132,22 +135,21 @@ function MainPageStack({ navigation }) {
           headerTitleAlign:'center',
           headerTintColor:'white'
         }}/>
-        
-        <Stack.Screen name ="MentoApplyPage" component={MentoApplyPage}
-          options={{
-          title: "멘토 신청하기", //Set Header Title
-          headerTitleStyle: styles.header2,
-          headerStyle:{
-            backgroundColor:'#7cd175',
-            height:100
-          },
-          headerTitleAlign:'left',
-          headerTintColor:'white',
-          headerRight: () => (
-            <NavigationDrawerStructure navigationProps={navigation} style = {{height : 1000}}/>
-          ),
-        }}/>
+
+        <Stack.Screen name="requestStudy" component={requestStudy} 
+                  options={{
+                  title: "스터디 신청", //Set Header Title
+                  headerTitleStyle: styles.header1,
+                  headerStyle:{
+                    backgroundColor:'#fff',
+                    height:100,
+                  },
+                  headerTitleAlign:'center',
+                  headerTintColor:'#000'
+                }}/>
+
     </Stack.Navigator>
+    
   );
 }
 
@@ -200,8 +202,13 @@ export default function Test(props){
       
     },
     icon:{
-      height:40,
-      width:40,
+      height:35,
+      width:35,
+      marginRight:12
+    },
+    icon1:{
+      height:28,
+      width:28,
       marginRight:7
     },
     nameContainer:{
