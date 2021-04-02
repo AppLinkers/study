@@ -5,13 +5,13 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList, M
 const DATA = [
     {
         id: '1',
-        title: '코인 1개',
-        cost: '100원'
+        title: '코인 10개',
+        cost: '1,000원'
     },
     {
         id: '2',
-        title: '코인 10개',
-        cost: '1,000원'
+        title: '코인 50개',
+        cost: '5,000원'
     },
     {
         id: '3',
@@ -25,14 +25,10 @@ const DATA = [
     },
     {
         id: '5',
-        title: '코인 500개',
-        cost: '50,000원'
+        title: '코인 300개',
+        cost: '30,000원'
     },
-    {
-        id: '6',
-        title: '코인 1000개',
-        cost: '100,000원'
-    },
+    
     
 ];
 

@@ -1,6 +1,6 @@
 
 import React, {useState} from 'react';
-import { StyleSheet, Text, View,Image,TouchableOpacity,TextInput } from 'react-native';
+import { StyleSheet, Text, View,Image,TouchableOpacity,TextInput,KeyboardAvoidingView, Platform} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase'
@@ -55,7 +55,9 @@ export default function LoginPage({navigation}, props) {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+          style={styles.container}
+          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
           <Text style={styles.AppName}>App Linker's</Text>
         
         <Text style={styles.txt}>Follow Your Dream!</Text>
@@ -73,7 +75,7 @@ export default function LoginPage({navigation}, props) {
         <TouchableOpacity style={{marginTop:20}}><Text style={styles.forgetPW}>아이디/비밀번호 찾기</Text></TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={loginAuth}><Text style={styles.buttonTxt}>로 그 인</Text></TouchableOpacity>
         <TouchableOpacity style={styles.enter} onPress={goToSignup}><Text style={styles.enterTxt}>아직 회원이 아니신가요?</Text></TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

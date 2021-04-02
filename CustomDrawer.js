@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { MainPage} from './pages/MainPage'
 import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
 import { AsyncStorage } from 'react-native';
+import requestStudy from './pages/requestStudy';
 
 //const CustomDrawer = (props) => 
 
@@ -38,6 +39,10 @@ export default function CustomDrawer({navigation})  {
         navigation.navigate("BuyCoinPage");
       }
 
+      function request(){
+        navigation.navigate("requestStudy");
+      }
+
     return(
 
         <View >
@@ -63,8 +68,11 @@ export default function CustomDrawer({navigation})  {
                 <Text style={{color:'white', fontWeight:'500'}}>프로필 변경</Text>
             </TouchableOpacity>
             <View style={styles.banner}>
-                <Text style={{marginLeft:15, fontSize:18, color:'white'}}>튜터 신청</Text>
+                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>튜터 신청</Text>
             </View>
+            <TouchableOpacity style={styles.banner1} onPress={request}>
+                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>스터디 신청</Text>
+            </TouchableOpacity>
             <View style={styles.listTitle}>
                 <Text style={{fontSize:20, fontWeight:'700'}}>내 스터디</Text>
             </View>
@@ -154,6 +162,12 @@ const styles = StyleSheet.create({
     banner:{
         height:68,
         backgroundColor:'#fa7470',
+        marginTop:12,
+        justifyContent:'center'
+    },
+    banner1:{
+        height:68,
+        backgroundColor:'#467fd7',
         marginTop:12,
         justifyContent:'center'
     },

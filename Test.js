@@ -12,6 +12,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 import CustomDrawer from './CustomDrawer';
+import requestStudy from './pages/requestStudy'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 
@@ -31,14 +33,14 @@ const NavigationDrawerStructure = (props) => {
 
   return (
     <View style={{ flexDirection: 'row' }}>
-      <TouchableOpacity onPress={toggleDrawer}>
+      <TouchableWithoutFeedback onPress={toggleDrawer}>
         {/*Donute Button Image */}
         <Image style={styles.icon1}
                         source={{uri:'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/User%20icon%20(2).png?alt=media&token=f334db93-5686-4287-a29b-13ce9cec9b16'}}/>
-      </TouchableOpacity>
-      <TouchableOpacity><Image style={styles.icon}
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback><Image style={styles.icon}
                         source={require('./assets/settingIcon.png')}/>
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
       <View style={styles.alramContainer}>
         </View>
     </View>
@@ -129,7 +131,20 @@ function MainPageStack({ navigation }) {
           headerTitleAlign:'center',
           headerTintColor:'white'
         }}/>
+        <Stack.Screen name="requestStudy" component={requestStudy} 
+                  options={{
+                  title: "스터디 신청", //Set Header Title
+                  headerTitleStyle: styles.header1,
+                  headerStyle:{
+                    backgroundColor:'#fff',
+                    height:100,
+                  },
+                  headerTitleAlign:'center',
+                  headerTintColor:'#000'
+                }}/>
+
     </Stack.Navigator>
+    
   );
 }
 
