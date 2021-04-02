@@ -12,6 +12,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 import CustomDrawer from './CustomDrawer';
+import MentoApplyPage from './pages/MentoApplyPage';
 
 
 
@@ -34,10 +35,10 @@ const NavigationDrawerStructure = (props) => {
       <TouchableOpacity onPress={toggleDrawer}>
         {/*Donute Button Image */}
         <Image style={styles.icon}
-                        source={require('./assets/myIcon.png')}/>
+                        source={require('./assets/user.png')}/>
       </TouchableOpacity>
       <TouchableOpacity><Image style={styles.icon}
-                        source={require('./assets/settingIcon.png')}/>
+                        source={require('./assets/settings.png')}/>
                 </TouchableOpacity>
       <View style={styles.alramContainer}>
         </View>
@@ -98,7 +99,7 @@ function MainPageStack({ navigation }) {
           headerTitleStyle: styles.header,
         }}/>
 
-<Stack.Screen name ="JoinPage" component={JoinPage}
+        <Stack.Screen name ="JoinPage" component={JoinPage}
           options={{
           title: "", //Set Header Title
           headerTitleStyle: styles.header,
@@ -130,6 +131,21 @@ function MainPageStack({ navigation }) {
           },
           headerTitleAlign:'center',
           headerTintColor:'white'
+        }}/>
+        
+        <Stack.Screen name ="MentoApplyPage" component={MentoApplyPage}
+          options={{
+          title: "멘토 신청하기", //Set Header Title
+          headerTitleStyle: styles.header2,
+          headerStyle:{
+            backgroundColor:'#7cd175',
+            height:100
+          },
+          headerTitleAlign:'left',
+          headerTintColor:'white',
+          headerRight: () => (
+            <NavigationDrawerStructure navigationProps={navigation} style = {{height : 1000}}/>
+          ),
         }}/>
     </Stack.Navigator>
   );

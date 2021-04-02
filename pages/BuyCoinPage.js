@@ -77,6 +77,7 @@ export default function BuyCoinPage() {
     
     function coinplus(selected_coin) {
         firebase.database().ref('/users/' + getName + '/coin').set(getCoin + selected_coin);
+        console.log(getCoin);
     }
 
     const ItemView = ({ item }) => (
