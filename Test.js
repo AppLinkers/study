@@ -36,10 +36,10 @@ const NavigationDrawerStructure = (props) => {
         {/*Donute Button Image */}
 
         <Image style={styles.icon1}
-                        source={{uri:'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/User%20icon%20(2).png?alt=media&token=f334db93-5686-4287-a29b-13ce9cec9b16'}}/>
+                        source={require('./assets/user.png')}/>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback><Image style={styles.icon}
-                        source={require('./assets/settingIcon.png')}/>
+                        source={require('./assets/settings.png')}/>
                 </TouchableWithoutFeedback>
       <View style={styles.alramContainer}>
         </View>
