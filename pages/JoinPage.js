@@ -4,6 +4,22 @@ import { withOrientation } from 'react-navigation';
 import { SliderBox } from "react-native-image-slider-box";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import firebase from 'firebase'
+
+var firebaseConfig = {
+    apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
+    authDomain: "studyapp-3e58f.firebaseapp.com",
+    databaseURL: "https://studyapp-3e58f-default-rtdb.firebaseio.com",
+    projectId: "studyapp-3e58f",
+    storageBucket: "studyapp-3e58f.appspot.com",
+    messagingSenderId: "514395246608",
+    appId: "1:514395246608:web:2c39981eed6d3602b4fa95",
+    measurementId: "G-GL08SPFWYS"
+  };
+  // Initialize Firebase
+  if(firebase.apps.length===0){
+    firebase.initializeApp(firebaseConfig);
+  }
 
 
 
@@ -23,6 +39,7 @@ export default function JoinPage({navigation, route}) {
                 <Image style={styles.propilImage} source={require('../assets/profile.jpg')}/>
                 <Text style={styles.name}>이 름</Text>
                 <Text style={styles.studyName}>스터디 이름</Text>
+                <Text style={styles.studySubject}>과 목</Text>
                 <Text style={styles.studyShort}>"스터디 간단 소개"</Text>
                 <View style={styles.info}>
                     <View style={styles.infoBox}>
@@ -77,15 +94,24 @@ const styles = StyleSheet.create({
         
     },
     name:{
-        fontSize:20,
+        fontSize:18,
         marginTop:10
     },
     studyName:{
         alignSelf:'flex-start',
-        fontSize:22,
+        fontSize:20,
         fontWeight:'700',
         marginLeft:35,
-        marginTop:10
+        marginTop:10,
+        color:'black'
+    },
+    studySubject:{
+        alignSelf:'flex-start',
+        fontSize:15,
+        fontWeight:'700',
+        marginLeft:35,
+        marginTop:10,
+        color:'black'
     },
     studyShort:{
         fontSize:16,
@@ -121,13 +147,13 @@ const styles = StyleSheet.create({
         height:18
     },
     infoTxt:{
-        fontSize:15,
+        fontSize:13,
         marginTop:7,
         color:'gray'
     },
     studyDetail:{
         width:318,
-        height:305,
+        height:250,
         borderWidth:0.5,
         marginTop:15,
         paddingLeft:15,
@@ -141,7 +167,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#7cd175',
         justifyContent:'center',
         alignItems:'center',
-        marginTop:8
+        marginTop:20
     },
     joinTxt:{
         fontSize:16,

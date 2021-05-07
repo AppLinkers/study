@@ -26,9 +26,10 @@ export default function requestStudy({navigation}) {
     const [studyDay, setStudyDay] = useState('');
     const [studyLocate, setStudyLocate] = useState('');
     const [studyTerm, setStudyTerm] = useState('');
+    const [studyExplain, setStudyExplain] = useState('');
     const [studyWish, setStudyWish] = useState('');
 
-    function Request(studyName,intro,subject,people,day,locate,term,wish){
+    function Request(studyName,intro,subject,people,day,locate,term,explain,wish){
         var ref = firebase.database().ref('requestStudy/'+id);
     
         ref.set({
@@ -39,6 +40,7 @@ export default function requestStudy({navigation}) {
           day : day,
           locate : locate ,
           term : term,
+          explain : explain,
           wish : wish
         })
         navigation.navigate("MainPage")
@@ -100,17 +102,25 @@ export default function requestStudy({navigation}) {
             placeholder="스터디 기간을 입력하세요"
             onChangeText={text => setStudyTerm(text)}
             value={studyTerm}/>
+            <Text style={styles.title}>스터디 설명</Text>
+            <TextInput 
+            style={styles.input2} 
+            placeholder="스터디에 대한 설명을 구체적으로 적어주세요!" 
+            multiline={true}
+            onChangeText={text => setStudyExplain(text)}
+            value={studyExplain}/>
             <Text style={styles.title}>멘토에게 바라는 점</Text>
+            
             <TextInput 
             style={styles.input1} 
-            placeholder="" 
+            placeholder="멘토에게 바라는 점을 적어주세요!" 
             multiline={true}
             onChangeText={text => setStudyWish(text)}
             value={studyWish}/>
             <TouchableOpacity 
             style={styles.button}
-            onPress={()=>Request(studyName,studyIntro,studySubject,studyPeople,studyDay,studyLocate,studyTerm,studyWish)}>
-                <Text style={{color:'#fff', fontWeight:'700', fontSize:15}}>신 청 하 기</Text>
+            onPress={()=>Request(studyName,studyIntro,studySubject,studyPeople,studyDay,studyLocate,studyTerm,studyExplain,studyWish)}>
+                <Text style={{color:'#fff', fontWeight:'700', fontSize:14}}>신 청 하 기</Text>
             </TouchableOpacity>
             </ScrollView>
             
@@ -155,7 +165,19 @@ const styles = StyleSheet.create({
     },
     input1:{
         width:330,
-        height:150,
+        height:100,
+        borderWidth:1.5,
+        borderColor:'#7cd175',
+        paddingLeft:10,
+        paddingRight:10,
+        fontSize:12,
+        marginTop:15,
+        textAlignVertical:'top',
+        paddingTop:10
+    },
+    input2:{
+        width:330,
+        height:180,
         borderWidth:1.5,
         borderColor:'#7cd175',
         paddingLeft:10,

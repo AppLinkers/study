@@ -13,14 +13,18 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 import CustomDrawer from './CustomDrawer';
-
+import tutorApplyPage from './pages/tutorApplyPage'
 import requestStudy from './pages/requestStudy'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import OkMentoPage from './pages/OkMentoPage';
 
 
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+
+
 
 const NavigationDrawerStructure = (props) => {
 
@@ -35,11 +39,11 @@ const NavigationDrawerStructure = (props) => {
       <TouchableWithoutFeedback onPress={toggleDrawer}>
         {/*Donute Button Image */}
 
-        <Image style={styles.icon}
-                        source={require('./assets/user.png')}/>
+        <Image style={styles.icon1}
+                        source={{uri:'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/User%20icon%20(2).png?alt=media&token=f334db93-5686-4287-a29b-13ce9cec9b16'}}/>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback><Image style={styles.icon}
-                        source={require('./assets/settings.png')}/>
+                        source={require('./assets/settingIcon.png')}/>
                 </TouchableWithoutFeedback>
       <View style={styles.alramContainer}>
         </View>
@@ -145,8 +149,31 @@ function MainPageStack({ navigation }) {
                   headerTitleAlign:'center',
                   headerTintColor:'#000'
                 }}/>
-
-      <Stack.Screen name="MentoApplyPage" component={MentoApplyPage} 
+        <Stack.Screen name="OkMentoPage" component={OkMentoPage} 
+                  options={{
+                  title: "멘토 승락하기", //Set Header Title
+                  headerTitleStyle: styles.header3,
+                  headerStyle:{
+                    backgroundColor:'#7cd175',
+                    height:100,
+                  },
+                  headerTitleAlign:'center',
+                  headerTintColor:'#fff'
+                }}/>
+        
+        <Stack.Screen name="tutorApplyPage"
+        component={tutorApplyPage}
+        options={{
+            title: "튜텨 신청", //Set Header Title
+            headerTitleStyle: styles.header1,
+            headerStyle:{
+              backgroundColor:'#fff',
+              height:100
+            },
+            headerTitleAlign:'center',
+            headerTintColor:'#000'
+        }}/>
+         <Stack.Screen name="MentoApplyPage" component={MentoApplyPage} 
                  options={{
                   title: "멘토 신청하기", //Set Header Title
                   headerTitleStyle: styles.header2,
@@ -213,6 +240,13 @@ export default function Test(props){
       color:'white',
       fontWeight:'700',
       
+    },
+    header3:{
+      marginBottom:5,
+      marginRight:25,
+      fontSize:16,
+      color:'white',
+      fontWeight:'700',
     },
     icon:{
       height:35,

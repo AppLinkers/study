@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\aaaa\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add expo-connstants
+  C:\Program Files\nodejs\node.exe C:\Users\aaaa\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add expo-notification
 
 PATH: 
   D:\Program Files (x86)\VMware\VMware Player\bin\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\aaaa\anaconda3\Library\bin\graphviz;C:\Program Files\Java\jdk1.8.0_281\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\aaaa\anaconda3;C:\Users\aaaa\anaconda3\Scripts;C:\Users\aaaa\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip\;C:\Users\aaaa\anaconda3\Library\bin\graphviz;C:\Users\aaaa\AppData\Roaming\npm;C:\Users\aaaa\AppData\Local\Programs\Microsoft VS Code\bin;
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/expo-connstants: Not found
+  Error: https://registry.yarnpkg.com/expo-notification: Not found
       at Request.params.callback [as _callback] (C:\Users\aaaa\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66988:18)
       at Request.self.callback (C:\Users\aaaa\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140662:22)
       at Request.emit (events.js:315:20)
