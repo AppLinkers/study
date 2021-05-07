@@ -35,7 +35,7 @@ const NavigationDrawerStructure = (props) => {
       <TouchableWithoutFeedback onPress={toggleDrawer}>
         {/*Donute Button Image */}
 
-        <Image style={styles.icon1}
+        <Image style={styles.icon}
                         source={require('./assets/user.png')}/>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback><Image style={styles.icon}

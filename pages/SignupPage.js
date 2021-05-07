@@ -143,7 +143,7 @@ export default function signup({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style ={styles.button} onPress={testSMS}></TouchableOpacity>
+      <TouchableOpacity style ={styles.button} ></TouchableOpacity>
       <ScrollView>
         <Text style={{ marginTop: 30, alignSelf: 'flex-start', marginLeft: 5, fontSize: 14, color: 'black', }}>이 름</Text>
 
