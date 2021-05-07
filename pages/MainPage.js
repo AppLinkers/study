@@ -43,6 +43,9 @@ export default function MainPage({navigation, route, props}) {
        // navigation.navigate("SelectPage")
        navigation.navigate('SelectPage');
       }
+      function OkPage(){
+        navigation.navigate("OkMentoPage");
+      }
 
 
 
@@ -87,7 +90,7 @@ return(
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage} source={require('../assets/homeButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage2} source={require('../assets/chatButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Text style={{fontSize:18, color:'gray',fontWeight:'500'}}>QnA</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:20, paddingBottom:10, color:'gray',fontWeight:'700'}}>. . .</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:20, paddingBottom:10, color:'gray',fontWeight:'700'}} onPress={OkPage}>. . .</Text></TouchableOpacity>
         </View>
     </View>
         )

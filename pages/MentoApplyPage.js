@@ -39,12 +39,12 @@ firebase.database().ref("requestStudy").on('value', (snapshot) => {
             image: "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4"
         })
     })
+    list = Array.from(new Set(list));
 });
 
 
 
-export default function MentoApplyPage() {
-
+export default function heart_mentoApplyPage() {
     const [getName, setName] = useState('');
     const [subject, setSubject] = useState("");
     const [people, setPeople] = useState("");
@@ -52,50 +52,52 @@ export default function MentoApplyPage() {
     const [masterList, setMasterList] = useState(list);
     const [filteredList, setFilteredList] = useState(list);
     const [modalVisible, setModalVisible] = useState(false);
+    const [img_link, setImg_link] = useState("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart%20icon.png?alt=media&token=ac8afea9-122e-4cd1-a2f9-0632d5b8b608")
+    const [heart, setHeart] = useState(false);
     AsyncStorage.getItem('user').then(
         (value) =>
             setName(value)
     );
-        
+
     useEffect(() => {
         (() => registerForPushNotificationsAsync())();
     }, []);
 
     const registerForPushNotificationsAsync = async () => {
-        console.log(getName);
-        let token;
+        var token;
         if (Constants.isDevice) {
-          const { status: existingStatus } = await Notifications.getPermissionsAsync();
-          let finalStatus = existingStatus;
-          if (existingStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
-            finalStatus = status;
-          }
-          if (finalStatus !== 'granted') {
-            alert('Failed to get push token for push notification!');
-            return;
-          }
-          token = (await Notifications.getExpoPushTokenAsync()).data;
-          console.log(token);
+            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                return;
+            }
+            token = (await Notifications.getExpoPushTokenAsync()).data;
+            console.log(token);
         } else {
-          alert('Must use physical device for Push Notifications');
+            alert('Must use physical device for Push Notifications');
         }
-        
+
         if (token) {
-            firebase.database().ref('/users/'+getName+'/token').set(token);
+            console.log(getName);
+            firebase.database().ref('users/' + "aaa" + '/token').set(token);
         }
 
         if (Platform.OS === 'android') {
-          Notifications.setNotificationChannelAsync('default', {
-            name: 'default',
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#FF231F7C',
-          });
+            Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
         }
-      
+
         return token;
-      }
+    }
 
 
     const Filtering = (sel_sub, sel_peo, sel_day) => {
@@ -135,72 +137,100 @@ export default function MentoApplyPage() {
                     return filter_chk;
                 }
             );
-            setFilteredList(newData);
+            setFilteredList(Array.from(new Set(newData)));
         } else {
-            setFilteredList(list);
+            setFilteredList(Array.from(new Set(list)));
         }
     }
 
-    const double_chk = (item,user) => {
+    const double_chk = (item, user) => {
         var double = false;
-        if(item.apply_mento){
+        if (item.apply_mento) {
             Object.values(item.apply_mento).forEach(e => {
-                if(user == e.user) {
+                if (user == e.user) {
                     double = true;
                     return double;
-                }else{
+                } else {
                     double = false;
                 }
             })
         }
-        return double
+        return double;
     }
 
-    const apply = async (item,user) => {
-        console.log(item.user);
-        if(double_chk(item,user)){
+    const apply = async (item, user) => {
+        var token = "";
+        firebase.database().ref("users/" + item.user).on('value', snapshot => {
+            token = snapshot.val().token;
+        });
+
+        if (double_chk(item, user)) {
             Alert.alert("이미 신청 완료된 스터디 입니다.");
-        }else{
+        } else {
             Alert.alert(
                 "신청 확인",
                 "신청 하시겠습니까?",
                 [
                     {
                         text: "Ok",
-                        onPress: (user) => {
+                        onPress: () => {
                             const message = {
-                                to: "ExponentPushToken[iYJVUIE61KovNJEM9z96xD]",
+                                to: `${token}`,
                                 sound: 'default',
-                                title: 'Original Title',
-                                body: 'And here is the body!',
+                                title: item.studyName + "멘토 신청",
+                                body: user + '님이 멘토 신청을 하였습니다.',
                                 data: { someData: 'goes here' },
-                              };
-                            
-                               fetch('https://exp.host/--/api/v2/push/send', {
+                            };
+
+                            fetch('https://exp.host/--/api/v2/push/send', {
                                 method: 'POST',
                                 headers: {
-                                  Accept: 'application/json',
-                                  'Accept-encoding': 'gzip, deflate',
-                                  'Content-Type': 'application/json',
+                                    Accept: 'application/json',
+                                    'Accept-encoding': 'gzip, deflate',
+                                    'Content-Type': 'application/json',
                                 },
                                 body: JSON.stringify(message),
-                              });
-                            firebase.database().ref('/requestStudy/'+item.key+'/apply_mento').push().update({
-                                 user
                             });
-                            Alert.alert("신청 되었습니다.")}
+                            firebase.database().ref('/requestStudy/' + item.key + '/apply_mento').push().update({
+                                user
+                            });
+                            Alert.alert("신청 되었습니다.")
+                        }
                     },
                     {
                         text: "cancle"
-                    }                
+                    }
                 ],
-                {cancelable:false}
+                { cancelable: false }
             );
         }
     }
 
+    useEffect(() => {
+        (() => setFilteredList(Array.from(new Set(filteredList))))();
+    }, []);
+    
+    const ref = firebase.database().ref('/requestStudy/');
+    const heartchk = (item, user, heart) => {
+        console.log(heart);
+        if (heart == true) {
+            console.log("2")
+            
+            setImg_link("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart%20icon.png?alt=media&token=ac8afea9-122e-4cd1-a2f9-0632d5b8b608");
+            setHeart(false);
+        } else {
+            ref.child( item.key + '/heart_mento').push().update({
+                user
+            });
+            console.log(user);
+            console.log("1");
+            setHeart(true);
+            setImg_link("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/full_star.png?alt=media&token=db37ebaf-d297-410a-8691-6feef73b1cd1");
+        }
+    }
+
     const ItemView = ({ item }) => (
-        <View style={styles.studylist}>
+        <View style={styles.studylist} >
             <View style={styles.study}>
                 <View style={{ paddingLeft: 10, flexDirection: 'row' }}>
                     <Image style={styles.subjectimage} source={{ uri: item.image }} />
@@ -210,7 +240,7 @@ export default function MentoApplyPage() {
                         <Text>희망 멘토 : {item.wish}</Text>
                         <Text>인원 : {item.people}명</Text>
                     </View>
-                    <TouchableOpacity ><Image style={{ width: 25, height: 25 }} source={{ uri: "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/full_star.png?alt=media&token=db37ebaf-d297-410a-8691-6feef73b1cd1" }} /></TouchableOpacity>
+                    <TouchableOpacity onPress={() => {heartchk(item, getName, heart) }}><Image style={{ width: 25, height: 25 }} source={{ uri: img_link }} /></TouchableOpacity>
                 </View>
                 <View style={styles.studybutton}>
                     <Modal
@@ -244,7 +274,7 @@ export default function MentoApplyPage() {
                         </View>
                     </Modal>
                     <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}><Text style={{ color: '#646363' }}>상세보기</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => apply(item,getName)} ><Text style={{ color: '#7cd175' }}>신청하기</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={() => apply(item, getName)} ><Text style={{ color: '#7cd175' }}>신청하기</Text></TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -252,9 +282,9 @@ export default function MentoApplyPage() {
     return (
         <View style={styles.container}>
             <View style={styles.menu}>
-                <TouchableOpacity><Text style={{ marginHorizontal:5,fontWeight: '700', fontSize: 18, color: "black",borderBottomWidth: 1.5 }}>전체</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={{ marginHorizontal:5,fontWeight: '700', fontSize: 18, color: "black", borderBottomWidth: 1.5 }}>신청 스터디</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={{ marginHorizontal:5,fontWeight: '700', fontSize: 18, color: "black", borderBottomWidth: 1.5 }}>나를 찜한</Text></TouchableOpacity>
+                <TouchableOpacity><Text style={{ marginHorizontal: 5, fontWeight: '700', fontSize: 18, color: "black", borderBottomWidth: 1.5 }}>전체</Text></TouchableOpacity>
+                <TouchableOpacity><Text style={{ marginHorizontal: 5, fontWeight: '700', fontSize: 18, color: "black", borderBottomWidth: 1.5 }}>신청 스터디</Text></TouchableOpacity>
+                <TouchableOpacity><Text style={{ marginHorizontal: 5, fontWeight: '700', fontSize: 18, color: "black", borderBottomWidth: 1.5 }}>나를 찜한</Text></TouchableOpacity>
             </View>
             <View style={styles.searchFilter} >
                 <Text style={{ marginBottom: 15, marginLeft: 10, fontWeight: '700', fontSize: 14 }}>검색 필터</Text>
@@ -303,13 +333,15 @@ export default function MentoApplyPage() {
                 </View>
             </View>
             <FlatList
-                data={filteredList}
+                data={Array.from(new Set(filteredList))}
                 renderItem={ItemView}
                 keyExtractor={(item) => item.key} />
+                
         </View>
+        
     )
-
     
+
 }
 
 
@@ -319,7 +351,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0f0f0'
     },
     menu: {
-        paddingLeft:5 ,
+        paddingLeft: 5,
         flexDirection: 'row',
         height: 40,
         alignItems: 'center',
@@ -342,8 +374,8 @@ const styles = StyleSheet.create({
     studylist: {
         marginTop: 10,
         flexDirection: 'column',
-        borderRadius : 10,
-        alignItems:'center'
+        borderRadius: 10,
+        alignItems: 'center'
     },
     study: {
         height: 130,
@@ -351,8 +383,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         paddingTop: 10,
         marginBottom: 6,
-        borderRadius : 10,
-        width : 397
+        borderRadius: 10,
+        width: 397
     },
     subjectimage: {
         width: 75,
@@ -402,7 +434,7 @@ const styles = StyleSheet.create({
         padding: 10,
         elevation: 2,
         backgroundColor: '#7cd175',
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     textStyle: {
         color: "white",

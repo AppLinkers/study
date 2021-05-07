@@ -46,8 +46,12 @@ export default function CustomDrawer({ navigation }) {
     }
 
 
-      function request(){
+    function request(){
         navigation.navigate("requestStudy");
+      }
+    
+    function tutor(){
+        navigation.navigate("tutorApplyPage");
       }
 
     return(
@@ -71,11 +75,14 @@ export default function CustomDrawer({ navigation }) {
             <TouchableOpacity style={styles.profileChange} onPress={changeProile}>
                 <Text style={{color:'white', fontWeight:'500'}}>프로필 변경</Text>
             </TouchableOpacity>
-            <View style={styles.banner}>
-                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>튜터 신청</Text>
-            </View>
+            <TouchableOpacity style={styles.banner}>
+                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}} onPress={tutor}>튜터 신청</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.banner1} onPress={request}>
                 <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>스터디 신청</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.banner1} onPress={MentoApply}>
+                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>멘토 신청</Text>
             </TouchableOpacity>
             <View style={styles.listTitle}>
                 <Text style={{fontSize:20, fontWeight:'700'}}>내 스터디</Text>

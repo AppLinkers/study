@@ -7,14 +7,16 @@ import JoinPage from './pages/JoinPage';
 import SignupPage from './pages/SignupPage';
 import ChangeProfilePage from './pages/ChangeProfilePage';
 import BuyCoinPage from './pages/BuyCoinPage'
+import MentoApplyPage from './pages/MentoApplyPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 import CustomDrawer from './CustomDrawer';
-
+import tutorApplyPage from './pages/tutorApplyPage'
 import requestStudy from './pages/requestStudy'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import OkMentoPage from './pages/OkMentoPage';
 
 
 
@@ -147,6 +149,44 @@ function MainPageStack({ navigation }) {
                   headerTitleAlign:'center',
                   headerTintColor:'#000'
                 }}/>
+        <Stack.Screen name="OkMentoPage" component={OkMentoPage} 
+                  options={{
+                  title: "멘토 승락하기", //Set Header Title
+                  headerTitleStyle: styles.header3,
+                  headerStyle:{
+                    backgroundColor:'#7cd175',
+                    height:100,
+                  },
+                  headerTitleAlign:'center',
+                  headerTintColor:'#fff'
+                }}/>
+        
+        <Stack.Screen name="tutorApplyPage"
+        component={tutorApplyPage}
+        options={{
+            title: "튜텨 신청", //Set Header Title
+            headerTitleStyle: styles.header1,
+            headerStyle:{
+              backgroundColor:'#fff',
+              height:100
+            },
+            headerTitleAlign:'center',
+            headerTintColor:'#000'
+        }}/>
+         <Stack.Screen name="MentoApplyPage" component={MentoApplyPage} 
+                 options={{
+                  title: "멘토 신청하기", //Set Header Title
+                  headerTitleStyle: styles.header2,
+                  headerStyle:{
+                    backgroundColor:'#7cd175',
+                    height:100
+                  },
+                  headerRight: () => (
+                    <NavigationDrawerStructure navigationProps={navigation} />
+                  ),
+                  headerTitleAlign:'center',
+                  headerTintColor:'white'
+                }}/>
 
     </Stack.Navigator>
     
@@ -200,6 +240,13 @@ export default function Test(props){
       color:'white',
       fontWeight:'700',
       
+    },
+    header3:{
+      marginBottom:5,
+      marginRight:25,
+      fontSize:16,
+      color:'white',
+      fontWeight:'700',
     },
     icon:{
       height:35,

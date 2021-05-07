@@ -1,97 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 import {firebase_db} from '../firebaseConfig'
+import firebase from 'firebase'
 import Card from '../Components/Card'
+import { AsyncStorage } from 'react-native';
+
+
 export default function SelectPage({navigation}) {
   console.disableYellowBox = true;
   //return 구문 밖에서는 슬래시 두개 방식으로 주석
 const[userID, setUserID]=useState('')
+
+const [state,setState] = useState([])
+
 
 AsyncStorage.getItem('user').then(
   (value) =>
     setUserID(value)
 );
 
-  const [state,setState] = useState([])
-
-  useEffect(()=>{
-
-    firebase_db.ref('/chat/devChat/info').once('value').then((snapshot) =>{
-      console.log("파이어베이스에서 데이터 가져왔습니다")
-      let info = snapshot.val();
-      setState(info)
-    })
-  },1000)
-
-  function goToChat(){
-    var authTemp=[]
-    var go = false;
-    firebase.database().ref('chat/devChat/auth').on("child_added", snapshot =>{
-      var authID = snapshot.val().id
-      authTemp.push(authID);
-    })
-    for(var i=0; i<authTemp.length; i++){
-      if(authTemp[i]===userID){
-        go = true;
-      }
+function goToChat(){
+  var authTemp=[]
+  var go = false;
+  firebase.database().ref('chat/devChat/auth').on("child_added", snapshot =>{
+    var authID = snapshot.val().id
+    authTemp.push(authID);
+  })
+  for(var i=0; i<authTemp.length; i++){
+    if(authTemp[i]===userID){
+      go = true;
     }
-
-    if(go==true){
-      navigation.navigate("ChatPage")
-    }else{
-      navigation.navigate("JoinPage")
-    }
-
-
-    
   }
 
+  if(go==true){
+    navigation.navigate("ChatPage")
+  }else{
+    navigation.navigate("JoinPage")
+  }
+}
+  
 
-  const ItemSeparatorView = () => {
-    return (
-      //Item Separator
-      <View
-      style={{ height: 0.5, width: '100%', backgroundColor: '#C8C8C8' }}
-    />
-    );
-  };
+  useEffect(() => {
+    firebase_db.ref('requestStudy').once('value').then((snapshot) => {
+      console.log("파이어베이스에서 데이터 가져왔습니다!!")
+      let request = snapshot.val();
+      setState(request)
+     
+    });
+  },[])
+
+ 
 
   
 
-  const ItemView = ({ item }) => {
-
-    return (
-      // Single Comes here which will be repeatative for the FlatListItems
-      <TouchableOpacity style={styles.chat} onPress={goToChat}>
-            <View style={styles.chat1}><Text style={styles.chatName}>{item.title}</Text><Text style={styles.chatPeople}>6</Text></View>
-            <View style={styles.chat2} >
-              <View style={styles.chatImage}>
-                <Image style={styles.jpg}
-                       source={{uri: item.image}}></Image>
-              </View>
-              <View style={styles.chatContnet}>
-                <Text style={styles.hostName}>{item.host}</Text>
-                <Text style={styles.hostIntro}
-                      numberOfLines={1}>{item.subtitle}</Text>
-              </View>
-              <View style={styles.chatDate}><Text style={styles.date}>{item.date}</Text></View>
-            </View>
-          </TouchableOpacity>
-    );
-  };
-
-
-  const selectList = [
-    {title: "React-native Study", host:"안승우", subTitle:"expo 이용해서 앱출시까지 마쳐봐요", date:"2021-02-09"+ " 개설", image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4"},
-    {title: "스타트업 스터디", host:"정승완", subTitle:"창업 컨퍼런스 인원 모집합니다!", date: state.date +" 개설", image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile2.jpg?alt=media&token=be4087a4-4ff5-4fe7-b0a2-b1c233f99313"},
-    {title: "JAVA 스터디", host:"이유석", subTitle:"코딩테스트 공부 같이해요", date:"2021-02-09"+ " 개설",image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile3.jpg?alt=media&token=d83432d6-bc4d-4df3-96a3-966b62653934"},
-    {title: "애견 스터디", host:"Rex", subTitle:"나를 범해주세요 주인님 하앍", date:"2021-02-09"+ " 개설", image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile4.jpg?alt=media&token=78f0a31b-2b53-4a52-aaa7-7b66a4a7dc4c"},
-  ]
-
+  
   return (
       <View style={styles.container}>
-        <View style={{height:50}}>
-        <ScrollView style={styles.selectStudy} horizontal={true}>
+        <View style={{height:40}}>
+        <ScrollView style={styles.selectStudy} horizontal={true} showsHorizontalScrollIndicator={false}>
           <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>기초개발</Text></TouchableOpacity>
           <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>앱/웹 개발</Text></TouchableOpacity>
           <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>시스템 개발</Text></TouchableOpacity>
@@ -102,17 +68,27 @@ AsyncStorage.getItem('user').then(
         </View>
         
         <ScrollView>
-
-        <FlatList
-            data={selectList}
-            ItemSeparatorComponent={ItemSeparatorView}
-            renderItem={ItemView}
-            keyExtractor={(item, index) => index.toString()}
-            />
+        <TouchableOpacity style={styles.chat} onPress={goToChat}>
+            <View style={styles.chat1}>
+              <Text style={styles.chatName}>개발스터디</Text>
+              <Text style={styles.chatPeople}>6</Text>
+            </View>
+            <View style={styles.chat2} >
+              <View style={styles.chatImage}>
+                <Image style={styles.jpg}
+                       source={{uri:'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4'}}></Image>
+              </View>
+              <View style={styles.chatContnet}>
+                <Text style={styles.hostName}>안승우</Text>
+                <Text style={styles.hostIntro}
+                      numberOfLines={1}>열심히 해요</Text>
+              </View>
+              <View style={styles.chatDate}><Text style={styles.date}>2021-04-09</Text></View>
+            </View>
+          </TouchableOpacity>
+        
+        
         </ScrollView>
-        <TouchableOpacity style={styles.addChat}>
-          <Text style={{fontSize:30, color:'white'}}>+</Text>
-        </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage} source={require('../assets/homeButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage2} source={require('../assets/chatButton.png')}></Image></TouchableOpacity>
@@ -130,17 +106,6 @@ const styles = StyleSheet.create({
 container:{
         flex:1,
         backgroundColor:'white',
-},
-
-addChat:{
-  borderRadius:30,
-  backgroundColor:'#7cd175',
-  height:60,
-  width:60,
-  marginLeft:310,
-  marginBottom:20,
-  alignItems:'center',
-  justifyContent:'center'
 },
 header:{
     backgroundColor:'white',
@@ -189,7 +154,24 @@ selectStudyTxt:{
   fontWeight:'700',
   color:'white'
 },
-chatContainer:{
+buttonContainer:{
+  justifyContent:'flex-end',
+  height:60,
+  flexDirection:'row',
+  backgroundColor:'#F2F2F2'
+},
+underButton:{
+  width:'25%',
+  justifyContent:'center',
+  alignItems:'center'
+},
+buttonImage:{
+  width:30,
+  height:30
+},
+buttonImage2:{
+  width:25,
+  height:25
 },
 chat:{
   height:150,
@@ -255,25 +237,6 @@ date:{
   color:'gray',
   marginRight:5,
 },
-buttonContainer:{
-  justifyContent:'flex-end',
-  height:60,
-  flexDirection:'row',
-  backgroundColor:'#F2F2F2'
-},
-underButton:{
-  width:'25%',
-  justifyContent:'center',
-  alignItems:'center'
-},
-buttonImage:{
-  width:30,
-  height:30
-},
-buttonImage2:{
-  width:25,
-  height:25
-}
 
 
 })

@@ -4,23 +4,43 @@ import {View, Image, Text, StyleSheet,TouchableOpacity} from 'react-native'
 
 
 export default function Card({content,navigation}){
-    function goToChat(){
-        navigation.navigate("JoinPage");
+  
+  function goToChat(){
+    var authTemp=[]
+    var go = false;
+    firebase.database().ref('chat/devChat/auth').on("child_added", snapshot =>{
+      var authID = snapshot.val().id
+      authTemp.push(authID);
+    })
+    for(var i=0; i<authTemp.length; i++){
+      if(authTemp[i]===userID){
+        go = true;
       }
+    }
+
+    if(go==true){
+      navigation.navigate("ChatPage")
+    }else{
+      navigation.navigate("JoinPage")
+    }
+  }
     return(
         <TouchableOpacity style={styles.chat} onPress={goToChat}>
-            <View style={styles.chat1}><Text style={styles.chatName}>{content.title}</Text><Text style={styles.chatPeople}>6</Text></View>
+            <View style={styles.chat1}>
+              <Text style={styles.chatName}>개발스터디</Text>
+              <Text style={styles.chatPeople}>6</Text>
+            </View>
             <View style={styles.chat2} >
               <View style={styles.chatImage}>
                 <Image style={styles.jpg}
                        source={{uri:'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4'}}></Image>
               </View>
               <View style={styles.chatContnet}>
-                <Text style={styles.hostName}>{content.host}</Text>
+                <Text style={styles.hostName}>안승우</Text>
                 <Text style={styles.hostIntro}
-                      numberOfLines={1}>{content.subtitle}</Text>
+                      numberOfLines={1}>열심히 해요</Text>
               </View>
-              <View style={styles.chatDate}><Text style={styles.date}>{content.date}</Text></View>
+              <View style={styles.chatDate}><Text style={styles.date}>2021-04-09</Text></View>
             </View>
           </TouchableOpacity>
     )}
