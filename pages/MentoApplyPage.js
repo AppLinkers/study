@@ -212,18 +212,14 @@ export default function heart_mentoApplyPage() {
     
     const ref = firebase.database().ref('/requestStudy/');
     const heartchk = (item, user, heart) => {
-        console.log(heart);
         if (heart == true) {
-            console.log("2")
-            
+            ref.child( item.key + '/heart_mento').child(user).remove();
             setImg_link("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart%20icon.png?alt=media&token=ac8afea9-122e-4cd1-a2f9-0632d5b8b608");
             setHeart(false);
         } else {
             ref.child( item.key + '/heart_mento').push().update({
                 user
             });
-            console.log(user);
-            console.log("1");
             setHeart(true);
             setImg_link("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/full_star.png?alt=media&token=db37ebaf-d297-410a-8691-6feef73b1cd1");
         }

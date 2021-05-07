@@ -30,9 +30,9 @@ export default function requestStudy({navigation}) {
     const [studyWish, setStudyWish] = useState('');
 
     function Request(studyName,intro,subject,people,day,locate,term,explain,wish){
-        var ref = firebase.database().ref('requestStudy/'+id);
+        var ref = firebase.database().ref('requestStudy/');
     
-        ref.set({
+        ref.push().set({
           studyName: studyName,
           intro: intro,
           subject : subject,
