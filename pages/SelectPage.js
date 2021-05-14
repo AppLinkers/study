@@ -92,8 +92,8 @@ function goToChat(){
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage} source={require('../assets/homeButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage2} source={require('../assets/chatButton.png')}></Image></TouchableOpacity>
-          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:18, color:'gray',fontWeight:'500'}}>QnA</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:20, paddingBottom:10, color:'gray',fontWeight:'700'}}>. . .</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:15, color:'gray',fontWeight:'500'}}>QnA</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:18, paddingBottom:10, color:'gray',fontWeight:'700'}}>. . .</Text></TouchableOpacity>
         </View> 
 
         
@@ -166,12 +166,12 @@ underButton:{
   alignItems:'center'
 },
 buttonImage:{
-  width:30,
-  height:30
-},
-buttonImage2:{
   width:25,
   height:25
+},
+buttonImage2:{
+  width:20,
+  height:20
 },
 chat:{
   height:150,

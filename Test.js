@@ -61,6 +61,11 @@ function MainPageStack({ navigation }) {
         component={MainPage}
         options={{
           title: "App Linker's", //Set Header Title
+          headerTitleAlign:'center',
+          headerStyle:{
+            height:100
+          },
+          headerTintColor:'white',
           headerRight: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
@@ -82,11 +87,15 @@ function MainPageStack({ navigation }) {
 
         <Stack.Screen name ="SelectPage" component={SelectPage}
           options={{
-          title: "App Linker's", //Set Header Title
+          title: "스터디 참여하기", //Set Header Title
+          headerTitleAlign:'center',
+          headerStyle:{
+            height:100
+          },
           headerRight: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          headerTitleStyle: styles.header,
+          headerTitleStyle: styles.header1,
         }}/>
 
         <Stack.Screen name="SignupPage" component={SignupPage} 
@@ -223,8 +232,8 @@ export default function Test(props){
   const styles = StyleSheet.create({
     header:{
       marginBottom:15,
-      fontSize:25,
-      color:'#A5DF00',
+      fontSize:22,
+      color:'#7cd175',
       fontWeight:'700'
     },
     header1:{
@@ -249,13 +258,13 @@ export default function Test(props){
       fontWeight:'700',
     },
     icon:{
-      height:35,
-      width:35,
+      height:30,
+      width:30,
       marginRight:12
     },
     icon1:{
-      height:28,
-      width:28,
+      height:25,
+      width:25,
       marginRight:7
     },
     nameContainer:{

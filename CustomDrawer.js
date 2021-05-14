@@ -69,37 +69,37 @@ export default function CustomDrawer({ navigation }) {
                 </View>
                 <View style={styles.profileInfo}>
                     <Text style={styles.profileName}>{getName}</Text>
-                    <Text>보유 코인: {getCoin}</Text>
+                    <Text style={{fontSize:13}}>보유 코인: {getCoin}</Text>
                 </View>
             </View>
             <TouchableOpacity style={styles.profileChange} onPress={changeProile}>
-                <Text style={{color:'white', fontWeight:'500'}}>프로필 변경</Text>
+                <Text style={{color:'white', fontWeight:'700', fontSize:12}}>프로필 변경</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.banner}>
-                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}} onPress={tutor}>튜터 신청</Text>
+                <Text style={{marginLeft:15, fontSize:13, color:'white',fontWeight:'700'}} onPress={tutor}>튜터 신청</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.banner1} onPress={request}>
-                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>스터디 신청</Text>
+                <Text style={{marginLeft:15, fontSize:13, color:'white',fontWeight:'700'}}>스터디 신청</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.banner1} onPress={MentoApply}>
-                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>멘토 신청</Text>
+            <TouchableOpacity style={styles.banner2} onPress={MentoApply}>
+                <Text style={{marginLeft:15, fontSize:13, color:'white',fontWeight:'700'}}>멘토 신청</Text>
             </TouchableOpacity>
             <View style={styles.listTitle}>
-                <Text style={{fontSize:20, fontWeight:'700'}}>내 스터디</Text>
+                <Text style={{fontSize:17, fontWeight:'700'}}>내 스터디</Text>
             </View>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Android 스터디 룸</Text></TouchableOpacity>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Expo 스터디 룸</Text></TouchableOpacity>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>창업 스터디 룸</Text></TouchableOpacity>
            
             <View style={styles.listTitle}>
-                <Text style={{fontSize:20, fontWeight:'700'}}>고객센터</Text>
+                <Text style={{fontSize:17, fontWeight:'700'}}>고객센터</Text>
             </View>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>공지사항</Text></TouchableOpacity>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>문의하기</Text></TouchableOpacity>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>사용 가이드</Text></TouchableOpacity>
            
             <View style={styles.listTitle}>
-                <Text style={{fontSize:20, fontWeight:'700'}}>코인</Text>
+                <Text style={{fontSize:17, fontWeight:'700'}}>코인</Text>
             </View>
             <TouchableOpacity style={styles.listContainer} onPress={BuyCoin}><Text style={styles.listName}>코인충전</Text></TouchableOpacity>
 
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
         paddingLeft: 5
     },
     profileName: {
-        fontSize: 20,
+        fontSize: 17,
         fontWeight: '700',
         marginBottom: 7
     },
@@ -177,6 +177,12 @@ const styles = StyleSheet.create({
 
     banner1:{
         height:68,
+        backgroundColor:'#f5a44d',
+        marginTop:12,
+        justifyContent:'center'
+    },
+    banner2:{
+        height:68,
         backgroundColor:'#467fd7',
         marginTop:12,
         justifyContent:'center'
@@ -189,8 +195,11 @@ const styles = StyleSheet.create({
         paddingLeft:15,
         paddingBottom:10
     },
+    listName:{
+        fontSize:12
+    },
     listContainer: {
-        height: 68,
+        height: 55,
         justifyContent: 'center',
         paddingLeft: 15
     }
