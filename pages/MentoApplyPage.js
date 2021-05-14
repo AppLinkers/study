@@ -22,29 +22,54 @@ var firebaseConfig = {
 if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
 }
+var list = [];
+
+AsyncStorage.getItem('user').then(
+    (value) => {
+        firebase.database().ref("requestStudy").on('value', (snapshot) => {
+    
+            list = [];
+            snapshot.forEach((child) => {
+                var heart = false;
+                var heart_img = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart%20icon.png?alt=media&token=ac8afea9-122e-4cd1-a2f9-0632d5b8b608";
+                // heart init
+                var heart_mento = child.val().heart_mento;
+                if (heart_mento) {
+                    Object.values(heart_mento).forEach(e => {
+                        console.log("1");
+                        console.log(value);
+                        if (value == e.user) {
+                            heart = true;
+                            heart_img = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart.png?alt=media&token=f1d57d52-74d4-4d41-8c9c-7bd02c51bc5a";
+                        } else {
+                            heart_img = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart%20icon.png?alt=media&token=ac8afea9-122e-4cd1-a2f9-0632d5b8b608";
+                            heart = false;
+                        }
+                    })
+                }
+                list.push({
+                    user: child.val().user,
+                    key: child.key,
+                    subject: child.val().subject,
+                    day: child.val().day,
+                    studyName: child.val().studyName,
+                    wish: child.val().wish,
+                    people: child.val().people,
+                    apply_mento: child.val().apply_mento,
+                    heart: heart,
+                    heart_img: heart_img,
+                    image: "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4"
+                })
+            })
+            list = Array.from(new Set(list));
+        });
+        
+    }
+);
 
 
-var list = []
-firebase.database().ref("requestStudy").on('value', (snapshot) => {
-    snapshot.forEach((child) => {
-        list.push({
-            user: child.val().user,
-            key: child.key,
-            subject: child.val().subject,
-            day: child.val().day,
-            studyName: child.val().studyName,
-            wish: child.val().wish,
-            people: child.val().people,
-            apply_mento: child.val().apply_mento,
-            image: "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4"
-        })
-    })
-    list = Array.from(new Set(list));
-});
 
-
-
-export default function heart_mentoApplyPage() {
+export default function MentoApplyPage() {
     const [getName, setName] = useState('');
     const [subject, setSubject] = useState("");
     const [people, setPeople] = useState("");
@@ -52,8 +77,9 @@ export default function heart_mentoApplyPage() {
     const [masterList, setMasterList] = useState(list);
     const [filteredList, setFilteredList] = useState(list);
     const [modalVisible, setModalVisible] = useState(false);
-    const [img_link, setImg_link] = useState("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart%20icon.png?alt=media&token=ac8afea9-122e-4cd1-a2f9-0632d5b8b608")
-    const [heart, setHeart] = useState(false);
+    const [topFilter, setTopFilter] = useState(1);
+    const [top_color,setTop_color] = useState(["black","#646363", "#646363" ]);
+    const [a, setA] = useState("");
     AsyncStorage.getItem('user').then(
         (value) =>
             setName(value)
@@ -158,6 +184,8 @@ export default function heart_mentoApplyPage() {
         return double;
     }
 
+
+
     const apply = async (item, user) => {
         var token = "";
         firebase.database().ref("users/" + item.user).on('value', snapshot => {
@@ -209,78 +237,131 @@ export default function heart_mentoApplyPage() {
     useEffect(() => {
         (() => setFilteredList(Array.from(new Set(filteredList))))();
     }, []);
-    
+
     const ref = firebase.database().ref('/requestStudy/');
-    const heartchk = (item, user, heart) => {
-        if (heart == true) {
-            ref.child( item.key + '/heart_mento').child(user).remove();
-            setImg_link("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart%20icon.png?alt=media&token=ac8afea9-122e-4cd1-a2f9-0632d5b8b608");
-            setHeart(false);
+    const heartchk = (item, user) => {
+        
+        if (item.heart == true) {
+            var same_key = [];
+            ref.child(item.key + '/heart_mento').once("value").then(function (snapshot) {
+                var name = snapshot.val();
+                for (var e in name) {
+                    if (user === name[e].user) {
+                        same_key.push(e);
+                    }
+                }
+                same_key.forEach(i => {
+                    ref.child(item.key + '/heart_mento/' + i).remove();
+                })
+            });
+            item.heart_img = ("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart%20icon.png?alt=media&token=ac8afea9-122e-4cd1-a2f9-0632d5b8b608");
+            item.heart = (false);
         } else {
-            ref.child( item.key + '/heart_mento').push().update({
+            ref.child(item.key + '/heart_mento').push().update({
                 user
             });
-            setHeart(true);
-            setImg_link("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/full_star.png?alt=media&token=db37ebaf-d297-410a-8691-6feef73b1cd1");
+            item.heart = (true);
+            item.heart_img = ("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart.png?alt=media&token=f1d57d52-74d4-4d41-8c9c-7bd02c51bc5a");
+        }
+        setA(item.heart_img);
+    }
+
+    
+    const top_menu = (ith, user) => {
+        var new_top_color = [0,1,2];
+        for(var i in new_top_color){
+            if(ith == i){
+                new_top_color[i] = "black";
+            }else{
+                new_top_color[i] = "#646363"
+            }
+        }
+        setTop_color(new_top_color);
+
+        if (ith == 0) {
+            setFilteredList(Array.from(new Set(list)));
+        } else if (ith == 1) {
+            const newData = masterList.filter(
+                function (item) {
+                    var filter_chk = false;
+                    if(item.apply_mento){
+                        // object 타입을 리스트 형태로 변환 하든가 오브젝트에서 각 요소를 뽑아오기.
+                        console.log(typeof(Array.from(Object.values(item.apply_mento))))
+                        for(var e in Object.values(item.apply_mento)){
+                            // if(user == Ob)
+                        }
+                    }else{
+                        filter_chk = false;
+                    }
+                    return filter_chk;
+                }
+            );
+            setFilteredList(Array.from(new Set(newData)));
+        } else{
+            setFilteredList(Array.from(new Set(list)));
         }
     }
 
-    const ItemView = ({ item }) => (
-        <View style={styles.studylist} >
-            <View style={styles.study}>
-                <View style={{ paddingLeft: 10, flexDirection: 'row' }}>
-                    <Image style={styles.subjectimage} source={{ uri: item.image }} />
-                    <View style={{ justifyContent: 'space-evenly', width: 270, height: 75 }}>
-                        <Text>신청 과목 : {item.subject}</Text>
-                        <Text>요일 : {item.day}</Text>
-                        <Text>희망 멘토 : {item.wish}</Text>
-                        <Text>인원 : {item.people}명</Text>
-                    </View>
-                    <TouchableOpacity onPress={() => {heartchk(item, getName, heart) }}><Image style={{ width: 25, height: 25 }} source={{ uri: img_link }} /></TouchableOpacity>
-                </View>
-                <View style={styles.studybutton}>
-                    <Modal
-                        animationType="none"
-                        transparent={true}
-                        visible={modalVisible}
-                        onRequestClose={() => {
-                            setModalVisible(!modalVisible);
-                        }}
-                    >
-                        <View style={styles.centeredView}>
-                            <View style={styles.modalView}>
-                                <View >
-                                    <Text style={styles.modalText}>스</Text>
-                                    <Text style={styles.modalText}>스</Text>
-                                    <Text style={styles.modalText}>스</Text>
-                                    <Text style={styles.modalText}>스</Text>
-                                    <Text style={styles.modalText}>스</Text>
-                                    <Text style={styles.modalText}>스</Text>
-                                    <Text style={styles.modalText}>스</Text>
-                                    <Text style={styles.modalText}>스</Text>
-                                    <Text style={styles.modalText}>스</Text>
-                                </View>
-                                <Pressable
-                                    style={styles.buttonClose}
-                                    onPress={() => setModalVisible(!modalVisible)}
-                                >
-                                    <Text style={styles.textStyle}>확인 완료</Text>
-                                </Pressable>
-                            </View>
+    const ItemView = ({ item }) => {
+        return (
+            <View style={styles.studylist} >
+                <View style={styles.study}>
+                    <View style={{ paddingLeft: 10, flexDirection: 'row' }}>
+                        <Image style={styles.subjectimage} source={{ uri: item.image }} />
+                        <View style={{ justifyContent: 'space-evenly', width: 270, height: 75 }}>
+                            <Text>신청 과목 : {item.subject}</Text>
+                            <Text>요일 : {item.day}</Text>
+                            <Text>희망 멘토 : {item.wish}</Text>
+                            <Text>인원 : {item.people}명</Text>
                         </View>
-                    </Modal>
-                    <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}><Text style={{ color: '#646363' }}>상세보기</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => apply(item, getName)} ><Text style={{ color: '#7cd175' }}>신청하기</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => { heartchk(item, getName) }}><Image style={{ width: 25, height: 25 }} source={{ uri: item.heart_img }} /></TouchableOpacity>
+                    </View>
+                    <View style={styles.studybutton}>
+                        <Modal
+                            animationType="none"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                                setModalVisible(!modalVisible);
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <View >
+                                        <Text style={styles.modalText}>스</Text>
+                                        <Text style={styles.modalText}>스</Text>
+                                        <Text style={styles.modalText}>스</Text>
+                                        <Text style={styles.modalText}>스</Text>
+                                        <Text style={styles.modalText}>스</Text>
+                                        <Text style={styles.modalText}>스</Text>
+                                        <Text style={styles.modalText}>스</Text>
+                                        <Text style={styles.modalText}>스</Text>
+                                        <Text style={styles.modalText}>스</Text>
+                                    </View>
+                                    <Pressable
+                                        style={styles.buttonClose}
+                                        onPress={() => setModalVisible(!modalVisible)}
+                                    >
+                                        <Text style={styles.textStyle}>확인 완료</Text>
+                                    </Pressable>
+                                </View>
+                            </View>
+                        </Modal>
+                        <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}><Text style={{ color: '#646363' }}>상세보기</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => apply(item, getName)} ><Text style={{ color: '#7cd175' }}>신청하기</Text></TouchableOpacity>
+                    </View>
                 </View>
             </View>
-        </View>
-    );
+        );
+
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.menu}>
-                <TouchableOpacity><Text style={{ marginHorizontal: 5, fontWeight: '700', fontSize: 18, color: "black", borderBottomWidth: 1.5 }}>전체</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={{ marginHorizontal: 5, fontWeight: '700', fontSize: 18, color: "black", borderBottomWidth: 1.5 }}>신청 스터디</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={{ marginHorizontal: 5, fontWeight: '700', fontSize: 18, color: "black", borderBottomWidth: 1.5 }}>나를 찜한</Text></TouchableOpacity>
+                <TouchableOpacity onPress = {() => {top_menu(0,getName)}}><Text style={[{color: top_color[0] },styles.top_menu]}>전체</Text></TouchableOpacity>
+                <TouchableOpacity onPress = {() => {top_menu(1,getName)}}><Text style={[{color: top_color[1] },styles.top_menu]}>신청 스터디</Text></TouchableOpacity>
+                <TouchableOpacity onPress = {() => {top_menu(2,getName)}}><Text style={[{color: top_color[2] },styles.top_menu]}>나를 찜한</Text></TouchableOpacity>
             </View>
             <View style={styles.searchFilter} >
                 <Text style={{ marginBottom: 15, marginLeft: 10, fontWeight: '700', fontSize: 14 }}>검색 필터</Text>
@@ -328,20 +409,24 @@ export default function heart_mentoApplyPage() {
                     </View>
                 </View>
             </View>
+
             <FlatList
                 data={Array.from(new Set(filteredList))}
                 renderItem={ItemView}
-                keyExtractor={(item) => item.key} />
-                
+                keyExtractor={(item, index) => index.toString()}
+            />
         </View>
-        
     )
-    
-
 }
 
 
 const styles = StyleSheet.create({
+    top_menu:{
+        marginHorizontal: 5,
+        fontWeight: '700',
+        fontSize: 18, 
+        borderBottomWidth: 1.5
+    },
     container: {
         flex: 1,
         backgroundColor: '#f0f0f0'

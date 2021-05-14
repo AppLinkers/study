@@ -35,7 +35,6 @@ const DATA = [
         cost: '30,000원',
         value : 30000
     },
-    
 ];
 
 var firebaseConfig = {
@@ -55,7 +54,7 @@ if (firebase.apps.length === 0) {
 }
 
 export default function BuyCoinPage() {
-
+    console.log("test");
     const [getName, setName] = useState('');
     const [getCoin, setCoin] = useState('');
 
@@ -74,18 +73,23 @@ export default function BuyCoinPage() {
         console.log(getCoin);
     }
 
-    const ItemView = ({ item }) => (
-        <View style={styles.lines}>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Image style={styles.coinImage} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/coin%20icon.png?alt=media&token=7f9c00f0-0772-4f37-8779-9ccf5acc1048' }} />
+    const ItemView = ({ item }) => {
+        return (
+            <View style={styles.lines}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Image style={styles.coinImage} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/coin%20icon.png?alt=media&token=7f9c00f0-0772-4f37-8779-9ccf5acc1048' }} />
+                </View>
+                <View style={{ flex: 3, justifyContent: 'center' }}><Text>{item.title}</Text></View>
+                <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity style={styles.buyButton} onPress={() => coinplus(item.value)} ><Text style={{ color: 'white', fontWeight: '700' }}>{item.cost}</Text></TouchableOpacity>
+                </View>
             </View>
-            <View style={{ flex: 3, justifyContent: 'center' }}><Text>{item.title}</Text></View>
-            <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
-                <TouchableOpacity style={styles.buyButton} onPress={() => coinplus(item.value)} ><Text style={{ color: 'white', fontWeight: '700' }}>{item.cost}</Text></TouchableOpacity>
-            </View>
-        </View>
-    );
+        );
+    };
     const [modalVisible, setModalVisible] = useState(false);
+
+    
+
     return (
         <View style={styles.container}>
             <View style={styles.myCoin}>
@@ -120,7 +124,7 @@ export default function BuyCoinPage() {
             <FlatList
                 data={DATA}
                 renderItem={ItemView}
-                keyExtractor={(index) => index.toString()} />
+                keyExtractor={(item,index) => index.toString()} />
             <View style={{ height: 45, borderBottomWidth: 0.5, marginBottom: 183, borderBottomColor: 'gray', justifyContent: 'flex-end' }}>
                 <Text style={{ marginLeft: 10, marginBottom: 5, fontWeight: '700', fontSize: 12 }}>코인 이용안내</Text>
             </View>
