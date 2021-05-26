@@ -8,7 +8,7 @@ import SignupPage from './pages/SignupPage';
 import ChangeProfilePage from './pages/ChangeProfilePage';
 import BuyCoinPage from './pages/BuyCoinPage'
 import MentoApplyPage from './pages/MentoApplyPage';
-import MyStudyPage from './pages/MyStudyPage';
+import MyStudyPage from './pages/MyStudy/MyStudyPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
@@ -18,7 +18,8 @@ import tutorApplyPage from './pages/tutorApplyPage'
 import requestStudy from './pages/requestStudy'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import OkMentoPage from './pages/OkMentoPage';
-import ToDoPage from './pages/ToDoPage';
+import ToDoPage from './pages/MyStudy/ToDoPage';
+import ProgressPage from './pages/MyStudy/ProgressPage';
 
 
 
@@ -177,7 +178,7 @@ function MainPageStack({ navigation }) {
         }} />
       <Stack.Screen name="MentoApplyPage" component={MentoApplyPage}
         options={{
-          title: "멘토 신청하기", //Set Header Title
+          title: "Mento Apply", //Set Header Title
           headerTitleStyle: styles.header2,
           headerStyle: {
             backgroundColor: '#7cd175',
@@ -203,10 +204,25 @@ function MainPageStack({ navigation }) {
           headerTitleAlign: 'center',
           headerTintColor: 'white'
         }} />
-        
+
       <Stack.Screen name="ToDoPage" component={ToDoPage}
         options={{
-          title: "ToDoPage", //Set Header Title
+          title: "To Do List", //Set Header Title
+          headerTitleStyle: styles.header2,
+          headerStyle: {
+            backgroundColor: '#7cd175',
+            height: 100
+          },
+          headerRight: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTitleAlign: 'center',
+          headerTintColor: 'white'
+        }} />
+
+      <Stack.Screen name="ProgressPage" component={ProgressPage}
+        options={{
+          title: "Progress", //Set Header Title
           headerTitleStyle: styles.header2,
           headerStyle: {
             backgroundColor: '#7cd175',
@@ -220,6 +236,10 @@ function MainPageStack({ navigation }) {
         }} />
 
     </Stack.Navigator>
+
+
+
+
 
   );
 }
@@ -268,9 +288,9 @@ const styles = StyleSheet.create({
   },
   header2: {
     marginBottom: 15,
-    fontSize: 20,
+    fontSize: 29,
     color: 'white',
-    fontWeight: '700',
+    fontWeight: '600',
 
   },
   header3: {

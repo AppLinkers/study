@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View,Image,TouchableOpacity,TextInput,KeyboardAvoidingView, Platform} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import firebase from 'firebase'
+import firebase from 'firebase';
 import CustomDrawer from '../CustomDrawer';
 import App from '../App';
 import { AsyncStorage } from 'react-native';
