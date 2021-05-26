@@ -27,17 +27,15 @@ var list = [];
 AsyncStorage.getItem('user').then(
     (value) => {
         firebase.database().ref("requestStudy").on('value', (snapshot) => {
-    
             list = [];
-            snapshot.forEach((child) => {
+            snapshot.forEach((child1) => {
+                var child = child1.val().chattingRoom;
                 var heart = false;
                 var heart_img = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart%20icon.png?alt=media&token=ac8afea9-122e-4cd1-a2f9-0632d5b8b608";
                 // heart init
-                var heart_mento = child.val().heart_mento;
+                var heart_mento = child.heart_mento;
                 if (heart_mento) {
                     Object.values(heart_mento).forEach(e => {
-                        console.log("1");
-                        console.log(value);
                         if (value == e.user) {
                             heart = true;
                             heart_img = "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart.png?alt=media&token=f1d57d52-74d4-4d41-8c9c-7bd02c51bc5a";
@@ -48,14 +46,14 @@ AsyncStorage.getItem('user').then(
                     })
                 }
                 list.push({
-                    user: child.val().user,
-                    key: child.key,
-                    subject: child.val().subject,
-                    day: child.val().day,
-                    studyName: child.val().studyName,
-                    wish: child.val().wish,
-                    people: child.val().people,
-                    apply_mento: child.val().apply_mento,
+                    user: child.user,
+                    key: child1.key,
+                    subject: child.subject,
+                    day: child.day,
+                    studyName: child.studyName,
+                    wish: child.wish,
+                    people: child.people,
+                    apply_mento: child.apply_mento,
                     heart: heart,
                     heart_img: heart_img,
                     image: "https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4"
@@ -171,8 +169,8 @@ export default function MentoApplyPage() {
 
     const double_chk = (item, user) => {
         var double = false;
-        if (item.apply_mento) {
-            Object.values(item.apply_mento).forEach(e => {
+        if (item.chattingRoom.apply_mento) {
+            Object.values(item.chattingRoom.apply_mento).forEach(e => {
                 if (user == e.user) {
                     double = true;
                     return double;
@@ -190,6 +188,10 @@ export default function MentoApplyPage() {
         var token = "";
         firebase.database().ref("users/" + item.user).on('value', snapshot => {
             token = snapshot.val().token;
+        });
+        var key = item.key;
+        firebase.database().ref("requestStudy/" + item.key ).on('value', (snapshot) => {
+            item = snapshot.val()
         });
 
         if (double_chk(item, user)) {
@@ -219,7 +221,7 @@ export default function MentoApplyPage() {
                                 },
                                 body: JSON.stringify(message),
                             });
-                            firebase.database().ref('/requestStudy/' + item.key + '/apply_mento').push().update({
+                            firebase.database().ref('/requestStudy/' + key + '/chattingRoom/apply_mento').push().update({
                                 user
                             });
                             Alert.alert("신청 되었습니다.")
@@ -240,10 +242,9 @@ export default function MentoApplyPage() {
 
     const ref = firebase.database().ref('/requestStudy/');
     const heartchk = (item, user) => {
-        
         if (item.heart == true) {
             var same_key = [];
-            ref.child(item.key + '/heart_mento').once("value").then(function (snapshot) {
+            ref.child(item.key + '/chattingRoom/heart_mento').once("value").then(function (snapshot) {
                 var name = snapshot.val();
                 for (var e in name) {
                     if (user === name[e].user) {
@@ -251,13 +252,13 @@ export default function MentoApplyPage() {
                     }
                 }
                 same_key.forEach(i => {
-                    ref.child(item.key + '/heart_mento/' + i).remove();
+                    ref.child(item.key + '/chattingRoom/heart_mento/' + i).remove();
                 })
             });
             item.heart_img = ("https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/heart%20icon.png?alt=media&token=ac8afea9-122e-4cd1-a2f9-0632d5b8b608");
             item.heart = (false);
         } else {
-            ref.child(item.key + '/heart_mento').push().update({
+            ref.child(item.key + '/chattingRoom/heart_mento').push().update({
                 user
             });
             item.heart = (true);
@@ -328,15 +329,12 @@ export default function MentoApplyPage() {
                             <View style={styles.centeredView}>
                                 <View style={styles.modalView}>
                                     <View >
-                                        <Text style={styles.modalText}>스</Text>
-                                        <Text style={styles.modalText}>스</Text>
-                                        <Text style={styles.modalText}>스</Text>
-                                        <Text style={styles.modalText}>스</Text>
-                                        <Text style={styles.modalText}>스</Text>
-                                        <Text style={styles.modalText}>스</Text>
-                                        <Text style={styles.modalText}>스</Text>
-                                        <Text style={styles.modalText}>스</Text>
-                                        <Text style={styles.modalText}>스</Text>
+                                        <Text style={styles.modalText}>스터디 이름 : {item.studyName}</Text>
+                                        <Text style={styles.modalText}>스터디 장 : {item.user}</Text>
+                                        <Text style={styles.modalText}>과목 : {item.subject}</Text>
+                                        <Text style={styles.modalText}>요일 : {item.day}</Text>
+                                        <Text style={styles.modalText}>인원수 : {item.people}</Text>
+                                        <Text style={styles.modalText}>희망 사항 : {item.wish}</Text>
                                     </View>
                                     <Pressable
                                         style={styles.buttonClose}
@@ -377,6 +375,7 @@ export default function MentoApplyPage() {
                             <Picker.Item label="개발" value="개발" />
                             <Picker.Item label="내신" value="내신" />
                             <Picker.Item label="창업" value="창업" />
+                            <Picker.Item label="토익" value="토익" />
                         </Picker>
 
                     </View>
@@ -403,8 +402,13 @@ export default function MentoApplyPage() {
                             mode="dropdown"
                         >
                             <Picker.Item color="grey" label="요일" value="" />
-                            <Picker.Item label="Java" value="java" />
-                            <Picker.Item label="JavaScript" value="js" />
+                            <Picker.Item label="월" value="월" />
+                            <Picker.Item label="화" value="화" />
+                            <Picker.Item label="수" value="수" />
+                            <Picker.Item label="목" value="목" />
+                            <Picker.Item label="금" value="금" />
+                            <Picker.Item label="토" value="토" />
+                            <Picker.Item label="일" value="일" />
                         </Picker>
                     </View>
                 </View>
