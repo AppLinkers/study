@@ -1,34 +1,56 @@
 import React from 'react'
 import {View, Image, Text, StyleSheet,TouchableOpacity} from 'react-native'
-
+import { AsyncStorage } from 'react-native';
 
 
 export default function Card({content,navigation}){
   
-  function goToChat(){
-    var authTemp=[]
-    var go = false;
-    firebase.database().ref('chat/devChat/auth').on("child_added", snapshot =>{
-      var authID = snapshot.val().id
-      authTemp.push(authID);
-    })
-    for(var i=0; i<authTemp.length; i++){
-      if(authTemp[i]===userID){
-        go = true;
-      }
-    }
+  const[userID, setUserID]=useState('')
 
-    if(go==true){
-      navigation.navigate("ChatPage")
-    }else{
-      navigation.navigate("JoinPage")
+const [state,setState] = useState([])
+
+
+AsyncStorage.getItem('user').then(
+  (value) =>
+    setUserID(value)
+);
+
+function goToChat(){
+  var authTemp=[]
+  var go = false;
+  firebase.database().ref('chat/devChat/auth').on("child_added", snapshot =>{
+    var authID = snapshot.val().id
+    authTemp.push(authID);
+  })
+  for(var i=0; i<authTemp.length; i++){
+    if(authTemp[i]===userID){
+      go = true;
     }
   }
+
+  if(go==true){
+    navigation.navigate("ChatPage")
+  }else{
+    navigation.navigate("JoinPage")
+  }
+}
+  
+
+  useEffect(() => {
+    firebase_db.ref('requestStudy').once('value').then((snapshot) => {
+      console.log("파이어베이스에서 데이터 가져왔습니다!!")
+      let request = snapshot.val();
+      setState(request)
+     
+    });
+  },[])
+
+
     return(
         <TouchableOpacity style={styles.chat} onPress={goToChat}>
             <View style={styles.chat1}>
-              <Text style={styles.chatName}>개발스터디</Text>
-              <Text style={styles.chatPeople}>6</Text>
+              <Text style={styles.chatName}>{content.studyName}</Text>
+              <Text style={styles.chatPeople}>{content.people}</Text>
             </View>
             <View style={styles.chat2} >
               <View style={styles.chatImage}>
@@ -38,9 +60,9 @@ export default function Card({content,navigation}){
               <View style={styles.chatContnet}>
                 <Text style={styles.hostName}>안승우</Text>
                 <Text style={styles.hostIntro}
-                      numberOfLines={1}>열심히 해요</Text>
+                      numberOfLines={1}>{content.intro}</Text>
               </View>
-              <View style={styles.chatDate}><Text style={styles.date}>2021-04-09</Text></View>
+              <View style={styles.chatDate}><Text style={styles.date}>{content.term}</Text></View>
             </View>
           </TouchableOpacity>
     )}
