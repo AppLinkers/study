@@ -48,50 +48,51 @@ export default function MainPage({navigation, route, props}) {
       }
 
 
-
-
 return(
     
     <View style={styles.container}>
         
-        <View style={styles.alramContainer}>
-        </View>
+        <ScrollView>
+            <View style={styles.title1}>
 
-            <ScrollView>
+            <Text style={{fontSize:16,fontWeight:'700',marginLeft:15,marginTop:20,color:'black'}}> Best Study </Text>
             <SliderBox 
             images={images}
-            style={{height:250, borderRadius:30, width:400,marginLeft:5, marginTop:10}} 
+            style={{height:280,marginTop:20}} 
             autoplay={true}  //자동 슬라이드 넘김
             circleLoop={true}
             onCurrentImagePressed={index => alert(`image ${index} pressed`)}/>
             
-            <TouchableOpacity style={styles.adBanner}></TouchableOpacity>
+            </View>
 
+            <TouchableOpacity style={styles.adBanner}><Text style={{color:'white'}}>Ad Banner</Text></TouchableOpacity>
 
-            <View style={styles.underImage}><Text style={{fontWeight:"bold",fontSize:30}}>Study</Text></View>
+            <View style={styles.underImage}><Text style={{fontWeight:"bold",fontSize:16}}>Study List</Text></View>
         
         
-            <View style={styles.line1}>
+            <View style={styles.title2}>
                 <TouchableOpacity onPress={selcetStudy} style={styles.studyBanner}>
                     <Text style={styles.studyTxt}>개 발</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={selcetStudy} style={styles.studyBanner2}>
                     <Text style={styles.studyTxt}>창 업</Text>
                 </TouchableOpacity>
-              
                 <TouchableOpacity onPress={selcetStudy} style={styles.studyBanner3}>
                     <Text style={styles.studyTxt}>자 격 증</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={selcetStudy} style={styles.studyBanner4}>
-                <Text style={styles.studyTxt}>취 업</Text>
+                     <Text style={styles.studyTxt}>취 업</Text>
                 </TouchableOpacity>
                 </View>
-            </ScrollView>
-            <View style={styles.buttonContainer}>
+
+        </ScrollView>
+
+        <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage} source={require('../assets/homeButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton} onPress={() => {navigation.navigate("MyStudyPage")}}><Image style={styles.buttonImage2} source={require('../assets/book-club.png')} ></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage2} source={require('../assets/chatButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Text style={{fontSize:20, paddingBottom:10, color:'gray',fontWeight:'700'}} onPress={OkPage}>. . .</Text></TouchableOpacity>
+
         </View>
     </View>
         )
@@ -99,108 +100,59 @@ return(
 
 const styles = StyleSheet.create({
     container:{
-        flex:1
-       
-    },
-    header:{
-        backgroundColor:'white',
-        width:'100%',
-        height:70,
-        flexDirection:'row',
-    },
-    nameContainer:{
-      flex:6,
-      paddingLeft:10,
-      paddingTop:5
-    },
-    icons:{
-      flex:4,
-      backgroundColor:'white',
-      flexDirection:'row',
-      justifyContent:'flex-end',
-      paddingTop:15,
-      paddingRight:10,
-    
-    },
-    AppName:{
-        marginTop:15,
-        fontSize:25,
-        color:'#A5DF00',
-        fontWeight:'700'
-    
-    },
-    icon:{
-      height:40,
-      width:40,
-      marginRight:7
-    },
-    alramContainer: {
-        backgroundColor:'white',
-        justifyContent:'center',
-        height:5,
-        backgroundColor:'#A5DF00',
-        marginTop:10
-      },
-    container2:{
+        flex:1,
+        backgroundColor:'#fff'
         
-        backgroundColor:'yellow',
-               
     },
-    underTitle:{
-        borderWidth:1,
-        height:50
-    },
-    image:{
-        marginTop:20
-    },
-    imageButton:{
-        width:300,
-        height:200,
-        borderWidth:1,
-        borderRadius:40,
-        marginLeft:20
+    title1:{
+        height:280,
+        alignSelf:'center',
+        backgroundColor:'#fff',
+        
     },
     underImage:{
-        height:50,
+        height:35,
         marginTop:25,
-        paddingLeft:10
+        paddingLeft:20
     },
     adBanner:{
         width:'100%',
         height:80,
-        marginTop:30,
-        backgroundColor:'#FA5858'
+        marginTop:65,
+        backgroundColor:'#FA5858',
+        justifyContent:'center',
+        paddingLeft:15
     },
-    line1:{
+    title2:{
         alignItems:'center',
     },
     studyBanner:{
-        width:400,
-        height:120,
-        marginTop:15,
+        width:395,
+        height:100,
+        marginTop:10,
         borderRadius:20,
         justifyContent:'flex-end',
         backgroundColor:'#00FFBF'
     },
     studyBanner2:{
-        width:400,
-        height:120,
+        width:395,
+        height:100,
         marginTop:15,
         borderRadius:20,
         justifyContent:'flex-end',
         backgroundColor:'#FFBF00'
     },
     studyBanner3:{
-        width:400,
-        height:120,
+        width:395,
+        height:100,
         marginTop:15,
         borderRadius:20,
         justifyContent:'flex-end',
         backgroundColor:'#2E64FE'
     },
     studyBanner4:{
-        width:400,
-        height:120,
+        width:395,
+        height:100,
         marginTop:15,
         borderRadius:20,
         justifyContent:'flex-end',
@@ -209,7 +161,7 @@ const styles = StyleSheet.create({
     studyTxt:{
         paddingBottom:10,
         paddingLeft:15,
-        fontSize:35,
+        fontSize:25,
         color:'white',
         fontWeight:'700'
     },
@@ -225,12 +177,12 @@ const styles = StyleSheet.create({
         alignItems:'center'
       },
       buttonImage:{
-        width:30,
-        height:30
-      },
-      buttonImage2:{
         width:25,
         height:25
+      },
+      buttonImage2:{
+        width:20,
+        height:20
       }
 
 

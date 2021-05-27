@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList,TextInput} from 'react-native';
 import firebase from 'firebase'
 
+
 var firebaseConfig = {
     apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
     authDomain: "studyapp-3e58f.firebaseapp.com",
@@ -12,7 +13,8 @@ var firebaseConfig = {
     appId: "1:514395246608:web:2c39981eed6d3602b4fa95",
     measurementId: "G-GL08SPFWYS"
   };
-
+  
+  
   if(firebase.apps.length===0){
     firebase.initializeApp(firebaseConfig);
   }
@@ -30,21 +32,29 @@ export default function requestStudy({navigation}) {
     const [studyWish, setStudyWish] = useState('');
 
     function Request(studyName,intro,subject,people,day,locate,term,explain,wish){
-        var ref = firebase.database().ref('requestStudy/');
-    
-        ref.push().set({
-          studyName: studyName,
-          intro: intro,
-          subject : subject,
-          people : people,
-          day : day,
-          locate : locate ,
-          term : term,
-          explain : explain,
-          wish : wish
-        })
+        const inputlist = [studyName,intro,subject,people,day,locate,term,explain,wish]
+        const ref = firebase.database().ref().child('requestStudy');
+        
+        if (inputlist.includes('')){
+            alert('모든 항목을 입력해주세요!');
+        } else{
+            ref.push().set({
+            'chattingRoom':{
+                studyName: studyName,
+                intro: intro,
+                subject : subject,
+                people : people,
+                day : day,
+                locate : locate ,
+                term : term,
+                explain : explain,
+                wish : wish
+                }
+                })
+            
         navigation.navigate("MainPage")
-     }
+            }
+    }
 
     return (
         <View style={styles.container}>

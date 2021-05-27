@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList} from 'react-native';
 import { withOrientation } from 'react-navigation';
 import { SliderBox } from "react-native-image-slider-box";
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, TabRouter } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase'
+import {firebase_db} from '../firebaseConfig'
+import Constants from 'expo-constants';
 
 var firebaseConfig = {
     apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
@@ -25,6 +27,33 @@ var firebaseConfig = {
 
 
 export default function JoinPage({navigation, route}) {
+    let user_idx = Constants.installationId
+    
+    const [join,setJoin]= useState({
+        "day": "월",
+        "explain": "기말고사 대비",
+        "intro": "A+향해 달려봐요~",
+        "locate": "인천시",
+        "people": "3",
+        "studyName": "열전달 스터디",
+        "subject": "열전달",
+        "term": "1달",
+        "user": "rio319",
+        "wish": "친절함"
+
+    })
+    useEffect(()=>{
+        console.log(route)
+       
+    
+
+    const {key} = route.params;
+    firebase_db.ref('/requestStudy/'+key).once('value').then((snapshot) =>{
+        let join = snapshot.val();
+        setJoin(join)
+    });
+},[])
+
 
     function goToChat(){
 
@@ -100,6 +129,14 @@ const styles = StyleSheet.create({
     studyName:{
         alignSelf:'flex-start',
         fontSize:20,
+        fontWeight:'700',
+        marginLeft:35,
+        marginTop:10,
+        color:'black'
+    },
+    studySubject:{
+        alignSelf:'flex-start',
+        fontSize:15,
         fontWeight:'700',
         marginLeft:35,
         marginTop:10,
