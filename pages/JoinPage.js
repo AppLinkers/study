@@ -30,16 +30,7 @@ export default function JoinPage({navigation, route}) {
     let user_idx = Constants.installationId
     
     const [join,setJoin]= useState({
-        "day": "월",
-        "explain": "기말고사 대비",
-        "intro": "A+향해 달려봐요~",
-        "locate": "인천시",
-        "people": "3",
-        "studyName": "열전달 스터디",
-        "subject": "열전달",
-        "term": "1달",
-        "user": "rio319",
-        "wish": "친절함"
+       
 
     })
     useEffect(()=>{
@@ -47,12 +38,18 @@ export default function JoinPage({navigation, route}) {
        
     
 
-    const {key} = route.params;
-    firebase_db.ref('/requestStudy/'+key).once('value').then((snapshot) =>{
-        let join = snapshot.val();
-        setJoin(join)
-    });
+    const {key} = "test";
+    const k = "-M_fGYyDleJyEV9oJIQ1";
+   /* firebase_db.ref('/requestStudy/'+key).once('value').then((snapshot) =>{
+        console.log(snapshot)
+    });*/
+    firebase.database().ref('requestStudy/'+k).on("value", snapshot =>{
+        var data = snapshot.val().chattingRoom
+        setJoin(data)
+      })
 },[])
+
+console.log("---------")
 
 
     function goToChat(){
@@ -66,25 +63,25 @@ export default function JoinPage({navigation, route}) {
             <ScrollView>
             <View style={styles.body}>
                 <Image style={styles.propilImage} source={require('../assets/profile.jpg')}/>
-                <Text style={styles.name}>이 름</Text>
-                <Text style={styles.studyName}>스터디 이름</Text>
-                <Text style={styles.studySubject}>과 목</Text>
-                <Text style={styles.studyShort}>"스터디 간단 소개"</Text>
+                <Text style={styles.name}>{join.user}</Text>
+                <Text style={styles.studyName}>{join.studyName}</Text>
+                <Text style={styles.studySubject}>{join.subject}</Text>
+                <Text style={styles.studyShort}>{join.intro}</Text>
                 <View style={styles.info}>
                     <View style={styles.infoBox}>
                         <Image style={styles.infoImage} source={require('../assets/location.jpg')}/>
-                        <Text style={styles.infoTxt}>위 치</Text>
+                        <Text style={styles.infoTxt}>{join.locate}</Text>
                     </View>
                     <View style={styles.infoBox}>
                         <Image style={styles.infoImage} source={require('../assets/people.jpg')}/>
-                        <Text style={styles.infoTxt}>인원수</Text>
+                        <Text style={styles.infoTxt}>{join.people} 명</Text>
                     </View>
                     <View style={styles.infoBox2}>
                         <Image style={styles.infoImage} source={require('../assets/date.jpg')}/>
-                        <Text style={styles.infoTxt}>기 간</Text>
+                        <Text style={styles.infoTxt}>{join.term}</Text>
                     </View>
                 </View>
-                <View style={styles.studyDetail}><Text>설명란 (테두리 없음)</Text></View>
+                <View style={styles.studyDetail}><Text>{join.explain}</Text></View>
                 <TouchableOpacity style={styles.joinButton} onPress={goToChat}><Text style={styles.joinTxt}>Join it!</Text></TouchableOpacity>
             </View>
                 
