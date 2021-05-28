@@ -29,21 +29,15 @@ var firebaseConfig = {
 export default function JoinPage({navigation, route}) {
     let user_idx = Constants.installationId
     
-    const [join,setJoin]= useState({
-       
+    const [join,setJoin]= useState({})
+    const {key} =route.params;
 
-    })
     useEffect(()=>{
-        console.log(route)
        
-    
-
-    const {key} = "test";
-    const k = "-M_fGYyDleJyEV9oJIQ1";
    /* firebase_db.ref('/requestStudy/'+key).once('value').then((snapshot) =>{
         console.log(snapshot)
     });*/
-    firebase.database().ref('requestStudy/'+k).on("value", snapshot =>{
+    firebase.database().ref('requestStudy/'+key).on("value", snapshot =>{
         var data = snapshot.val().chattingRoom
         setJoin(data)
       })
