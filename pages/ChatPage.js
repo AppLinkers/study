@@ -25,11 +25,15 @@ var firebaseConfig = {
 
 
 export default function ChantPage({navigation, route}) {
+    
     const [chatType, setChatType] = useState('')
     const [userID, setUserID] = useState('');
     const [chat, setChat]=useState([{messages: '로딩 중'}]);
+    const [chatName, setChatName] = useState('');
+    const [currentDate, setCurrentDate] = useState('');
+    const [currentTime, setCurretnTime] = useState('');
+    const key =route.params.key;
     
-
     AsyncStorage.getItem('user').then(
         (value) =>
           setUserID(value)
@@ -41,10 +45,25 @@ export default function ChantPage({navigation, route}) {
       const [refreshing, setRefreshing]=useState(false)
       var data;
       useEffect(()=>{
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
+        var hours = new Date().getHours(); //Current Hours
+        var min = new Date().getMinutes(); //Current Minutes
+        var sec = new Date().getSeconds(); //Current Seconds
+
+        setCurrentDate(
+            year + '-' + month + '-' + date
+        );
+        setCurretnTime(
+            hours + ':' + min + ':' + sec
+        );
         data = Object.values(chat);
-        
+          firebase.database().ref('/chat/' + key + '/info').once("value",snapshot => {
+            setChatName(snapshot.val().studyName);
+          })
           //  firebase.database().ref('/chat/devChat/').once("value").then((snapshot) =>{
-            firebase.database().ref('/chat/devChat/messages').once("value", snapshot =>{
+            firebase.database().ref('/chat/'+key+'/messages').once("value", snapshot =>{
                 setChat(snapshot.val())
              }); 
 
@@ -58,7 +77,7 @@ export default function ChantPage({navigation, route}) {
       const ItemSeparatorView = () => {
         return (
           //Item Separator
-          <View
+          <View 
             style={{ }}
           />
         );
@@ -68,10 +87,11 @@ export default function ChantPage({navigation, route}) {
     
         return (
           // Single Comes here which will be repeatative for the FlatListItems
-          <View flexDirection="row" style={{backgroundColor:"white"}}>
+          <View flexDirection="row" style={{backgroundColor:"white", justifyContent : 'space-between', padding : 10}}>
             <Text style={styles.chat} >
                {item.id}  :  {item.msg}
             </Text>
+            <Text> {item.time}</Text>
           </View>
         );
       };
@@ -83,15 +103,14 @@ export default function ChantPage({navigation, route}) {
       }
     
       function sendChat(userID,newChat){
-
-        setRefreshing(true)
-       var ref = firebase.database().ref('chat/devChat/messages');
-       ref.push().set({id:userID, msg:newChat})  
+       setRefreshing(true)
+       var ref = firebase.database().ref('chat/'+key+'/messages');
+       ref.push().set({id:userID, msg:newChat,date : currentDate,time : currentTime })  
 
        data = Object.values(chat);
         
            
-            firebase.database().ref('/chat/devChat/messages').once("value").then((snapshot) =>{
+            firebase.database().ref('/chat/'+key+'/messages').once("value").then((snapshot) =>{
           //  firebase.database().ref('/chat/devChat/').once("value", snapshot =>{
                 setChat(snapshot.val())
              }); 
@@ -107,7 +126,7 @@ export default function ChantPage({navigation, route}) {
     return(
         <View style={styles.container}>
      <View style={{backgroundColor:"#ffd3ae"}}>
-       <Text style={{fontSize:20, textAlign:"center", marginTop:12}}>StudyGroup Name:{chatData.length}</Text>
+       <Text style={{fontSize:20, textAlign:"center", marginTop:12}}>{chatName}:{chatData.length}</Text>
        <View style={{borderBottomColor: '#D5D5D5', borderBottomWidth: 1, paddingBottom:10}}/>
      </View>
 

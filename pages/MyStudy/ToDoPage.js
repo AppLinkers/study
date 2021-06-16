@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Accordian from '../../Components/Accordian';
-
+// todolist 데이터 구조 생성
+// 기능 구현
 
 class ToDoPage extends Component {
 

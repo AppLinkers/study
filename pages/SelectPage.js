@@ -19,8 +19,9 @@ AsyncStorage.getItem('user').then(
 function goToChat(studyKey){
   var authTemp=[]
   var go = false;
-  firebase.database().ref('chat/devChat/auth').on("child_added", snapshot =>{
+  firebase.database().ref('chat/'+studyKey+'/auth').on("child_added", snapshot =>{
     var authID = snapshot.val().id
+    console.log(authID)
     authTemp.push(authID);
   })
   for(var i=0; i<authTemp.length; i++){
@@ -28,9 +29,9 @@ function goToChat(studyKey){
       go = true;
     }
   }
-
+  console.log(go)
   if(go==true){
-    navigation.navigate("ChatPage")
+    navigation.navigate("ChatPage",{key : studyKey})
   }else{
     console.log(studyKey)
     navigation.navigate("JoinPage",{key: studyKey})
@@ -59,7 +60,7 @@ let DATA = []
         })
       })
     });
-    console.log(DATA)
+    //console.log(DATA)
     setState(DATA)
   },[])
   const ItemView = ({ item }) => (

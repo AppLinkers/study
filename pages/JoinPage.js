@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase'
 import {firebase_db} from '../firebaseConfig'
 import Constants from 'expo-constants';
+import { AsyncStorage } from 'react-native';
 
 var firebaseConfig = {
     apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
@@ -27,10 +28,16 @@ var firebaseConfig = {
 
 
 export default function JoinPage({navigation, route}) {
-    let user_idx = Constants.installationId
     
+    let user_idx = Constants.installationId
+    const [getName, setName] = useState('');
     const [join,setJoin]= useState({})
     const {key} =route.params;
+
+    AsyncStorage.getItem('user').then(
+        (value) =>
+            setName(value)
+    );
 
     useEffect(()=>{
        
@@ -46,8 +53,10 @@ export default function JoinPage({navigation, route}) {
 console.log("---------")
 
 
-    function goToChat(){
-
+    function goToChat(user){
+        firebase.database().ref('requestStudy/' + key + '/chattingRoom/users').push().update({
+            user
+        });
         navigation.navigate("ChatPage");
     }
 
@@ -76,7 +85,7 @@ console.log("---------")
                     </View>
                 </View>
                 <View style={styles.studyDetail}><Text>{join.explain}</Text></View>
-                <TouchableOpacity style={styles.joinButton} onPress={goToChat}><Text style={styles.joinTxt}>Join it!</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.joinButton} onPress={() => goToChat(getName)}><Text style={styles.joinTxt}>Join it!</Text></TouchableOpacity>
             </View>
                 
 

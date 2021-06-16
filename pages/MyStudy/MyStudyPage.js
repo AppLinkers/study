@@ -1,50 +1,74 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList } from 'react-native';
+import React, { Component, useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import * as firebase from 'firebase';
+import { firebase_db } from '../../firebaseConfig';
+import { AsyncStorage } from 'react-native';
 
+
+// 채팅 flatlist 데이터 정리해서 띄우기
+// chat --> 현재 확인 안한 chat 개수 / 최근 대화 시간 / 채팅창 이름 / 최근 대화 내용 / chat image
+// 채팅창 링크 navigation 활성화
 
 
 class MyStudyPage extends Component {
-
+    
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {
-                    name : 'asdf',
-                    chat : '최근 대화미',
-                    chat_time : '최근 대화 시간미',
-                    chat_nums : '1'
-                },
-                {
-                    name : 'asdf',
-                    chat : '최근 대화미',
-                    chat_time : '최근 대화 시간미',
-                    chat_nums : '1'
-                },
-                {
-                    name : 'asdf',
-                    chat : '최근 대화미',
-                    chat_time : '최근 대화 시간미',
-                    chat_nums : '1'
-                },
-                {
-                    name : 'asdf',
-                    chat : '최근 대화미',
-                    chat_time : '최근 대화 시간미',
-                    chat_nums : '1'
-                }
-            ]
+            newdata : []
         }
     }
 
+    componentWillMount() {
+        const list = []
+        const chatList = []
+        AsyncStorage.getItem('user').then(
+            value => {
+                firebase_db.ref('requestStudy').on('value', (snapshot) => {
+                    snapshot.forEach((child) => {
+                        if (child.val().chattingRoom.users) {
+                            const users = child.val().chattingRoom.users;
+                            for (let key in users){
+                                if(value == users[key].user){
+                                    list.push(child.key)
+                                    return;
+                                }
+                            };
+                        } else {
+                            console.log("no users")
+                        }
+
+                    })
+                });
+            }
+        ).then(
+            value => {
+            for (let chatKey of list){
+                firebase_db.ref('chat/'+chatKey).on('value', snapshot => {
+                    if(snapshot.exists()){
+                        chatList.push({
+                            chatKey : chatKey,
+                            name : snapshot.val().info.studyName,
+                            chat_nums : '1',
+                            chat : snapshot.val().messages[Object.keys(snapshot.val().messages)[0]].msg,
+                            cat_time : snapshot.val().messages[Object.keys(snapshot.val().messages)[0]].time
+                        })
+                        this.setState({newdata : chatList})
+                    }
+                    
+                })
+        }
+        });
+        
+    }
+
+    
+
     render() {
-
-        const { navigation } = this.props;
-
         return (
             <View style={styles.container}>
 
-                <TouchableOpacity onPress={() => { navigation.navigate('ToDoPage') }}>
+                <TouchableOpacity onPress={() => { this.props.navigation.navigate('ToDoPage') }}>
                     <View style={styles.todo}>
                         <Image style={styles.todo_img} source={require('../../assets/list.png')}></Image>
                         <Text style={styles.todo_font}>  To Do List !!</Text>
@@ -53,12 +77,12 @@ class MyStudyPage extends Component {
 
                 <ScrollView style={styles.content}>
                     <FlatList
-                        data={this.state.data}
+                        data={this.state.newdata}
                         numColumns={1}
                         scrollEnabled={false}
                         renderItem={({ item, index }) =>
                             <View>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress = {() => this.props.navigation.navigate("ChatPage",{key : item.chatKey})}> 
                                     <View style={styles.elem}>
                                         <View style={styles.userInfo}>
                                             <Image style={styles.profile} source={require('../../assets/profile.jpg')} />
@@ -77,10 +101,10 @@ class MyStudyPage extends Component {
                         } />
                 </ScrollView>
                 <View style={styles.footer} >
-                    <TouchableOpacity style={styles.underButton} onPress={() => { navigation.navigate('MainPage') }}><Image style={styles.buttonImage} source={require('../../assets/homeButton.png')}></Image></TouchableOpacity>
-                    <TouchableOpacity style={styles.underButton} onPress={() => { navigation.navigate('ToDoPage') }}><Image style={styles.buttonImage2} source={require('../../assets/check-mark.png')} ></Image></TouchableOpacity>
+                    <TouchableOpacity style={styles.underButton} onPress={() => { this.props.navigation.navigate('MainPage') }}><Image style={styles.buttonImage} source={require('../../assets/homeButton.png')}></Image></TouchableOpacity>
+                    <TouchableOpacity style={styles.underButton} onPress={() => { this.props.navigation.navigate('ToDoPage') }}><Image style={styles.buttonImage2} source={require('../../assets/check-mark.png')} ></Image></TouchableOpacity>
                     <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage2} source={require('../../assets/calendar.png')}></Image></TouchableOpacity>
-                    <TouchableOpacity style={styles.underButton} onPress={() => { navigation.navigate('ProgressPage') }}><Image style={styles.buttonImage2} source={require('../../assets/steps.png')}></Image></TouchableOpacity>
+                    <TouchableOpacity style={styles.underButton} onPress={() => { this.props.navigation.navigate('ProgressPage') }}><Image style={styles.buttonImage2} source={require('../../assets/steps.png')}></Image></TouchableOpacity>
                 </View>
             </View>
         );
