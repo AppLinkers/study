@@ -50,10 +50,11 @@ class MyStudyPage extends Component {
                             chatKey : chatKey,
                             name : snapshot.val().info.studyName,
                             chat_nums : '1',
-                            chat : snapshot.val().messages[Object.keys(snapshot.val().messages)[0]].msg,
-                            cat_time : snapshot.val().messages[Object.keys(snapshot.val().messages)[0]].time
+                            chat : snapshot.val().messages[Object.keys(snapshot.val().messages)[Object.keys(snapshot.val().messages).length-1]].msg,
+                            chat_time : snapshot.val().messages[Object.keys(snapshot.val().messages)[Object.keys(snapshot.val().messages).length-1]].time
                         })
                         this.setState({newdata : chatList})
+                        
                     }
                     
                 })
