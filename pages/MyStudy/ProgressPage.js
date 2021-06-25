@@ -1,42 +1,68 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import * as Progress from 'react-native-progress';
-
+import { firebase_db } from '../../firebaseConfig';
 class ProgressPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {
-                    study_name: 'Study 1',
-                    study_img: '../../assets/profile.jpg',
-                    study_per: 30,
-                },
-                {
-                    study_name: 'Study 2',
-                    study_img: '../../assets/profile.jpg',
-                    study_per: 50,
-                },
-                {
-                    study_name: 'Study 3',
-                    study_img: '../../assets/profile.jpg',
-                    study_per: 70,
-                },
-                {
-                    study_name: 'Study 4',
-                    study_img: '../../assets/profile.jpg',
-                    study_per: 80,
-                }
-            ]
+            data: []
         }
     }
 
-
+    componentWillMount() {
+        AsyncStorage.getItem('user').then(
+            value => {
+                firebase_db.ref('todolist/' + value+'/').on('value', (snapshot) => {
+                    var newdata = [];
+                    var studyList = [];
+                    var datacontent = [];
+                    var aggdata = [];
+                    snapshot.forEach((child) => {
+                        child.forEach((sub_child) => {
+                            datacontent.push({
+                                study_name : sub_child.val().studyName,
+                                state : child.key
+                            })
+                            studyList.push(sub_child.val().studyName)
+                        })
+                    })
+                    studyList = [...new Set(studyList)]
+                    studyList.forEach((child) => {
+                        var total = 0;
+                        var confirmed = 0;
+                        if(child != undefined){
+                            datacontent.forEach((sub_child) => {
+                                
+                                console.log()
+                                if(sub_child.study_name == child){
+                                    if(sub_child.state == "confirmed"){
+                                        confirmed = confirmed + 1 ;
+                                    }
+                                    total = total + 1;
+                                }
+                            })
+                            aggdata.push({
+                                study_name : child, total : total, confirmed : confirmed
+                            })
+                        }
+                        
+                    })
+                    aggdata.forEach((child) => {
+                        newdata.push({
+                            study_name : child.study_name, study_img : '../../assets/profile.jpg', study_per : Math.round((child.confirmed / child.total) * 100)
+                        })
+                    })
+                    this.setState({data : newdata})
+                })
+            }
+        )
+    }
 
     render() {
         const { navigation } = this.props;
-
 
 
         return (

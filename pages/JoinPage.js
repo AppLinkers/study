@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase'
 import {firebase_db} from '../firebaseConfig'
 import Constants from 'expo-constants';
+import { AsyncStorage } from 'react-native';
 
 var firebaseConfig = {
     apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
@@ -27,23 +28,23 @@ var firebaseConfig = {
 
 
 export default function JoinPage({navigation, route}) {
+    
     let user_idx = Constants.installationId
-    
-    const [join,setJoin]= useState({
-       
+    const [getName, setName] = useState('');
+    const [join,setJoin]= useState({})
+    const {key} =route.params;
 
-    })
+    AsyncStorage.getItem('user').then(
+        (value) =>
+            setName(value)
+    );
+
     useEffect(()=>{
-        console.log(route)
        
-    
-
-    const {key} = "test";
-    const k = "-M_fGYyDleJyEV9oJIQ1";
    /* firebase_db.ref('/requestStudy/'+key).once('value').then((snapshot) =>{
         console.log(snapshot)
     });*/
-    firebase.database().ref('requestStudy/'+k).on("value", snapshot =>{
+    firebase.database().ref('requestStudy/'+key).on("value", snapshot =>{
         var data = snapshot.val().chattingRoom
         setJoin(data)
       })
@@ -52,9 +53,14 @@ export default function JoinPage({navigation, route}) {
 console.log("---------")
 
 
-    function goToChat(){
-
-        navigation.navigate("ChatPage");
+    function goToChat(user){
+        firebase.database().ref('requestStudy/' + key + '/chattingRoom/users').push().update({
+            user
+        });
+        firebase.database().ref('chat/' + key + '/auth').push().update({
+            id : user
+        })
+        navigation.navigate("ChatPage",{key : key});
     }
 
 
@@ -82,7 +88,7 @@ console.log("---------")
                     </View>
                 </View>
                 <View style={styles.studyDetail}><Text>{join.explain}</Text></View>
-                <TouchableOpacity style={styles.joinButton} onPress={goToChat}><Text style={styles.joinTxt}>Join it!</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.joinButton} onPress={() => goToChat(getName)}><Text style={styles.joinTxt}>Join it!</Text></TouchableOpacity>
             </View>
                 
 

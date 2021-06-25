@@ -13,7 +13,6 @@ import CustomDrawer from './CustomDrawer';
 import Test from './Test'
 
 
-
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 

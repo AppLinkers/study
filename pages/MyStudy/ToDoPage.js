@@ -1,49 +1,73 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Accordian from '../../Components/Accordian';
-
+import { AsyncStorage } from 'react-native';
+import { firebase_db } from '../../firebaseConfig';
 
 class ToDoPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            menu: [
-                {
-                    title: 'To Do',
-                    data: [
-                        { key: 0, value: 'Ch6 과제 1', chk: false },
-                        { key: 1, value: 'Ch6 과제 2', chk: false },
-                    ]
-                },
-                {
-                    title: 'Progress',
-
-                    data: [
-                        { key: 2, value: 'Ch6 과제 3', chk: false },
-                    ]
-                },
-                {
-                    title: 'Done',
-                    data: [
-                        { key: 3, value: 'Ch6 과제 6', chk: false },
-                    ]
-                },
-                {
-                    title: 'Confirmed',
-                    data: [
-                        { key: 4, value: 'Ch6 과제 7', chk: false },
-                        { key: 5, value: 'Ch6 과제 8', chk: false },
-                        { key: 6, value: 'Ch6 과제 9', chk: false }
-                    ]
-                },
-            ]
+            menu: []
         }
+    }
+
+    componentWillMount() {
+        AsyncStorage.getItem('user').then(
+            value => {
+                firebase_db.ref('todolist/' + value+'/').on('value', (snapshot) => {
+                    var newMenu = [];
+                    var key = 0;
+                    snapshot.forEach((child) => {
+                        var dataContent = [];
+                        var state = 0;
+                        if(child.key == 'todo'){
+                            state = 0;
+                        }else if(child.key == 'progress'){
+                            state = 1;
+                        }else if(child.key == 'done'){
+                            state = 2;
+                        }else if(child.key == 'confirmed'){
+                            state = 3;
+                        }
+                        console.log(child)
+                        child.forEach((sub_child) => {
+                            
+                            if(sub_child.val().content != 'nothing'){
+                                dataContent.push({
+                                    key : key, content : sub_child.val().content, studyName : sub_child.val().studyName, state : state
+                                })
+                            }
+                            key = key + 1;
+                        })
+                        var menuContent = {};
+                        menuContent = {
+                            title : child.key,
+                            data : dataContent
+                        }
+                        newMenu.push(menuContent);  
+                    })
+                    newMenu.sort(function(a, b) {
+                        var nameA = a.title.toUpperCase(); // ignore upper and lowercase
+                        var nameB = b.title.toUpperCase(); // ignore upper and lowercase
+                        if (nameA < nameB) {
+                          return 1;
+                        }
+                        if (nameA > nameB) {
+                          return -1;
+                        }
+                        // 이름이 같을 경우
+                        return 0;
+                      });
+                    this.setState({menu : newMenu})
+                })
+            }
+        )
     }
 
     render() {
         const { navigation } = this.props;
-
 
 
         return (
@@ -68,12 +92,14 @@ class ToDoPage extends Component {
     }
 
     renderAccordians = () => {
+        console.log("test")
         const items = [];
         for (item of this.state.menu) {
             items.push(
                 <Accordian
                     title={item.title}
                     data={item.data}
+                    parent = {this.props}
                 />
             );
         }

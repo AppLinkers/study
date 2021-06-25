@@ -9,30 +9,34 @@ export default function SelectPage({navigation,route}) {
   console.disableYellowBox = true;
   //return 구문 밖에서는 슬래시 두개 방식으로 주석
 const[userID, setUserID]=useState('')
-
+const[count, setCount]=useState('')
 const [state,setState] = useState([])
 AsyncStorage.getItem('user').then(
   (value) =>
     setUserID(value)
 );
 
-function goToChat(){
+function goToChat(studyKey){
   var authTemp=[]
   var go = false;
-  firebase.database().ref('chat/devChat/auth').on("child_added", snapshot =>{
+  firebase.database().ref('chat/'+studyKey+'/auth').on("child_added", snapshot =>{
     var authID = snapshot.val().id
+    console.log(authID)
     authTemp.push(authID);
   })
   for(var i=0; i<authTemp.length; i++){
+    console.log(authTemp[i])
     if(authTemp[i]===userID){
       go = true;
     }
   }
-
+  console.log(go)
   if(go==true){
-    navigation.navigate("ChatPage")
+    navigation.navigate("ChatPage",{key : studyKey})
   }else{
-    navigation.navigate("JoinPage")
+    console.log(studyKey)
+    navigation.navigate("JoinPage",{key: studyKey})
+
   }
 }
   
@@ -57,11 +61,11 @@ let DATA = []
         })
       })
     });
-    console.log(DATA)
+    //console.log(DATA)
     setState(DATA)
   },[])
   const ItemView = ({ item }) => (
-      <TouchableOpacity style={styles.chat} onPress={goToChat}>
+      <TouchableOpacity style={styles.chat} onPress={()=>goToChat(item.key)}>
 	      <View style={styles.chat1}>
             <Text style={styles.chatName}>{item.studyName}</Text>
             <Text style={styles.chatPeople}>{item.people}</Text>
@@ -113,24 +117,7 @@ const ItemSeparatorView = () => {
               renderItem={ItemView}
               keyExtractor={(item, index) => index.toString()}/>
 
-        <TouchableOpacity style={styles.chat} onPress={goToChat}>
-	        <View style={styles.chat1}>
-            <Text style={styles.chatName}>개발스터디</Text>
-            <Text style={styles.chatPeople}>6</Text>
-          </View>
-          <View style={styles.chat2} >
-            <View style={styles.chatImage}>
-              <Image style={styles.jpg}
-                       source={{uri:'https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4'}}></Image>
-            </View>
-            <View style={styles.chatContnet}>
-              <Text style={styles.hostName}>안승우</Text>
-              <Text style={styles.hostIntro}
-                      numberOfLines={1}>열심히 해용</Text>
-            </View>
-          <View style={styles.chatDate}><Text style={styles.date}>일</Text></View>
-          </View>
-      </TouchableOpacity>
+        
         
         </ScrollView>
         <View style={styles.buttonContainer}>
