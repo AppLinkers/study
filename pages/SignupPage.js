@@ -86,13 +86,15 @@ export default function signup({ navigation }) {
   };
 
   function doubleChk(idOk, id){
-    firebase.database().ref('/users').on("child_added", snapshot =>{
-      var userID = snapshot.val().id;
-      setidOk(true);
-      if ( userID === id){
-        setidOk(false);
-        alert('ID가 중복됩니다.');
-      }
+    setidOk(true);
+    firebase.database().ref('/users').on("value", snapshot =>{
+      snapshot.forEach((child) => {
+        console.log(id)
+        if(id === child.key){
+          setidOk(false);
+          alert('ID가 중복됩니다.')
+        }
+      })
    }); 
    if (idOk){
      alert('사용 가능한 ID 입니다.');
