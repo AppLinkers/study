@@ -125,6 +125,29 @@ export default function signup({ navigation }) {
         study: studylist,
         coin: 10
       })
+      var todoRef = firebase.database().ref('todolist/'+id);
+      todoRef.set({
+        confirmed:{
+          init:{
+            content : 'nothing'
+          }
+        },
+        done : {
+          init : {
+            content : 'nothing'
+          }
+        },
+        progress : {
+          init : {
+            content : "nothing"
+          }
+        },
+        todo : {
+          init : {
+            content : "nothing"
+          }
+        }
+      })
       navigation.navigate("LoginPage")
     }
 

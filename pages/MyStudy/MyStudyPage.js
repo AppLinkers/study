@@ -5,10 +5,6 @@ import { firebase_db } from '../../firebaseConfig';
 import { AsyncStorage } from 'react-native';
 
 
-// 채팅 flatlist 데이터 정리해서 띄우기
-// chat --> 현재 확인 안한 chat 개수 / 최근 대화 시간 / 채팅창 이름 / 최근 대화 내용 / chat image
-// 채팅창 링크 navigation 활성화
-
 
 class MyStudyPage extends Component {
     
@@ -21,7 +17,7 @@ class MyStudyPage extends Component {
 
     componentWillMount() {
         const list = []
-        const chatList = []
+        var chatList = []
         AsyncStorage.getItem('user').then(
             value => {
                 firebase_db.ref('requestStudy').on('value', (snapshot) => {
@@ -46,6 +42,7 @@ class MyStudyPage extends Component {
             for (let chatKey of list){
                 firebase_db.ref('chat/'+chatKey).on('value', snapshot => {
                     if(snapshot.exists()){
+                        chatList = [];
                         chatList.push({
                             chatKey : chatKey,
                             name : snapshot.val().info.studyName,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import * as Progress from 'react-native-progress';
+console.disableYellowBox = true;
 
 class ProgressPage extends Component {
 
@@ -36,7 +37,6 @@ class ProgressPage extends Component {
 
     render() {
         const { navigation } = this.props;
-
 
 
         return (

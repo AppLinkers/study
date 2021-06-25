@@ -25,6 +25,7 @@ function goToChat(studyKey){
     authTemp.push(authID);
   })
   for(var i=0; i<authTemp.length; i++){
+    console.log(authTemp[i])
     if(authTemp[i]===userID){
       go = true;
     }

@@ -57,7 +57,10 @@ console.log("---------")
         firebase.database().ref('requestStudy/' + key + '/chattingRoom/users').push().update({
             user
         });
-        navigation.navigate("ChatPage");
+        firebase.database().ref('chat/' + key + '/auth').push().update({
+            id : user
+        })
+        navigation.navigate("ChatPage",{key : key});
     }
 
 
