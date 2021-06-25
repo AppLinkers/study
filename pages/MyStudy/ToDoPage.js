@@ -31,7 +31,9 @@ class ToDoPage extends Component {
                         }else if(child.key == 'confirmed'){
                             state = 3;
                         }
+                        console.log(child)
                         child.forEach((sub_child) => {
+                            
                             if(sub_child.val().content != 'nothing'){
                                 dataContent.push({
                                     key : key, content : sub_child.val().content, studyName : sub_child.val().studyName, state : state

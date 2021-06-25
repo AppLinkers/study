@@ -78,10 +78,8 @@ export default class Accordian extends Component {
                 const state = child.key;
                 child.forEach((subChild) => {
                     if (isEquivalent(subTemp, subChild) && chk) {
-                        
                         chk = false;
                         if (state == "todo") {
-                            console.log("test")
                             firebase_db.ref('todolist/' + this.state.user + '/' + state + '/' + subChild.key).remove();
                             firebase_db.ref('todolist/' + this.state.user + '/progress/').push(
                                 {
@@ -106,7 +104,10 @@ export default class Accordian extends Component {
             })
             return true;
         })
-        this.state.parent.navigation.replace('ToDoPage')
+        if(temp[index].state <2){
+            this.state.parent.navigation.replace('ToDoPage')
+        }
+        
         //firebase 데이터 적용 -> set 화면 리로딩
     }
 
