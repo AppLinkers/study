@@ -54,7 +54,6 @@ if (firebase.apps.length === 0) {
 }
 
 export default function BuyCoinPage() {
-    console.log("test");
     const [getName, setName] = useState('');
     const [getCoin, setCoin] = useState('');
 
@@ -62,15 +61,21 @@ export default function BuyCoinPage() {
         (value) =>
             setName(value)
     );
-
+    
     AsyncStorage.getItem('coin').then(
-        (value) =>
-            setCoin(value)
+        (value) => {
+            setCoin(JSON.parse(value))
+        } 
     );
     
     function coinplus(selected_coin) {
         firebase.database().ref('/users/' + getName + '/coin').set(getCoin + selected_coin);
-        console.log(getCoin);
+        AsyncStorage.setItem('coin', JSON.stringify(getCoin + selected_coin)); 
+        AsyncStorage.getItem('coin').then(
+            (value) => {
+                setCoin(JSON.parse(value))
+            } 
+        );
     }
 
     const ItemView = ({ item }) => {
@@ -94,7 +99,7 @@ export default function BuyCoinPage() {
         <View style={styles.container}>
             <View style={styles.myCoin}>
                 <View style={{ flex: 2 }}>
-                    <Text style={{ fontWeight: '700', fontSize: 14 }}>보유 코인 : </Text>
+                    <Text style={{ fontWeight: '700', fontSize: 14 }}>보유 코인 : {getCoin}</Text>
                 </View>
                 <Modal
                     animationType="none"

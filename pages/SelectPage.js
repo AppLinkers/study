@@ -99,10 +99,10 @@ const ItemSeparatorView = () => {
       <View style={styles.container}>
         <View style={{height:40}}>
         <ScrollView style={styles.selectStudy} horizontal={true} showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>기초개발</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>앱/웹 개발</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>시스템 개발</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>보안</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>프로그래밍</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>영 어</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>문 서</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>기 타</Text></TouchableOpacity>
           <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>인공지능</Text></TouchableOpacity>
           <TouchableOpacity style={styles.selectStudyList}><Text style={styles.selectStudyTxt}>기타</Text></TouchableOpacity>
         </ScrollView>

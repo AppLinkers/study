@@ -54,9 +54,13 @@ export default function CustomDrawer({ navigation }) {
         navigation.navigate("tutorApplyPage");
       }
 
+    function logout(){
+        navigation.navigate('LoginPage')
+    }
+
     return(
 
-        <View >
+        <View style = {{paddingBottom:10}}>
 
 
         <ScrollView>
@@ -75,22 +79,21 @@ export default function CustomDrawer({ navigation }) {
             <TouchableOpacity style={styles.profileChange} onPress={changeProile}>
                 <Text style={{color:'white', fontWeight:'700', fontSize:12}}>프로필 변경</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.banner}>
-                <Text style={{marginLeft:15, fontSize:13, color:'white',fontWeight:'700'}} onPress={tutor}>튜터 신청</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.banner1} onPress={request}>
-                <Text style={{marginLeft:15, fontSize:13, color:'white',fontWeight:'700'}}>스터디 신청</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.banner1} onPress={MentoApply}>
-                <Text style={{marginLeft:15, fontSize:15, color:'white',fontWeight:'700'}}>멘토 신청</Text>
-            </TouchableOpacity>
+
             <View style={styles.listTitle}>
-                <Text style={{fontSize:17, fontWeight:'700'}}>내 스터디</Text>
+                <Text style={{fontSize:17, fontWeight:'700'}}>Apply</Text>
             </View>
-            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Android 스터디 룸</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>Expo 스터디 룸</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>창업 스터디 룸</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName} onPress={tutor} >튜터 신청</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName} onPress={request}>스터디 신청</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName} onPress={MentoApply}>멘토 신청</Text></TouchableOpacity>
+            
            
+            <View style={styles.listTitle}>
+                <Text style={{fontSize:17, fontWeight:'700'}}>코인</Text>
+            </View>
+            <TouchableOpacity style={styles.listContainer} onPress={BuyCoin}><Text style={styles.listName}>코인충전</Text></TouchableOpacity>
+            
+
             <View style={styles.listTitle}>
                 <Text style={{fontSize:17, fontWeight:'700'}}>고객센터</Text>
             </View>
@@ -98,11 +101,9 @@ export default function CustomDrawer({ navigation }) {
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>문의하기</Text></TouchableOpacity>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName}>사용 가이드</Text></TouchableOpacity>
            
-            <View style={styles.listTitle}>
-                <Text style={{fontSize:17, fontWeight:'700'}}>코인</Text>
-            </View>
-            <TouchableOpacity style={styles.listContainer} onPress={BuyCoin}><Text style={styles.listName}>코인충전</Text></TouchableOpacity>
-
+            <TouchableOpacity style={styles.profileChange} onPress={logout}>
+                <Text style={{color:'white', fontWeight:'700', fontSize:14}}>로 그 아 웃</Text>
+            </TouchableOpacity>
             </ScrollView>
         </View>
 
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     listTitle:{
-        height:80,
+        height:60,
         borderBottomWidth:2,
         borderBottomColor:'#7cd175',
         justifyContent:'flex-end',
@@ -196,10 +197,12 @@ const styles = StyleSheet.create({
         paddingBottom:10
     },
     listName:{
-        fontSize:12
+        fontSize:12,
+        color:'black',
+        fontWeight:'bold'
     },
     listContainer: {
-        height: 55,
+        height: 50,
         justifyContent: 'center',
         paddingLeft: 15
     }

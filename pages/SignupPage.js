@@ -85,19 +85,20 @@ export default function signup({ navigation }) {
     );
   };
 
+  
   function doubleChk(idOk, id){
     setidOk(true);
     firebase.database().ref('/users').on("value", snapshot =>{
       snapshot.forEach((child) => {
-        console.log(id)
         if(id === child.key){
           setidOk(false);
-          alert('ID가 중복됩니다.')
         }
       })
    }); 
-   if (idOk){
+   if (idOk && id){
      alert('사용 가능한 ID 입니다.');
+   }else{
+     alert("id를 입력해 주세요")
    }
   }
 
@@ -150,7 +151,7 @@ export default function signup({ navigation }) {
           }
         }
       })
-      navigation.navigate("LoginPage")
+      navigation.goBack();
     }
 
   }
@@ -221,6 +222,7 @@ export default function signup({ navigation }) {
           onChangeText={text => setSignUpPW(text)}
           value={signUpPW}
           placeholder="비밀번호"
+          secureTextEntry={true}
         />
         <Text style={styles.inputExplain}>비밀번호 확인</Text>
         <TextInput
@@ -228,6 +230,7 @@ export default function signup({ navigation }) {
           onChangeText={text => setCheckPW(text)}
           value={checkPW}
           placeholder="비밀번호 확인"
+          secureTextEntry={true}
         />
         <Text style={styles.inputExplain}>관심 스터디</Text>
         <View style={{ flex: 1 }}>{renderFlatList(signUpStudy)}</View>

@@ -22,7 +22,6 @@ var firebaseConfig = {
 export default function ChangeProfilePage({navigation}) {
 
     const [getName, setName] = useState('');
-    const [getCoin, setCoin] = useState('');
     const [fixPhone, setFixPhone] = useState('');
     const [fixEmail, setFixEmail] = useState('');
     const [fixInterest, setFixInterest] = useState('');
@@ -32,17 +31,12 @@ export default function ChangeProfilePage({navigation}) {
           setName(value)
       );
 
-    AsyncStorage.getItem('coin').then(
-        (value) =>
-          setCoin(value)
-      );
 
     AsyncStorage.getItem('email').then((value)=> setFixEmail(value))
 
     function fixData(){
         firebase.database().ref('/users/'+getName+'/hp').set(fixPhone);
     }
-
 
 
     return(
