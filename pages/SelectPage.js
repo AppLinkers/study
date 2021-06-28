@@ -61,7 +61,7 @@ let DATA = []
         })
       })
     });
-    //console.log(DATA)
+    console.log(DATA)
     setState(DATA)
   },[])
   const ItemView = ({ item }) => (

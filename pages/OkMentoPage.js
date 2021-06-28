@@ -1,9 +1,47 @@
 import React, { useEffect, useState, } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,FlatList,TextInput,TouchableWithoutFeedback} from 'react-native';
 import firebase from 'firebase'
+import { AsyncStorage } from 'react-native';
 
-export default function OkMentoPage({navigation}) {
+
+var firebaseConfig = {
+    apiKey: "AIzaSyAhALJl-3lVlNXoIueqpfcR1gfLEkJXOxc",
+    authDomain: "studyapp-3e58f.firebaseapp.com",
+    databaseURL: "https://studyapp-3e58f-default-rtdb.firebaseio.com",
+    projectId: "studyapp-3e58f",
+    storageBucket: "studyapp-3e58f.appspot.com",
+    messagingSenderId: "514395246608",
+    appId: "1:514395246608:web:2c39981eed6d3602b4fa95",
+    measurementId: "G-GL08SPFWYS"
+};
+
+// Initialize Firebase
+if (firebase.apps.length === 0) {
+    firebase.initializeApp(firebaseConfig);
+}
+
+export default function OkMentoPage({navigation,key1,key2}) {
     console.disableYellowBox = true;
+
+    
+    const [getName, setName] = useState('');
+    
+
+    AsyncStorage.getItem('user').then(
+        (value) =>
+            setName(value)
+    );
+    
+    
+
+    var DATA = []
+    useEffect(()=>{ 
+            
+        
+        
+    },[])
+
+
 
     const selectList = [
         {name: "이 름", intro:"한줄 소개", subject:"과목", university:"학교",date:'희망 요일', image:"https://firebasestorage.googleapis.com/v0/b/studyapp-3e58f.appspot.com/o/profile.jpg?alt=media&token=dc164977-d60c-4ae6-a6a3-46062c73b7e4"},

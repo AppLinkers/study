@@ -21,19 +21,123 @@ var firebaseConfig = {
 
 export default function tutorApplyPage({navigation}){
 
-    let openImagePickerAsync = async () => {
-        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
-        if (permissionResult.granted === false) {
-          alert("Permission to access camera roll is required!");
-          return;
-        }
-    
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        console.log(pickerResult);
-      }
+        //이미지 관련 시작
+        // The path of the picked image
+        const [pickedImagePath, setPickedImagePath] = useState('');
+        const [pickedImagePath2, setPickedImagePath2] = useState('');
+        const [pickedImagePath3, setPickedImagePath3] = useState('');
+        const [pickedImagePath4, setPickedImagePath4] = useState('');
+
+
 
       
+        // This function is triggered when the "Select an image" button pressed
+        const showImagePicker = async () => {
+          // Ask the user for the permission to access the media library 
+          const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      
+          if (permissionResult.granted === false) {
+            alert("You've refused to allow this appp to access your photos!");
+            return;
+          }
+      
+          const result = await ImagePicker.launchImageLibraryAsync();
+      
+          // Explore the result
+          console.log(result);
+      
+          if (!result.cancelled) {
+            setPickedImagePath(result.uri);
+            console.log(result.uri);
+            
+          }
+        }
+
+        const showImagePicker2 = async () => {
+            // Ask the user for the permission to access the media library 
+            const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        
+            if (permissionResult.granted === false) {
+              alert("You've refused to allow this appp to access your photos!");
+              return;
+            }
+        
+            const result = await ImagePicker.launchImageLibraryAsync();
+        
+            // Explore the result
+            console.log(result);
+        
+            if (!result.cancelled) {
+              setPickedImagePath2(result.uri);
+              console.log(result.uri);
+              
+            }
+          }
+        
+          const showImagePicker3 = async () => {
+            // Ask the user for the permission to access the media library 
+            const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        
+            if (permissionResult.granted === false) {
+              alert("You've refused to allow this appp to access your photos!");
+              return;
+            }
+        
+            const result = await ImagePicker.launchImageLibraryAsync();
+        
+            // Explore the result
+            console.log(result);
+        
+            if (!result.cancelled) {
+              setPickedImagePath3(result.uri);
+              console.log(result.uri);
+              
+            }
+          }
+
+          const showImagePicker4 = async () => {
+            // Ask the user for the permission to access the media library 
+            const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        
+            if (permissionResult.granted === false) {
+              alert("You've refused to allow this appp to access your photos!");
+              return;
+            }
+        
+            const result = await ImagePicker.launchImageLibraryAsync();
+        
+            // Explore the result
+            console.log(result);
+        
+            if (!result.cancelled) {
+              setPickedImagePath4(result.uri);
+              console.log(result.uri);
+              
+            }
+          }
+      
+        // This function is triggered when the "Open camera" button pressed
+        const openCamera = async () => {
+          // Ask the user for the permission to access the camera
+          const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+      
+          if (permissionResult.granted === false) {
+            alert("You've refused to allow this appp to access your camera!");
+            return;
+          }
+      
+          const result = await ImagePicker.launchCameraAsync();
+      
+          // Explore the result
+          console.log(result);
+      
+          if (!result.cancelled) {
+            setPickedImagePath(result.uri);
+            console.log(result.uri);
+          }
+        }
+
+      //이미지 관련 끝
 
       
 
@@ -50,7 +154,6 @@ export default function tutorApplyPage({navigation}){
     const [classHow, setClassHow] = useState('');
     const [classTime, setClassTime] = useState('');
     const [appeal, setAppeal] = useState('');
-    const [selectedImage, setSelectedImage] = React.useState(null);
 
     
 
@@ -118,9 +221,38 @@ export default function tutorApplyPage({navigation}){
                 />
                 <Text style={styles.title}>사 진</Text>
                 <View style={styles.imageBox}>
-                    <TouchableOpacity style={styles.imageInput} onPress={openImagePickerAsync}>
-                        <Text style={{fontSize:24, color:'gray'}}>+</Text>
-                    </TouchableOpacity>   
+                    <TouchableOpacity style={styles.imageInput} onPress={showImagePicker2}>
+                        <View style={styles.imageContainer}>
+                     {
+                         pickedImagePath2 !== '' && <Image
+                        source={{ uri: pickedImagePath2 }}
+                        style={styles.image}
+                    />
+                     }
+                    </View> 
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.imageInput} onPress={showImagePicker}>
+                        <View style={styles.imageContainer}>
+                     {
+                         pickedImagePath !== '' && <Image
+                        source={{ uri: pickedImagePath }}
+                        style={styles.image}
+                    />
+                     }
+                    </View> 
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.imageInput} onPress={showImagePicker3}>
+                        <View style={styles.imageContainer}>
+                     {
+                         pickedImagePath3 !== '' && <Image
+                        source={{ uri: pickedImagePath3 }}
+                        style={styles.image}
+                    />
+                     }
+                    </View> 
+                    </TouchableOpacity>
+                      
                 </View>
             <View style={styles.infoBox}>
                 <Image style={{width:6,height:6,marginTop:29,marginLeft:5}}
@@ -179,8 +311,15 @@ export default function tutorApplyPage({navigation}){
                 <Text style={styles.infoText}>학교 인증</Text>
             </View>
             <View style={{width:330,height:120,marginTop:10,alignItems:'center'}}>
-                <TouchableOpacity style={styles.schoolAuth}>
-                    <Text style={{fontSize:24, color:'gray'}}>+</Text>
+                <TouchableOpacity style={styles.schoolAuth} onPress={showImagePicker4}>
+                    <View style={styles.imageContainer}>
+                     {
+                         pickedImagePath4 !== '' && <Image
+                        source={{ uri: pickedImagePath4 }}
+                        style={styles.image2}
+                    />
+                     }
+                    </View>
                 </TouchableOpacity>
             </View>
             <TouchableOpacity 
@@ -257,24 +396,37 @@ export default function tutorApplyPage({navigation}){
         width:330,
         height:120,
         marginTop:10,
-        flexDirection:'row'
+        flexDirection:'row',
+        
     },
     imageInput:{
         height:100,
         width:90,
-        borderWidth:1.5,
         borderRadius:5,
-        borderColor:'#7cd175',
         backgroundColor:'#f5f5f5',
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        marginRight:5
+    },
+    imageContainer: {
+        padding: 5
+    },
+    image: {
+        width: 90,
+        height: 100,
+        resizeMode: 'cover',
+        borderRadius:5,
+        borderWidth:1,
+    },
+    image2:{
+        width:240,
+        height:120,
+        borderRadius:15,
     },
     schoolAuth:{
         width:240,
         height:120,
-        borderWidth:1,
-        borderRadius:5,
-        borderColor:'#7cd175',
+        borderRadius:15,
         backgroundColor:'#f5f5f5',
         justifyContent:'center',
         alignItems:'center'
@@ -292,4 +444,3 @@ export default function tutorApplyPage({navigation}){
         marginBottom:20
     }
  })
-

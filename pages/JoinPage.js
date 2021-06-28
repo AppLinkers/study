@@ -5,7 +5,6 @@ import { SliderBox } from "react-native-image-slider-box";
 import { NavigationContainer, TabRouter } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase'
-import {firebase_db} from '../firebaseConfig'
 import Constants from 'expo-constants';
 import { AsyncStorage } from 'react-native';
 
@@ -49,7 +48,7 @@ export default function JoinPage({navigation, route}) {
         setJoin(data)
       })
 },[])
-
+console.log(join)
 console.log("---------")
 
 

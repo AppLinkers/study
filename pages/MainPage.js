@@ -91,7 +91,7 @@ return(
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage} source={require('../assets/homeButton.png')}></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton} onPress={() => {navigation.navigate("MyStudyPage")}}><Image style={styles.buttonImage2} source={require('../assets/book-club.png')} ></Image></TouchableOpacity>
           <TouchableOpacity style={styles.underButton}><Image style={styles.buttonImage2} source={require('../assets/chatButton.png')}></Image></TouchableOpacity>
-          <TouchableOpacity style={styles.underButton}><Text style={{fontSize:20, paddingBottom:10, color:'gray',fontWeight:'700'}} onPress={OkPage}>. . .</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.underButton} onPress={()=> {navigation.navigate("OkMentoPage")} }><Text style={{fontSize:20, paddingBottom:10, color:'gray',fontWeight:'700'}}>. . .</Text></TouchableOpacity>
 
         </View>
     </View>
