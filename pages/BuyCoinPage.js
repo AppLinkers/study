@@ -9,31 +9,31 @@ const DATA = [
         id: '1',
         title: '코인 10개',
         cost: '1,000원',
-        value: 1000
+        value: 10
     },
     {
         id: '2',
         title: '코인 50개',
         cost: '5,000원',
-        value : 5000
+        value : 50
     },
     {
         id: '3',
         title: '코인 100개',
         cost: '10,000원',
-        value: 10000
+        value: 100
     },
     {
         id: '4',
         title: '코인 200개',
         cost: '20,000원',
-        value: 20000
+        value: 200
     },
     {
         id: '5',
         title: '코인 300개',
         cost: '30,000원',
-        value : 30000
+        value : 300
     },
 ];
 

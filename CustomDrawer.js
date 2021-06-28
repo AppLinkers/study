@@ -83,9 +83,9 @@ export default function CustomDrawer({ navigation }) {
             <View style={styles.listTitle}>
                 <Text style={{fontSize:17, fontWeight:'700'}}>Apply</Text>
             </View>
-            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName} onPress={tutor} >튜터 신청</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName} onPress={tutor} >멘토 등록</Text></TouchableOpacity>
             <TouchableOpacity style={styles.listContainer}><Text style={styles.listName} onPress={request}>스터디 신청</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName} onPress={MentoApply}>멘토 신청</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.listContainer}><Text style={styles.listName} onPress={MentoApply}>멘토 신청 (멘토 전용)</Text></TouchableOpacity>
             
            
             <View style={styles.listTitle}>
