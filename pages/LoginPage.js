@@ -1,6 +1,6 @@
 
 import React, {useState} from 'react';
-import { StyleSheet, Text, View,Image,TouchableOpacity,TextInput,KeyboardAvoidingView, Platform} from 'react-native';
+import { StyleSheet, Text, View,Image,TouchableOpacity,TextInput,KeyboardAvoidingView, Platform, Alert} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import firebase from 'firebase';
@@ -32,30 +32,44 @@ export default function LoginPage({navigation}, props) {
   const [typeID, setTypeId] = useState('');
   const [typePw, setTypePw] = useState('');
   const [done, setDone] = useState(false)
+  const [IDchk, setIDchk] = useState(true)
+  const [PWchk, setPWchk] = useState(true)
 
   function loginAuth(){
-
-
-    var userList = [];
-    var auth = false;
+    const userIDs = []
+    const userPWs = []
     firebase.database().ref('/users').on("child_added", snapshot =>{
         var userID = snapshot.val().id;
+        userIDs.push(userID)
         var userPw = snapshot.val().pw;
+        userPWs.push(userPw)
         var userCoin= snapshot.val().coin;
         var userPhone = snapshot.val().hp
         var userEmail = snapshot.val().userEmail
-
+       
        if(userID===typeID){
           if(userPw===typePw){
             navigation.navigate("MainPage",{"userID":userID});
             AsyncStorage.setItem('user', userID); 
-            AsyncStorage.setItem('coin', userCoin); 
+            AsyncStorage.setItem('coin', JSON.stringify(userCoin)); 
             AsyncStorage.setItem('phone', userPhone); 
             AsyncStorage.setItem('email', userEmail); 
-            console.log(userCoin);
           }
         }
     }); 
+    
+    if(userIDs.includes(typeID)){
+      setIDchk(true)
+      if(userPWs[userIDs.indexOf(typeID)] !== typePw){
+        setPWchk(false)
+        setTypePw('')
+      }else{
+        setPWchk(true)
+      }
+    }else{
+      setIDchk(false)
+      setTypeId('')
+    }
 
   }
 
@@ -70,17 +84,19 @@ export default function LoginPage({navigation}, props) {
           <Text style={styles.AppName}>App Linker's</Text>
         
         <Text style={styles.txt}>Follow Your Dream!</Text>
-        <TextInput 
+        <TextInput
           style={styles.ID}
           value={typeID}
           onChangeText ={(typeID) =>setTypeId(typeID)}
-          placeholder='ID'></TextInput>
+          placeholder= {IDchk ? 'ID' : '해당 ID가 없습니다.'}
+          placeholderTextColor = {IDchk ? 'gray' : '#FB0C08'}></TextInput>
         <TextInput 
           style={styles.PW}
           value={typePw}
           secureTextEntry={true}
           onChangeText ={(typePw) =>setTypePw(typePw)}
-          placeholder='PassWord'></TextInput>
+          placeholder={PWchk ? 'PassWord' : '비밀번호가 올바르지 않습니다.'}
+          placeholderTextColor = {PWchk ? 'gray' : '#FB0C08'}></TextInput>
         <TouchableOpacity style={{marginTop:20}}><Text style={styles.forgetPW}>아이디/비밀번호 찾기</Text></TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={loginAuth}><Text style={styles.buttonTxt}>로 그 인</Text></TouchableOpacity>
         <TouchableOpacity style={styles.enter} onPress={goToSignup}><Text style={styles.enterTxt}>아직 회원이 아니신가요?</Text></TouchableOpacity>

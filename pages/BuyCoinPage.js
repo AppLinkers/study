@@ -9,31 +9,31 @@ const DATA = [
         id: '1',
         title: '코인 10개',
         cost: '1,000원',
-        value: 1000
+        value: 10
     },
     {
         id: '2',
         title: '코인 50개',
         cost: '5,000원',
-        value : 5000
+        value : 50
     },
     {
         id: '3',
         title: '코인 100개',
         cost: '10,000원',
-        value: 10000
+        value: 100
     },
     {
         id: '4',
         title: '코인 200개',
         cost: '20,000원',
-        value: 20000
+        value: 200
     },
     {
         id: '5',
         title: '코인 300개',
         cost: '30,000원',
-        value : 30000
+        value : 300
     },
 ];
 
@@ -54,7 +54,6 @@ if (firebase.apps.length === 0) {
 }
 
 export default function BuyCoinPage() {
-    console.log("test");
     const [getName, setName] = useState('');
     const [getCoin, setCoin] = useState('');
 
@@ -62,15 +61,21 @@ export default function BuyCoinPage() {
         (value) =>
             setName(value)
     );
-
+    
     AsyncStorage.getItem('coin').then(
-        (value) =>
-            setCoin(value)
+        (value) => {
+            setCoin(JSON.parse(value))
+        } 
     );
     
     function coinplus(selected_coin) {
         firebase.database().ref('/users/' + getName + '/coin').set(getCoin + selected_coin);
-        console.log(getCoin);
+        AsyncStorage.setItem('coin', JSON.stringify(getCoin + selected_coin)); 
+        AsyncStorage.getItem('coin').then(
+            (value) => {
+                setCoin(JSON.parse(value))
+            } 
+        );
     }
 
     const ItemView = ({ item }) => {
@@ -94,7 +99,7 @@ export default function BuyCoinPage() {
         <View style={styles.container}>
             <View style={styles.myCoin}>
                 <View style={{ flex: 2 }}>
-                    <Text style={{ fontWeight: '700', fontSize: 14 }}>보유 코인 : </Text>
+                    <Text style={{ fontWeight: '700', fontSize: 14 }}>보유 코인 : {getCoin}</Text>
                 </View>
                 <Modal
                     animationType="none"
